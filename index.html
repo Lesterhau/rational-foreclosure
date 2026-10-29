@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Interactive companion to Lester, Rational Foreclosure (2026): see where the model predicts someone chasing a moving target stops keeping score, estimate your own preferences, set a goal, and war-game a cohort.">
-<title>The Finish Line Moved</title>
+<meta name="description" content="The Hope Gap: a planning tool for federal, state, county and city economists, built on Lester, Rational Foreclosure (2026). Estimate how many people have stopped measuring themselves against a runaway benchmark, project the next two years, and get a dated action plan.">
+<title>The Hope Gap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one running lane down the page in three parts (explore, your own race, cohort lab); each section pairs controls with a chart or table and stacks on phones. */
+/* Layout: a planning console down one lane (place, benchmark, people, scenario, results, plan), then the model explorer and the data notes. Controls pair with outputs side by side on wide screens and stack on phones. */
 :root{
   --paper:#F3F6FA; --card:#FFFFFF; --ink:#12223A; --muted:#566880; --rule:#D3DBE6;
   --stay:#1C6E8C; --stay-soft:#D7E9F0; --quit:#B7471B; --quit-soft:#F6E1D6; --tape:#D9A400; --tape-ink:#5A4300; --mid:#7E8FA6;
@@ -26,90 +26,93 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
-.wrap{max-width:1060px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:.01em;line-height:1.02;text-wrap:balance;margin:0}
-h1{font-size:clamp(46px,9vw,92px);text-transform:uppercase}
+h1{font-size:clamp(50px,10vw,100px);text-transform:uppercase}
 h2{font-size:clamp(30px,5vw,44px);text-transform:uppercase}
-h3{font-size:22px;text-transform:uppercase;letter-spacing:.04em}
-p{margin:0;max-width:66ch}
+h3{font-size:21px;text-transform:uppercase;letter-spacing:.04em}
+p{margin:0;max-width:68ch}
 .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.lane{border-top:2px solid var(--ink);padding-top:22px;margin-top:52px;display:grid;gap:18px;scroll-margin-top:12px}
+.lane{border-top:2px solid var(--ink);padding-top:22px;margin-top:48px;display:grid;gap:18px;scroll-margin-top:12px}
 .part{margin-top:76px;display:grid;gap:10px;scroll-margin-top:12px}
 .part h2{font-size:clamp(38px,7vw,64px)}
-.part .tape{margin-top:2px}
-.hero{display:grid;gap:18px;padding-top:8px}
-.hero .dek{font-size:19px;color:var(--ink)}
+.hero{display:grid;gap:16px;padding-top:8px}
+.hero .dek{font-size:19px}
 nav.parts{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.04em;text-transform:uppercase}
 nav.parts a{color:var(--ink);text-decoration:none;border-bottom:3px solid var(--tape);padding-bottom:1px}
-.tape{position:relative;height:10px;margin:6px 0 2px;background:repeating-linear-gradient(90deg,var(--tape) 0 22px,transparent 22px 30px);opacity:.9}
-.readout{display:flex;flex-wrap:wrap;gap:14px 40px;align-items:flex-end;padding:18px 0 6px}
-.big{font-family:var(--display);font-weight:700;font-size:clamp(64px,12vw,120px);line-height:.9;color:var(--quit);font-variant-numeric:tabular-nums}
-.big small{font-size:.45em;color:var(--muted);font-weight:600}
-.readout .say{max-width:44ch;font-size:18px}
-.grid{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:28px;align-items:start}
-@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+.tape{height:10px;margin:6px 0 2px;background:repeating-linear-gradient(90deg,var(--tape) 0 22px,transparent 22px 30px);opacity:.9}
+.grid{display:grid;grid-template-columns:minmax(0,350px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
 .controls{display:grid;gap:16px;background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;min-width:0}
 .ctl{display:grid;gap:4px}
 .ctl label,.ctl .lbl{display:flex;justify-content:space-between;gap:10px;font-size:15px;font-weight:600}
-.ctl label output{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--stay);font-variant-numeric:tabular-nums}
-.ctl .hint{font-size:13.5px;color:var(--muted);line-height:1.35}
+.ctl output,.ctl .val{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--stay);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hint{font-size:13.5px;color:var(--muted);line-height:1.4}
 input[type=range]{width:100%;accent-color:var(--stay)}
-input[type=number],select,textarea{font-family:var(--mono);font-size:15px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:7px 9px;width:100%}
-textarea{min-height:120px;font-size:13px;line-height:1.4}
+input[type=number],input[type=text],select,textarea{font-family:var(--mono);font-size:15px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:7px 9px;width:100%}
+textarea{min-height:110px;font-size:13px;line-height:1.4}
 input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
-.charts{display:grid;gap:22px;min-width:0}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px}
+.seg button{font-size:15px;padding:7px 4px;line-height:1.1}
+button{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:4px;padding:7px 14px;cursor:pointer}
+button.primary{background:var(--ink);color:var(--paper)}
+button[aria-pressed="true"]{background:var(--tape);border-color:var(--tape);color:#1B1400}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.status{font-family:var(--mono);font-size:13.5px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{display:grid;gap:6px;background:var(--card);border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;cursor:pointer;text-align:left;font:inherit;color:inherit;text-transform:none;letter-spacing:0}
+.card[aria-pressed="true"]{border-color:var(--stay);background:var(--stay-soft);color:var(--ink)}
+.card strong{font-family:var(--display);font-size:21px;text-transform:uppercase;letter-spacing:.03em}
+.card span{font-size:14.5px;color:var(--muted)}
+.card svg{width:30px;height:30px;color:var(--stay)}
+fieldset.checks{border:1px solid var(--rule);border-radius:6px;padding:10px 12px 12px;margin:0;display:grid;gap:6px;min-width:0}
+fieldset.checks legend{font-size:15px;font-weight:600;padding:0 4px}
+.chk{display:flex;flex-wrap:wrap;gap:6px}
+.chk label{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--rule);border-radius:4px;padding:4px 9px;font-size:14.5px;cursor:pointer;white-space:nowrap}
+.chk label:has(input:checked){border-color:var(--stay);background:var(--stay-soft)}
+.chk input{accent-color:var(--stay);margin:0}
+/* stat blobs */
+.blobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px 14px;align-items:start}
+.blob{display:grid;justify-items:center;gap:8px;text-align:center}
+.blob .c{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:34px;line-height:1;color:#fff;font-variant-numeric:tabular-nums;padding:6px}
+.blob .c small{display:block;font-size:13px;font-weight:600;letter-spacing:.03em;margin-top:2px;opacity:.95}
+.blob.stay .c{background:var(--stay)} .blob.quit .c{background:var(--quit)} .blob.gold .c{background:var(--tape);color:#1B1400} .blob.ink .c{background:var(--ink);color:var(--paper)} .blob.mid .c{background:var(--mid)}
+.blob .d{font-size:14px;color:var(--muted);max-width:22ch;line-height:1.35}
+.blobs.small .blob .c{width:92px;height:92px;font-size:25px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .blob:is(.stay,.quit,.mid) .c{color:#0D1520}}
+:root[data-theme="dark"] .blob:is(.stay,.quit,.mid) .c{color:#0D1520}
+.verdict{display:grid;gap:8px;background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--quit);border-radius:6px;padding:16px 18px}
+.verdict.good{border-left-color:var(--stay)} .verdict.neutral{border-left-color:var(--tape)}
+.verdict strong{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.warn{background:var(--quit-soft);border-radius:6px;padding:12px 14px;font-size:15px}
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--rule);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 11px;text-align:right;border-bottom:1px solid var(--rule);vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:var(--display);font-weight:600;font-size:15.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.src{font-size:12.5px;color:var(--muted);text-align:left}
+.plan{display:grid;gap:0;background:var(--card);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.plan .item{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.plan .item:last-child{border-bottom:0}
+.plan .when{font-family:var(--mono);font-size:13px;color:var(--stay)}
+.plan .when b{display:block;font-family:var(--display);font-size:17px;color:var(--ink);letter-spacing:.03em;text-transform:uppercase}
+@media (max-width:560px){.plan .item{grid-template-columns:minmax(0,1fr)}}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 36px}
+.note{font-size:15.5px}
 figure{margin:0;min-width:0}
-figcaption{font-size:14.5px;color:var(--muted);margin-top:6px;max-width:66ch}
+figcaption{font-size:14.5px;color:var(--muted);margin-top:6px;max-width:68ch}
 .chart{width:100%;height:auto;display:block;overflow:visible}
 .chart text{fill:var(--muted);font-family:var(--mono);font-size:11px}
 .chart .axis{stroke:var(--rule);stroke-width:1}
 .chart .grid line{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
-.btns{display:flex;flex-wrap:wrap;gap:10px}
-button{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:4px;padding:7px 14px;cursor:pointer}
-button.primary{background:var(--ink);color:var(--paper)}
-button[aria-pressed="true"]{background:var(--tape);border-color:var(--tape);color:#1B1400}
-button:disabled{opacity:.45;cursor:not-allowed}
-.status{font-family:var(--mono);font-size:13.5px;color:var(--muted)}
-.verdict{display:grid;gap:8px;background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--quit);border-radius:6px;padding:16px 18px}
-.verdict.good{border-left-color:var(--stay)}
-.verdict.neutral{border-left-color:var(--tape)}
-.verdict strong{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.02em;font-weight:700}
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted)}
-.sw{display:inline-block;width:14px;height:4px;vertical-align:middle;margin-right:6px;border-radius:2px}
-.sq{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:6px;border-radius:2px}
-.warn{background:var(--quit-soft);color:var(--ink);border-radius:6px;padding:12px 14px;font-size:15px}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 36px}
-.note{font-size:15.5px}
+.sw{display:inline-block;width:16px;height:4px;vertical-align:middle;margin-right:6px;border-radius:2px}
+details{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 16px}
+details summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:.03em;text-transform:uppercase}
+details[open] summary{margin-bottom:10px}
+pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:10px;max-height:260px;overflow:auto;margin:0}
 a{color:var(--stay)}
-/* quiz */
-#ladders{grid-template-columns:minmax(0,1fr);max-width:820px}
-.ladder{display:grid;gap:0;background:var(--card);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
-.ladder .head{padding:14px 16px 10px;display:grid;gap:4px;border-bottom:1px solid var(--rule)}
-.ladder .head h3{font-size:20px}
-.ladder .head p{font-size:15px;color:var(--muted)}
-.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--rule)}
-.row:last-child{border-bottom:0}
-.row .q{font-size:16px}
-.row .q b{font-family:var(--mono);font-weight:500}
-.pick{display:flex;gap:6px;flex-wrap:wrap}
-.pick label{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--rule);border-radius:4px;padding:5px 10px;font-size:14.5px;cursor:pointer;white-space:nowrap}
-.pick input{accent-color:var(--stay);margin:0}
-.pick label:has(input:checked){border-color:var(--stay);background:var(--stay-soft)}
-@media (max-width:560px){.row{grid-template-columns:minmax(0,1fr)}}
-.result{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-.stat{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px 16px;display:grid;gap:2px}
-.stat .k{font-size:14px;color:var(--muted)}
-.stat .v{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;color:var(--stay);font-variant-numeric:tabular-nums}
-.stat .s{font-size:13.5px;color:var(--muted)}
-/* tables */
-.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--rule);border-radius:6px}
-table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
-th,td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
-th:first-child,td:first-child{text-align:left;white-space:normal}
-thead th{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
-tbody tr:last-child td{border-bottom:0}
-td.up{color:var(--stay)} td.down{color:var(--quit)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-size:14px;color:var(--muted);display:grid;gap:6px}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -117,252 +120,273 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-si
 <body>
 
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h11L21 8H6.2M9 20a1 1 0 100-2 1 1 0 000 2zm9 0a1 1 0 100-2 1 1 0 000 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+</svg>
+
 <div class="wrap">
   <header class="hero">
-    <div class="eyebrow">Interactive companion to Lester, “Rational Foreclosure” (2026)</div>
-    <h1>The finish line moved</h1>
+    <div class="eyebrow">A planning tool built on Lester, “Rational Foreclosure” (2026)</div>
+    <h1>The Hope Gap</h1>
     <div class="tape" aria-hidden="true"></div>
-    <p class="dek">A young worker measures her savings against a target that keeps moving: the price of a starter home, the pay that marks a career as on track. At any moment she can stop keeping score. This page solves her problem exactly, lets you put your own answers into it, and scales it up to a whole cohort.</p>
-    <nav class="parts" aria-label="Parts of this page"><a href="#explore">1 · Explore the model</a><a href="#your-race">2 · Your own race</a><a href="#cohort-lab">3 · Cohort lab</a></nav>
-    <div class="readout" aria-live="polite">
-      <div class="big" id="bigX">94.2<small>%</small></div>
-      <p class="say" id="bigSay">The model predicts she stops keeping score when her savings fall to this share of the target. She will always have stopped by <b id="bigBar">80.0%</b>.</p>
-    </div>
+    <p class="dek">When the things people work toward pull away from their paychecks, many stop measuring themselves against them. They keep their jobs, but stop grinding. This tool estimates how many people in your jurisdiction have reached that point, how many will over the next two years, and what someone in your office can do about it.</p>
+    <nav class="parts" aria-label="Sections"><a href="#planner">Planner</a><a href="#model">How the model works</a><a href="#data">Data and methods</a></nav>
   </header>
 
-  <!-- ===================== PART 1 ===================== -->
-  <section class="lane" id="explore" aria-labelledby="s1">
-    <div class="eyebrow">Part 1 · Step 1</div>
-    <h2 id="s1">Set the race</h2>
-    <div class="grid">
-      <form class="controls" id="params" onsubmit="return false">
-        <div class="ctl"><label for="delta">How fast the target pulls away <output id="o_delta"></output></label>
-          <input id="delta" type="range" min="-0.02" max="0.06" step="0.005" value="0.02">
-          <div class="hint">Yearly growth of the target minus growth of her savings.</div></div>
-        <div class="ctl"><label for="sig">How much the target jumps around <output id="o_sig"></output></label>
-          <input id="sig" type="range" min="0.03" max="0.25" step="0.01" value="0.10">
-          <div class="hint">Annual volatility. Home prices in a single market can swing by 10% or more in a year.</div></div>
-        <div class="ctl"><label for="lam">How much a shortfall stings <output id="o_lam"></output></label>
-          <input id="lam" type="range" min="1" max="6" step="0.1" value="2">
-          <div class="hint">2 means being behind hurts twice as much as being ahead feels good. The average estimate across 150 studies is about 2.</div></div>
-        <div class="ctl"><label for="alpha">How much she cares about standing <output id="o_alpha"></output></label>
-          <input id="alpha" type="range" min="0.1" max="3" step="0.1" value="0.5">
-          <div class="hint">Weight on the comparison relative to consumption. At 1, being 1% ahead of the target is worth as much as 1% more consumption.</div></div>
-        <div class="ctl"><label for="rho">How impatient she is <output id="o_rho"></output></label>
-          <input id="rho" type="range" min="0.03" max="0.12" step="0.005" value="0.05">
-          <div class="hint">Yearly discount rate.</div></div>
-        <div class="btns"><button type="button" id="reset">Reset to baseline</button></div>
-        <div class="status" id="quizApplied" hidden></div>
-      </form>
-      <div class="charts">
-        <div class="warn" id="warn" hidden>With these settings the upside of the race is worth infinitely much: she is less impatient than her standing is expected to grow. Raise her impatience, slow the target's jumps, or let it pull away faster.</div>
-        <figure>
-          <svg class="chart" id="chF" viewBox="0 0 640 300" role="img" aria-label="Value of staying in the race against standing"></svg>
-          <figcaption><b>What staying in is worth.</b> Her extra value from keeping score, by standing (savings as a share of the target). This is the model's measure of hope: it is positive because the gap may still close. It touches zero smoothly at the point where the model predicts she stops.</figcaption>
-        </figure>
-        <figure>
-          <svg class="chart" id="chQ" viewBox="0 0 640 240" role="img" aria-label="How hard she grinds against standing"></svg>
-          <figcaption><b>How hard she grinds.</b> How much less she consumes than she would after quitting, by standing. The grind fades as she falls behind and is gone when she quits. Near her stopping point she is still in the race, but barely grinding.</figcaption>
-        </figure>
-      </div>
-    </div>
+  <section class="lane" aria-labelledby="now">
+    <div class="eyebrow">Current U.S. conditions · preloaded</div>
+    <h2 id="now">Where the economy is now</h2>
+    <div class="blobs small" id="nowBlobs"></div>
+    <p class="hint" id="nowNote"></p>
   </section>
 
-  <section class="lane" aria-labelledby="s2">
-    <div class="eyebrow">Part 1 · Step 2</div>
-    <h2 id="s2">Watch the finish line move</h2>
+  <!-- ===================== PLANNER ===================== -->
+  <div class="part" id="planner">
+    <div class="eyebrow">Planner</div>
+    <h2>Run your jurisdiction</h2>
+    <div class="tape" aria-hidden="true"></div>
+  </div>
+
+  <section class="lane" aria-labelledby="p1">
+    <div class="eyebrow">Step 1</div>
+    <h2 id="p1">Where</h2>
     <div class="grid">
       <div class="controls">
-        <div class="ctl"><label for="x0">Where she starts <output id="o_x0"></output></label>
-          <input id="x0" type="range" min="0.95" max="1.5" step="0.01" value="1.25">
-          <div class="hint">Her savings as a share of the target today.</div></div>
-        <div class="ctl"><label for="jump">Move the finish line in year 2 <output id="o_jump"></output></label>
-          <input id="jump" type="range" min="0" max="0.3" step="0.01" value="0.15">
-          <div class="hint">A sudden rise in the target, like a run of price hikes or a career path that disappears.</div></div>
-        <div class="btns">
-          <button type="button" class="primary" id="newpath">New random years</button>
-          <button type="button" id="nudgeBtn" aria-pressed="false">Keep her in until 80%</button>
+        <div class="ctl"><span class="lbl">Level of government</span>
+          <div class="seg" id="levelSeg" role="group" aria-label="Level of government">
+            <button type="button" data-level="federal" aria-pressed="true">Federal</button><button type="button" data-level="state" aria-pressed="false">State</button><button type="button" data-level="county" aria-pressed="false">County</button><button type="button" data-level="city" aria-pressed="false">City</button>
+          </div></div>
+        <div class="ctl" id="stateWrap" hidden><label for="stateSel">State</label><select id="stateSel"></select>
+          <div class="hint">State figures are preloaded. County and city users start from their state's figures and replace them with local ones.</div></div>
+        <div id="localWrap" hidden class="ctl" style="gap:10px">
+          <div class="ctl"><label for="l_name">County or city name</label><input id="l_name" type="text" placeholder="e.g. Harris County"></div>
+          <div class="ctl"><label for="l_pop">Population</label><input id="l_pop" type="number" min="0" step="1000"></div>
+          <div class="ctl"><label for="l_val">Median home value ($)</label><input id="l_val" type="number" min="0" step="1000"></div>
+          <div class="ctl"><label for="l_inc">Median household income ($)</label><input id="l_inc" type="number" min="0" step="500"></div>
+          <div class="ctl"><label for="l_h1">Home price change, last year (%)</label><input id="l_h1" type="number" step="0.1"></div>
+          <div class="ctl"><label for="l_h5">Home price change, last five years (%, total)</label><input id="l_h5" type="number" step="0.1"></div>
+          <div class="ctl"><label for="l_w1">Pay change, last year (%)</label><input id="l_w1" type="number" step="0.1"></div>
+          <div class="ctl"><label for="l_w5">Pay change, last five years (%, total)</label><input id="l_w5" type="number" step="0.1"></div>
+          <div class="hint">Do not have these? Copy the data prompt, paste it into any AI assistant with web access, then paste its answer below.</div>
+          <div class="btns"><button type="button" id="copyPrompt">Copy data prompt</button></div>
+          <textarea id="pasteBox" spellcheck="false" placeholder="Paste the assistant's answer here (lines like  median_home_value: 312000)"></textarea>
+          <div class="btns"><button type="button" id="applyPaste">Use pasted figures</button></div>
+          <div class="status" id="pasteStatus" aria-live="polite"></div>
         </div>
-        <div class="status" id="pathStatus"></div>
       </div>
-      <div class="charts">
-        <figure>
-          <svg class="chart" id="chP" viewBox="0 0 640 300" role="img" aria-label="Her standing over ten years"></svg>
-          <figcaption><b>Ten years of standing.</b> Her savings as a share of the target, week by week, under one draw of random shocks. The yellow line is the model's stopping point for her. With the nudge on, she is kept in until 80%, and the red stretch is time spent in the race after the model says the comparison stopped paying.</figcaption>
-        </figure>
-        <div class="legend"><span><i class="sw" style="background:var(--stay)"></i>in the race</span><span><i class="sw" style="background:var(--quit)"></i>kept in past her stopping point</span><span><i class="sw" style="background:var(--tape)"></i>her stopping point</span></div>
+      <div class="tbl"><table aria-label="Data in use"><thead><tr><th>Data in use</th><th>Value</th><th>Source</th></tr></thead><tbody id="placeTable"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="lane" aria-labelledby="p2">
+    <div class="eyebrow">Step 2</div>
+    <h2 id="p2">What people measure themselves against</h2>
+    <div class="cards" id="benchCards">
+      <button type="button" class="card" data-bench="home" aria-pressed="true"><svg><use href="#i-home"/></svg><strong>Owning a home</strong><span>Home prices against pay. Par is a typical home costing three times a typical household income.</span></button>
+      <button type="button" class="card" data-bench="cost" aria-pressed="false"><svg><use href="#i-cart"/></svg><strong>Keeping up with prices</strong><span>Consumer prices against pay. Par is the buying power of pay in 2019.</span></button>
+      <button type="button" class="card" data-bench="gdp" aria-pressed="false"><svg><use href="#i-flag"/></svg><strong>Sharing in the nation's growth</strong><span>Output per person against pay. Par is pay's share of output per person in 1979.</span></button>
+    </div>
+    <div class="grid">
+      <div class="controls">
+        <div class="ctl"><span class="lbl">Which period sets the trend</span>
+          <div class="seg" id="winSeg" role="group" aria-label="Period">
+            <button type="button" data-win="latest" aria-pressed="false">Latest year</button><button type="button" data-win="five" aria-pressed="true">Five years</button><button type="button" data-win="long" aria-pressed="false">Since 1979</button>
+          </div>
+          <div class="hint" id="winHint"></div></div>
+        <div class="ctl" id="idxWrap" hidden><label for="idxSel">Price index</label>
+          <select id="idxSel"><option value="cpi">CPI, all items</option><option value="core">CPI, excluding food and energy</option><option value="pce">PCE price index</option><option value="corepce">PCE, excluding food and energy</option></select>
+          <div class="hint">CPI is what households see at the store; PCE is what the Federal Reserve targets. The five-year and long-run trends use CPI.</div></div>
+        <div class="ctl"><label for="drift">How fast the benchmark is pulling away from pay <output id="o_drift"></output></label>
+          <input id="drift" type="range" min="-0.06" max="0.08" step="0.001">
+          <div class="hint">Percentage points per year: the benchmark's growth minus pay growth. Zero means pay keeps pace. Two means the benchmark gets 2% further ahead of paychecks every year.</div></div>
+        <div class="ctl"><label for="vol">How much the benchmark jumps around <output id="o_vol"></output></label>
+          <input id="vol" type="range" min="0.01" max="0.2" step="0.001">
+          <div class="hint">Typical yearly swing. U.S. home prices: about 6%. A single metro: 4% to 13%. Consumer prices: about 1.5%. A jumpier benchmark gives people more reason to hold on.</div></div>
+        <div class="ctl"><label for="stand">Where the group stands today <output id="o_stand"></output></label>
+          <input id="stand" type="range" min="0.2" max="1.6" step="0.005">
+          <div class="hint" id="standHint">100% is par.</div></div>
+        <div class="ctl"><label for="spread">How unequal the group is <output id="o_spread"></output></label>
+          <input id="spread" type="range" min="0.05" max="0.6" step="0.01" value="0.25">
+          <div class="hint">At 0.25, about two-thirds of the group stand within 25% of its typical member. Wider gaps mean more people at both extremes.</div></div>
+        <div class="btns"><button type="button" id="resetData">Reset to the data</button></div>
+      </div>
+      <div class="verdict neutral" id="benchSay"><strong id="benchHead"></strong><p id="benchText"></p></div>
+    </div>
+  </section>
+
+  <section class="lane" aria-labelledby="p3">
+    <div class="eyebrow">Step 3</div>
+    <h2 id="p3">Who</h2>
+    <div class="grid">
+      <div class="controls" id="demo">
+        <fieldset class="checks"><legend>Age</legend><div class="chk" id="ck_age"></div></fieldset>
+        <fieldset class="checks"><legend>Sex</legend><div class="chk" id="ck_sex"></div></fieldset>
+        <fieldset class="checks"><legend>Education</legend><div class="chk" id="ck_edu"></div></fieldset>
+        <fieldset class="checks"><legend>Household income</legend><div class="chk" id="ck_inc"></div></fieldset>
+        <div class="hint">Check any combination. Within a row, checked boxes are combined; across rows, the group must match every row.</div>
+      </div>
+      <div style="display:grid;gap:16px;min-width:0">
+        <div class="blobs small" id="whoBlobs"></div>
+        <div class="controls">
+          <div class="ctl"><label for="pf_lam">How much falling behind stings</label>
+            <select id="pf_lam"><option value="auto">Group estimate</option><option value="1.5">Mildly (1.5×)</option><option value="2">Typically (2×)</option><option value="2.5">Strongly (2.5×)</option><option value="3.5">Severely (3.5×)</option></select>
+            <div class="hint">How much worse a shortfall feels than an equal gain feels good. The average across 607 published estimates is about 2 (Brown, Imai, Vieider and Camerer 2024). It tends to rise with age, especially after 55, and to fall with education.</div></div>
+          <div class="ctl"><label for="pf_alpha">How much people compare themselves with others</label>
+            <select id="pf_alpha"><option value="0.25">A little</option><option value="0.5" selected>Typically</option><option value="1">A lot</option><option value="2">Intensely</option></select>
+            <div class="hint">How much standing matters next to spending. “A lot” means being 1% ahead of the benchmark matters as much as 1% more spending. No reliable demographic pattern is known, so this is set directly.</div></div>
+          <div class="ctl"><label for="pf_rho">How much people weigh today over the future</label>
+            <select id="pf_rho"><option value="auto">Group estimate</option><option value="0.035">Patient (3.5% a year)</option><option value="0.05">Typical (5%)</option><option value="0.07">Impatient (7%)</option><option value="0.1">Very impatient (10%)</option></select>
+            <div class="hint">Economic models usually use 2% to 5% a year. Large surveys find the middle-aged most patient and the young and old less so, and patience rising with education (Falk et al. 2018).</div></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="lane" aria-labelledby="s3">
-    <div class="eyebrow">Part 1 · Step 3</div>
-    <h2 id="s3">Who should be nudged?</h2>
+  <section class="lane" aria-labelledby="p4">
+    <div class="eyebrow">Step 4</div>
+    <h2 id="p4">What happens next</h2>
     <div class="grid">
       <div class="controls">
-        <div class="ctl"><label for="xt">A program keeps her in until she falls to <output id="o_xt"></output></label>
+        <div class="ctl"><span class="lbl">Look ahead</span>
+          <div class="seg" id="horSeg" role="group" aria-label="Horizon"><button type="button" data-h="6" aria-pressed="false">6 mo</button><button type="button" data-h="12" aria-pressed="false">12 mo</button><button type="button" data-h="18" aria-pressed="false">18 mo</button><button type="button" data-h="24" aria-pressed="true">24 mo</button></div></div>
+        <div class="ctl"><label for="scnSel">If…</label>
+          <select id="scnSel">
+            <option value="none">Nothing changes: current trajectory only</option>
+            <option value="bench3">…the benchmark rises 3 points a year faster</option>
+            <option value="pay1">…pay grows 1 point a year faster</option>
+            <option value="slow2">…the benchmark slows by 2 points a year</option>
+            <option value="jump10">…the benchmark jumps 10% at once</option>
+            <option value="recess">…a recession: pay slows 2 points, the benchmark drops 5% at once</option>
+            <option value="vol2">…the benchmark becomes twice as jumpy</option>
+            <option value="custom">…my own scenario</option>
+          </select></div>
+        <div class="hint">Each scenario is a lasting change that people see coming, so it moves the quitting point at once, as well as everyone's standing over time.</div>
+        <div id="customWrap" hidden style="display:grid;gap:12px">
+          <div class="ctl"><label for="c_bg">Benchmark growth changes by <output id="o_c_bg"></output></label><input id="c_bg" type="range" min="-0.05" max="0.05" step="0.0025" value="0"></div>
+          <div class="ctl"><label for="c_pg">Pay growth changes by <output id="o_c_pg"></output></label><input id="c_pg" type="range" min="-0.05" max="0.05" step="0.0025" value="0"></div>
+          <div class="ctl"><label for="c_jump">One-time jump in the benchmark <output id="o_c_jump"></output></label><input id="c_jump" type="range" min="-0.2" max="0.3" step="0.01" value="0"></div>
+          <div class="ctl"><label for="c_vol">Jumpiness changes by <output id="o_c_vol"></output></label><input id="c_vol" type="range" min="-0.05" max="0.1" step="0.005" value="0"></div>
+        </div>
+        <div class="status" id="runStatus" aria-live="polite"></div>
+      </div>
+      <div style="display:grid;gap:18px;min-width:0">
+        <div class="verdict" id="resSay"><strong id="resHead"></strong><p id="resText"></p></div>
+        <div class="blobs" id="resBlobs"></div>
+        <figure>
+          <svg class="chart" id="chT" viewBox="0 0 640 280" role="img" aria-label="Share who have stopped keeping score over the next 24 months"></svg>
+          <figcaption><b>The next two years.</b> Share of the group that has stopped measuring itself against the benchmark, month by month, simulated from today's spread of standing. Once someone stops, the model treats it as lasting.</figcaption>
+          <div class="legend"><span><i class="sw" style="background:var(--mid)"></i>current trajectory</span><span><i class="sw" style="background:var(--quit)"></i>your scenario</span></div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="lane" aria-labelledby="p5">
+    <div class="eyebrow">Step 5</div>
+    <h2 id="p5">The plan</h2>
+    <div class="grid">
+      <div class="controls">
+        <div class="ctl"><label for="roleSel">Your office</label><select id="roleSel"></select></div>
+        <div class="verdict good" id="targetBox"><strong>The target</strong><p id="targetText"></p></div>
+        <div class="btns"><button type="button" class="primary" id="copyPlan">Copy the plan</button></div>
+        <div class="status" id="planStatus" aria-live="polite"></div>
+      </div>
+      <div class="plan" id="planList"></div>
+    </div>
+    <div class="cols">
+      <p class="note"><b>Help those still in the race first.</b> People near the edge are still trying; a small improvement keeps them in. People already past the quitting point have stopped keeping score, and pushing them to persist adds to their losses.</p>
+      <p class="note"><b>Slow the benchmark, or speed up pay.</b> Those are the two levers that move the quitting point. Damping the benchmark's swings alone can push people near the edge out sooner, so pair any stabilizing measure with slower growth.</p>
+      <p class="note"><b>Measure it like unemployment.</b> The inputs are published monthly for the nation and quarterly for states. Re-run this every quarter and report the share against the target.</p>
+    </div>
+  </section>
+
+  <!-- ===================== MODEL ===================== -->
+  <div class="part" id="model">
+    <div class="eyebrow">How the model works</div>
+    <h2>One person's race</h2>
+    <div class="tape" aria-hidden="true"></div>
+    <p class="dek">Everything above rests on one person's decision, solved exactly. Move the sliders to see how the quitting point, the effort people put in, and the cost of pushing them respond.</p>
+  </div>
+
+  <section class="lane" aria-labelledby="m1">
+    <div class="eyebrow">Model · 1</div>
+    <h2 id="m1">What staying in the race is worth</h2>
+    <div class="grid">
+      <form class="controls" onsubmit="return false">
+        <div class="ctl"><label for="m_delta">Benchmark pulls away by <output id="o_m_delta"></output></label>
+          <input id="m_delta" type="range" min="-0.02" max="0.06" step="0.005" value="0.02">
+          <div class="hint">Yearly growth of the benchmark minus growth of savings, before the extra saving the race demands. Higher means the benchmark is running away.</div></div>
+        <div class="ctl"><label for="m_sig">Benchmark jumps around by <output id="o_m_sig"></output></label>
+          <input id="m_sig" type="range" min="0.03" max="0.25" step="0.01" value="0.10">
+          <div class="hint">Yearly swing. More swing means more chance the gap closes on its own, which is worth waiting for.</div></div>
+        <div class="ctl"><label for="m_lam">Falling behind stings <output id="o_m_lam"></output></label>
+          <input id="m_lam" type="range" min="1" max="6" step="0.1" value="2">
+          <div class="hint">2 means a shortfall hurts twice as much as an equal lead pleases.</div></div>
+        <div class="ctl"><label for="m_alpha">Standing matters <output id="o_m_alpha"></output></label>
+          <input id="m_alpha" type="range" min="0.1" max="3" step="0.1" value="0.5">
+          <div class="hint">Weight on the comparison next to spending.</div></div>
+        <div class="ctl"><label for="m_rho">Today weighs more than the future by <output id="o_m_rho"></output></label>
+          <input id="m_rho" type="range" min="0.03" max="0.12" step="0.005" value="0.05">
+          <div class="hint">Yearly discount rate. Higher means more impatient.</div></div>
+        <div class="btns"><button type="button" id="m_reset">Reset to the paper's baseline</button></div>
+      </form>
+      <div style="display:grid;gap:20px;min-width:0">
+        <div class="blobs small" id="mBlobs"></div>
+        <div class="warn" id="m_warn" hidden>With these settings the race is worth staying in at any standing: the benchmark is not pulling away fast enough for anyone to stop. Make it pull away faster or jump around less.</div>
+        <figure><svg class="chart" id="chF" viewBox="0 0 640 280" role="img" aria-label="Value of staying in the race against standing"></svg>
+          <figcaption><b>What staying in is worth</b>, by standing (resources as a share of the benchmark). This is the model's measure of hope: positive because the gap may still close. It reaches zero smoothly at the quitting point.</figcaption></figure>
+        <figure><svg class="chart" id="chQ" viewBox="0 0 640 220" role="img" aria-label="How hard people grind against standing"></svg>
+          <figcaption><b>How hard people grind</b>: how much less they spend, to keep up, than they would after letting go. The grind fades as they fall behind and is gone at the quitting point. Near it, people are still in the race but barely trying, which is what quiet quitting looks like.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="lane" aria-labelledby="m2">
+    <div class="eyebrow">Model · 2</div>
+    <h2 id="m2">The cost of pushing people past the point</h2>
+    <div class="grid">
+      <div class="controls">
+        <div class="ctl"><label for="xt">A program keeps people in until they fall to <output id="o_xt"></output></label>
           <input id="xt" type="range" min="0.5" max="1.0" step="0.005" value="0.85">
-          <div class="hint">Below her own stopping point, this is forced persistence. Above it, it pushes her out early.</div></div>
+          <div class="hint">Below the quitting point this is forced persistence; above it, it pushes people out early.</div></div>
         <div class="verdict" id="verdict"><strong id="vHead"></strong><p id="vText"></p></div>
       </div>
-      <div class="charts">
-        <figure>
-          <svg class="chart" id="chW" viewBox="0 0 640 300" role="img" aria-label="Cost of an imposed stopping point"></svg>
-          <figcaption><b>The cost of overriding her.</b> Her loss, measured at par, from a stopping point someone else imposes, as a share of what the whole race was worth to her. Zero at her own stopping point, and rising quickly on both sides.</figcaption>
-        </figure>
-      </div>
-    </div>
-    <div class="cols">
-      <p class="note"><b>Encouragement helps</b> someone who would quit while she is still above her stopping point. That is what a lapse looks like, and a nudge can correct it.</p>
-      <p class="note"><b>Encouragement hurts</b> someone who quits at her stopping point. Every extra stretch below it is time spent feeling behind and sacrificing for a standing that is not coming back.</p>
-      <p class="note"><b>The same behavior, quitting, looks identical in both cases.</b> Telling them apart means knowing where she stands and how her target moves.</p>
+      <figure><svg class="chart" id="chW" viewBox="0 0 640 280" role="img" aria-label="Cost of an imposed stopping point"></svg>
+        <figcaption><b>The cost of overriding people</b>, measured at par, as a share of what the whole race was worth to them. Zero at their own quitting point, and rising quickly on both sides.</figcaption></figure>
     </div>
   </section>
 
-  <!-- ===================== PART 2 ===================== -->
-  <div class="part" id="your-race">
-    <div class="eyebrow">Part 2</div>
-    <h2>Your own race</h2>
+  <!-- ===================== DATA ===================== -->
+  <div class="part" id="data">
+    <div class="eyebrow">Data and methods</div>
+    <h2>What is under the hood</h2>
     <div class="tape" aria-hidden="true"></div>
-    <p class="dek">Three short sets of choices estimate the three numbers that describe a person in the model. Then set a goal of your own and see what the model predicts.</p>
   </div>
-
-  <section class="lane" aria-labelledby="s4">
-    <div class="eyebrow">Part 2 · Step 4</div>
-    <h2 id="s4">Make some choices</h2>
-    <p>There are no right answers. Answer each one as if it were real and permanent. Choices tend to reveal more than self-descriptions, so this asks what you would do, not what you are like. Nothing you enter leaves your browser.</p>
-    <div class="cols" id="ladders"></div>
-    <div class="btns"><button type="button" class="primary" id="quizGo">Estimate my numbers</button><button type="button" id="quizClear">Clear answers</button></div>
-    <div class="status" id="quizStatus" aria-live="polite"></div>
-    <div class="result" id="quizResult" hidden>
-      <div class="stat"><span class="k">How much a shortfall stings</span><span class="v" id="r_lam">2.0×</span><span class="s" id="r_lam_s"></span></div>
-      <div class="stat"><span class="k">How much you care about standing</span><span class="v" id="r_alpha">0.5</span><span class="s" id="r_alpha_s"></span></div>
-      <div class="stat"><span class="k">How impatient you are</span><span class="v" id="r_rho">5.0%</span><span class="s" id="r_rho_s"></span></div>
-    </div>
-    <div class="btns" id="quizUseWrap" hidden><button type="button" id="quizUse">Put my numbers in the model</button></div>
-    <p class="note" style="color:var(--muted)">How this works: each set is a ladder. The rung where you switch sides pins down one number. Coin flips with a gain and a loss measure loss aversion; money now versus later measures impatience; a raise for you alone versus a bigger raise for everyone measures how much standing matters to you. Choices about hypothetical money are noisier than choices about real money, and lab-style questions about waiting usually give higher impatience than people show over years, so treat the results as a guide, not a measurement.</p>
-  </section>
-
-  <section class="lane" aria-labelledby="s5">
-    <div class="eyebrow">Part 2 · Step 5</div>
-    <h2 id="s5">Your finish line</h2>
-    <div class="grid">
-      <form class="controls" id="goalForm" onsubmit="return false">
-        <div class="ctl"><label for="g_goal">The goal, in dollars</label>
-          <input id="g_goal" type="number" min="1000" step="1000" value="60000">
-          <div class="hint">For example, a down payment on a home in your area.</div></div>
-        <div class="ctl"><label for="g_have">What you have toward it now</label>
-          <input id="g_have" type="number" min="0" step="500" value="45000"></div>
-        <div class="ctl"><label for="g_rise">How fast the goal rises <output id="o_g_rise"></output></label>
-          <input id="g_rise" type="range" min="0" max="0.10" step="0.005" value="0.05">
-          <div class="hint">Per year. Home prices have often risen faster than incomes.</div></div>
-        <div class="ctl"><label for="g_save">How fast your savings grow at your normal pace <output id="o_g_save"></output></label>
-          <input id="g_save" type="range" min="0" max="0.12" step="0.005" value="0.03">
-          <div class="hint">Per year, from returns and regular contributions, without extra sacrifice.</div></div>
-        <div class="ctl"><label for="g_vol">How much the goal jumps around</label>
-          <select id="g_vol"><option value="0.05">Steady (5% a year)</option><option value="0.10" selected>Like a typical housing market (10%)</option><option value="0.18">Volatile (18%)</option></select></div>
-        <div class="status" id="goalPrefs"></div>
-      </form>
-      <div class="charts">
-        <div class="verdict neutral" id="goalVerdict"><strong id="gHead"></strong><p id="gText"></p></div>
-        <div class="result" id="goalStats">
-          <div class="stat"><span class="k">Where you stand</span><span class="v" id="gs_x">50%</span><span class="s">of the goal today</span></div>
-          <div class="stat"><span class="k">The model's stopping point for you</span><span class="v" id="gs_xs">–</span><span class="s" id="gs_xs_s">share of the goal</span></div>
-          <div class="stat"><span class="k">Chance you reach the goal first</span><span class="v" id="gs_p">–</span><span class="s" id="gs_p_s">within 30 years, before the stopping point</span></div>
-        </div>
-        <div class="tbl"><table aria-label="What would move your stopping point"><thead><tr><th>What changes</th><th>Stopping point</th><th>Chance of reaching the goal</th></tr></thead><tbody id="goalLevers"></tbody></table></div>
-        <p class="status">“Never stops” means your savings keep close enough pace with the goal that, in the model, the comparison pays for itself at any standing.</p>
-        <p class="note" style="color:var(--muted)">This is not advice about whether to pursue your goal. It estimates when, for someone who chooses as you did, measuring yourself against this target stops paying for itself, and it shows what would change that: a target that rises more slowly, savings that grow faster, or a target that can swing back. Stopping the comparison is not free either: once you stop sacrificing for it, the goal usually moves further away.</p>
+  <section class="lane" aria-labelledby="d1" style="border-top:0;margin-top:12px;padding-top:0">
+    <h2 id="d1" hidden>Data and methods</h2>
+    <details open><summary>How the numbers become the model's inputs</summary>
+      <div style="display:grid;gap:10px">
+        <p class="note"><b>Pulling away.</b> The drift gap is the benchmark's growth minus pay growth over the chosen period. In the model, people's resources grow with pay when they make no extra sacrifice; the race's extra saving is the grind.</p>
+        <p class="note"><b>Jumpiness.</b> For housing, the standard deviation of yearly changes in the Case-Shiller national index, 1990 to 2026 (5.9%), or of the nearest metro index for a state. For prices, about 1.5% (CPI, 1990 to 2026). For output per person, about 2%.</p>
+        <p class="note"><b>Standing.</b> Housing: three times income divided by the home value (a home costing three years of income is par). Prices: real median weekly pay against 2019. Growth: the ratio of real median pay to real GDP per person, against 1979.</p>
+        <p class="note"><b>The group.</b> Age changes standing through income by age of householder (ACS 2019 to 2023: under 25, $43,534; 25 to 44, $87,575; 45 to 64, $94,847; 65 and over, $57,108), unless an income tier is chosen, which then sets income directly (2025 Census percentiles: 20th, $35,800; 60th, $110,300; 80th, $182,400). The directions of the preference adjustments come from the cited studies; their sizes are assumptions of this tool, shown in the table below and adjustable through the preference menus.</p>
+        <p class="note"><b>Sensitivity.</b> Where the benchmark jumps around little, as home prices do nationally, the quitting point moves quickly with the trend: at U.S. housing values it rises from about 50% to about 66% of par as the gap goes from 1.0 to 1.3 points a year. The results report how today's share changes if the trend is a quarter point off.</p>
+        <p class="note"><b>The simulation.</b> Today's group is spread around its typical standing; each member's standing then evolves month by month with the benchmark's drift and swings, and anyone who reaches the quitting point stops for good. The scenario changes the drift, the swings, or both, from today. The target is the largest drift gap at which the share who have stopped would rise by no more than half a point over the horizon.</p>
+        <p class="note"><b>Limits.</b> This is one decision, solved exactly, applied to a group. It takes prices and pay as given, so it cannot show how disengagement feeds back into them. Population counts use national age shares within states and localities and treat household income tiers as shares of people. Read changes and comparisons more than levels.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ===================== PART 3 ===================== -->
-  <div class="part" id="cohort-lab">
-    <div class="eyebrow">Part 3</div>
-    <h2>Cohort lab</h2>
-    <div class="tape" aria-hidden="true"></div>
-    <p class="dek">The benchmark is shared: everyone saving for a house in one market faces the same price. So one shock moves a whole cohort. Set the cohort and the benchmark, then try a shock or a policy, and compare.</p>
-  </div>
-
-  <section class="lane" aria-labelledby="s6">
-    <div class="eyebrow">Part 3 · Step 6</div>
-    <h2 id="s6">War-game a cohort</h2>
-    <div class="grid">
-      <form class="controls" id="labForm" onsubmit="return false">
-        <h3>The benchmark</h3>
-        <div class="ctl"><label for="c_delta">Drift gap <output id="o_c_delta"></output></label>
-          <input id="c_delta" type="range" min="-0.01" max="0.06" step="0.005" value="0.02">
-          <div class="hint">Growth of the benchmark minus growth of the cohort's resources. From data: a metro home price index minus wage or savings growth.</div></div>
-        <div class="ctl"><label for="c_sig">Volatility <output id="o_c_sig"></output></label>
-          <input id="c_sig" type="range" min="0.03" max="0.25" step="0.01" value="0.10">
-          <div class="hint">Standard deviation of yearly log changes in the benchmark.</div></div>
-        <h3>The cohort</h3>
-        <div class="ctl"><label for="c_pre">Preferences</label>
-          <select id="c_pre">
-            <option value="paper" selected>Paper baseline: sting 2.0, standing 0.5, impatience 5%</option>
-            <option value="meta">Loss aversion at the meta-analysis mean (1.96)</option>
-            <option value="mine">My quiz answers (Step 4)</option>
-            <option value="custom">Set by hand</option>
-            <option value="data">Survey responses (paste below)</option>
-          </select>
-          <div class="hint" id="c_pre_hint"></div></div>
-        <div id="c_custom" class="two" hidden>
-          <div class="ctl"><span class="lbl">Sting</span><input id="c_lam" type="number" min="1" max="10" step="0.1" value="2"></div>
-          <div class="ctl"><span class="lbl">Standing</span><input id="c_alpha" type="number" min="0.05" max="5" step="0.05" value="0.5"></div>
-          <div class="ctl"><span class="lbl">Impatience</span><input id="c_rho" type="number" min="0.02" max="0.2" step="0.005" value="0.05"></div>
-        </div>
-        <div id="c_dataWrap" hidden class="ctl">
-          <span class="lbl">Responses (CSV: lambda,alpha,rho,standing)</span>
-          <textarea id="c_data" spellcheck="false" placeholder="lambda,alpha,rho,standing&#10;2.1,0.6,0.05,0.97&#10;1.7,0.3,0.06,1.10"></textarea>
-          <div class="btns"><button type="button" id="c_demo">Load a synthetic example</button></div>
-          <div class="hint">One row per respondent: the three quiz estimates and that person's savings as a share of the benchmark. The synthetic example is invented for demonstration and describes no real population.</div>
-        </div>
-        <div id="c_distWrap">
-          <div class="ctl"><label for="c_med">Median standing <output id="o_c_med"></output></label>
-            <input id="c_med" type="range" min="0.7" max="1.4" step="0.01" value="1.00">
-            <div class="hint">Typical savings as a share of the benchmark.</div></div>
-          <div class="ctl"><label for="c_sd">Spread of standing <output id="o_c_sd"></output></label>
-            <input id="c_sd" type="range" min="0.05" max="0.6" step="0.01" value="0.25">
-            <div class="hint">Standard deviation of log standing across the cohort.</div></div>
-        </div>
-        <h3>The scenario</h3>
-        <div class="ctl"><label for="s_jump">One-time jump in the benchmark <output id="o_s_jump"></output></label>
-          <input id="s_jump" type="range" min="-0.2" max="0.3" step="0.01" value="0.10"></div>
-        <div class="ctl"><label for="s_dd">Change in the drift gap <output id="o_s_dd"></output></label>
-          <input id="s_dd" type="range" min="-0.03" max="0.03" step="0.005" value="0"></div>
-        <div class="ctl"><label for="s_ds">Change in volatility <output id="o_s_ds"></output></label>
-          <input id="s_ds" type="range" min="-0.08" max="0.10" step="0.01" value="0"></div>
-        <div class="btns"><button type="button" class="primary" id="labGo">Run</button></div>
-        <div class="status" id="labStatus" aria-live="polite"></div>
-      </form>
-      <div class="charts">
-        <figure>
-          <svg class="chart" id="chC" viewBox="0 0 640 210" role="img" aria-label="Where the cohort stands, before and after the scenario"></svg>
-          <figcaption><b>Where the cohort stands.</b> Shares of the cohort that have stopped keeping score, that are still in the race but barely grinding (sacrificing less than 1% of consumption), and that are grinding, before and after the scenario.</figcaption>
-          <div class="legend" style="margin-top:6px"><span><i class="sq" style="background:var(--quit)"></i>stopped keeping score</span><span><i class="sq" style="background:var(--tape)"></i>in, barely grinding</span><span><i class="sq" style="background:var(--stay)"></i>grinding</span></div>
-        </figure>
-        <div class="tbl"><table aria-label="Cohort results"><thead><tr><th></th><th>Before</th><th>After</th><th>Change</th></tr></thead><tbody id="labTable"></tbody></table></div>
-        <div class="cols">
-          <p class="note"><b>Read changes, not levels.</b> The share out of the race depends heavily on where the cohort started, which this page has to assume. How a shock or a policy moves those shares is what the model pins down.</p>
-          <p class="note"><b>Partial equilibrium.</b> The benchmark is taken as given, so the lab cannot say how a cohort's disengagement feeds back into wages or prices. It links an observable benchmark to the share of a cohort that has stopped keeping score.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="lane" aria-labelledby="s7">
-    <h2 id="s7">What this does and does not say</h2>
-    <div class="cols">
-      <p class="note">“Quitting” here means letting go of a comparison: no longer scoring yourself against a benchmark that moves for reasons you do not control. It is not advice about leaving work, school, treatment or a relationship, and nothing on this page tells anyone to give up a goal.</p>
-      <p class="note">A target that jumps around makes waiting worthwhile, because it can swing back. A target that steadily pulls away makes quitting sooner the predicted response. Steadying a target cuts both ways: slowing its climb keeps people in, while damping its swings pushes those near their stopping point out.</p>
-      <p class="note">The model counts only the cost of time spent in the race. People pushed past their limits often carry exhaustion, cynicism and lost trust long after. The true cost of forced persistence is likely larger than these numbers.</p>
-    </div>
+    </details>
+    <details><summary>Preference assumptions by group</summary><div class="tbl"><table><thead><tr><th>Group</th><th>Sting</th><th>Impatience</th><th>Basis</th></tr></thead><tbody id="prefTable"></tbody></table></div></details>
+    <details><summary>Federal data</summary><div class="tbl"><table><thead><tr><th>Indicator</th><th>Value</th><th>Source</th></tr></thead><tbody id="fedTable"></tbody></table></div></details>
+    <details><summary>State data</summary><div class="tbl"><table><thead><tr><th>State</th><th>Population</th><th>Median income</th><th>Home value</th><th>Home prices 1y</th><th>Home prices 5y</th><th>Pay 1y</th><th>Jumpiness</th></tr></thead><tbody id="stTable"></tbody></table></div>
+      <p class="hint" style="margin-top:8px">Population: Census Vintage 2025 (July 1, 2025). Median household income: ACS 2024 1-year (B19013). Home value: Zillow Home Value Index, January 2026; Arkansas and the District of Columbia were not available and use the national price-to-income ratio. Home prices: FHFA House Price Index, 2026 Q2. Pay: BLS Quarterly Census of Employment and Wages, average weekly wage, 2026 Q1 over the year. Jumpiness: nearest S&amp;P Case-Shiller metro index, 1990 to 2026, or the national index.</p></details>
+    <details><summary>Data prompts for an AI assistant</summary><div style="display:grid;gap:10px"><p class="note">Use these to gather local inputs. Each asks for official sources and for “not available” instead of guesses. Check the sources it lists before relying on the numbers.</p><pre class="prompt" id="promptText"></pre></div></details>
   </section>
 
   <footer>
     <div>Model and proofs: Lester, R. (2026), “Rational Foreclosure: Why the Workers Who Stopped Grinding May Be the Sane Ones.” Working paper, <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858">SSRN 6614858</a>. Code: <a href="https://doi.org/10.7910/DVN/V5NSZX">Harvard Dataverse</a>.</div>
-    <div>Computed live in your browser by shooting on the free boundary (4th-order Runge-Kutta, bisection on the stopping point); it matches the paper's collocation solver to four digits at every calibration reported there. Loss-aversion benchmark: Brown, Imai, Vieider and Camerer (2024), <i>Journal of Economic Literature</i>, mean 1.955 across 607 estimates.</div>
+    <div>Solved live in your browser by shooting on the free boundary (4th-order Runge-Kutta with bisection on the quitting point), which matches the paper's collocation solver to four digits at every calibration reported there. Data current as of October 29, 2026.</div>
   </footer>
 </div>
 
@@ -370,413 +394,364 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-si
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
-const BASE={delta:0.02,sig:0.10,lam:2,alpha:0.5,rho:0.05};
-const fmtPct=(v,d=1)=>(100*v).toFixed(d)+"%";
-const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const pct=(v,d=1)=>(100*v).toFixed(d)+"%";
+const pts=v=>(v>=0?"+":"")+(100*v).toFixed(1)+" pts";
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmtN=n=>n>=1e6?(n/1e6).toFixed(n>=1e7?1:2)+" million":n>=1e3?Math.round(n/1e3).toLocaleString("en-US")+" thousand":Math.round(n).toLocaleString("en-US");
+const money=v=>"$"+Math.round(v).toLocaleString("en-US");
 
-/* ---------- model ---------- */
+/* ---------- data ---------- */
+const STATES=[{"n":"Alabama","a":"AL","pop":5193088,"inc":66659,"zhvi":226595,"hpi1":2.77,"hpi5":35.63,"wk":1292,"wage1":3.6,"sig":0.059,"sigsrc":"national index"},{"n":"Alaska","a":"AK","pop":737270,"inc":95665,"zhvi":392090,"hpi1":8.3,"hpi5":37.34,"wk":1519,"wage1":4.8,"sig":0.059,"sigsrc":"national index"},{"n":"Arizona","a":"AZ","pop":7623818,"inc":81486,"zhvi":426486,"hpi1":0.58,"hpi5":27.45,"wk":1495,"wage1":4.5,"sig":0.126,"sigsrc":"Phoenix"},{"n":"Arkansas","a":"AR","pop":3114791,"inc":62106,"zhvi":null,"hpi1":1.13,"hpi5":37.88,"wk":1291,"wage1":4.6,"sig":0.059,"sigsrc":"national index"},{"n":"California","a":"CA","pop":39355309,"inc":100149,"zhvi":778888,"hpi1":-0.2,"hpi5":17.31,"wk":1986,"wage1":2.7,"sig":0.11,"sigsrc":"Los Angeles, San Diego, San Francisco"},{"n":"Colorado","a":"CO","pop":6012561,"inc":97113,"zhvi":542482,"hpi1":-0.53,"hpi5":15.97,"wk":1774,"wage1":5.4,"sig":0.052,"sigsrc":"Denver"},{"n":"Connecticut","a":"CT","pop":3688496,"inc":96049,"zhvi":449376,"hpi1":4.69,"hpi5":49.56,"wk":2080,"wage1":5.2,"sig":0.059,"sigsrc":"national index"},{"n":"Delaware","a":"DE","pop":1059952,"inc":87534,"zhvi":396252,"hpi1":3.31,"hpi5":37.32,"wk":1606,"wage1":3.1,"sig":0.059,"sigsrc":"national index"},{"n":"District of Columbia","a":"DC","pop":693645,"inc":109707,"zhvi":null,"hpi1":1.67,"hpi5":-2.29,"wk":2725,"wage1":4.5,"sig":0.078,"sigsrc":"Washington"},{"n":"Florida","a":"FL","pop":23462518,"inc":77735,"zhvi":390223,"hpi1":0.96,"hpi5":37.47,"wk":1518,"wage1":4.3,"sig":0.106,"sigsrc":"Miami, Tampa"},{"n":"Georgia","a":"GA","pop":11302748,"inc":79991,"zhvi":328779,"hpi1":1.9,"hpi5":39.22,"wk":1539,"wage1":3.3,"sig":0.068,"sigsrc":"Atlanta"},{"n":"Hawaii","a":"HI","pop":1432820,"inc":100745,"zhvi":956542,"hpi1":5.82,"hpi5":37.99,"wk":1387,"wage1":1.7,"sig":0.059,"sigsrc":"national index"},{"n":"Idaho","a":"ID","pop":2029733,"inc":81166,"zhvi":462248,"hpi1":3.61,"hpi5":24.63,"wk":1254,"wage1":6.2,"sig":0.059,"sigsrc":"national index"},{"n":"Illinois","a":"IL","pop":12719141,"inc":83211,"zhvi":282832,"hpi1":5.61,"hpi5":43.96,"wk":1731,"wage1":4.1,"sig":0.059,"sigsrc":"Chicago"},{"n":"Indiana","a":"IN","pop":6973333,"inc":71959,"zhvi":247210,"hpi1":3.53,"hpi5":39.43,"wk":1356,"wage1":2.7,"sig":0.059,"sigsrc":"national index"},{"n":"Iowa","a":"IA","pop":3238387,"inc":75501,"zhvi":229167,"hpi1":2.25,"hpi5":32.21,"wk":1301,"wage1":3.9,"sig":0.059,"sigsrc":"national index"},{"n":"Kansas","a":"KS","pop":2977220,"inc":75514,"zhvi":236709,"hpi1":3.34,"hpi5":37.11,"wk":1286,"wage1":3.1,"sig":0.059,"sigsrc":"national index"},{"n":"Kentucky","a":"KY","pop":4606864,"inc":64526,"zhvi":224644,"hpi1":4.25,"hpi5":39.46,"wk":1248,"wage1":2.9,"sig":0.059,"sigsrc":"national index"},{"n":"Louisiana","a":"LA","pop":4618189,"inc":60986,"zhvi":208026,"hpi1":1.63,"hpi5":16.33,"wk":1274,"wage1":4.0,"sig":0.059,"sigsrc":"national index"},{"n":"Maine","a":"ME","pop":1414874,"inc":76442,"zhvi":391892,"hpi1":1.11,"hpi5":47.17,"wk":1327,"wage1":3.5,"sig":0.059,"sigsrc":"national index"},{"n":"Maryland","a":"MD","pop":6265347,"inc":102905,"zhvi":435954,"hpi1":1.03,"hpi5":25.6,"wk":1676,"wage1":2.7,"sig":0.059,"sigsrc":"national index"},{"n":"Massachusetts","a":"MA","pop":7154084,"inc":104828,"zhvi":660288,"hpi1":3.64,"hpi5":34.96,"wk":2201,"wage1":4.8,"sig":0.06,"sigsrc":"Boston"},{"n":"Michigan","a":"MI","pop":10127884,"inc":72389,"zhvi":247286,"hpi1":3.8,"hpi5":38.8,"wk":1445,"wage1":3.9,"sig":0.079,"sigsrc":"Detroit"},{"n":"Minnesota","a":"MN","pop":5830405,"inc":87117,"zhvi":342425,"hpi1":2.51,"hpi5":24.72,"wk":1630,"wage1":3.8,"sig":0.067,"sigsrc":"Minneapolis"},{"n":"Mississippi","a":"MS","pop":2954160,"inc":59127,"zhvi":185617,"hpi1":0.47,"hpi5":34.73,"wk":1051,"wage1":3.3,"sig":0.059,"sigsrc":"national index"},{"n":"Missouri","a":"MO","pop":6270541,"inc":71589,"zhvi":256284,"hpi1":3.76,"hpi5":38.16,"wk":1354,"wage1":3.4,"sig":0.059,"sigsrc":"national index"},{"n":"Montana","a":"MT","pop":1144694,"inc":75340,"zhvi":451564,"hpi1":2.78,"hpi5":40.58,"wk":1229,"wage1":3.5,"sig":0.059,"sigsrc":"national index"},{"n":"Nebraska","a":"NE","pop":2018006,"inc":76376,"zhvi":268014,"hpi1":2.03,"hpi5":33.64,"wk":1274,"wage1":3.7,"sig":0.059,"sigsrc":"national index"},{"n":"Nevada","a":"NV","pop":3282188,"inc":81134,"zhvi":457372,"hpi1":2.77,"hpi5":28.74,"wk":1391,"wage1":2.1,"sig":0.126,"sigsrc":"Las Vegas"},{"n":"New Hampshire","a":"NH","pop":1415342,"inc":99782,"zhvi":509835,"hpi1":3.13,"hpi5":46.09,"wk":1656,"wage1":3.0,"sig":0.059,"sigsrc":"national index"},{"n":"New Jersey","a":"NJ","pop":9548215,"inc":104294,"zhvi":577483,"hpi1":4.59,"hpi5":50.51,"wk":1879,"wage1":3.3,"sig":0.059,"sigsrc":"national index"},{"n":"New Mexico","a":"NM","pop":2125498,"inc":67816,"zhvi":309149,"hpi1":-1.25,"hpi5":33.94,"wk":1235,"wage1":2.7,"sig":0.059,"sigsrc":"national index"},{"n":"New York","a":"NY","pop":20002427,"inc":85820,"zhvi":473671,"hpi1":3.53,"hpi5":43.99,"wk":2363,"wage1":6.5,"sig":0.064,"sigsrc":"New York"},{"n":"North Carolina","a":"NC","pop":11197968,"inc":73958,"zhvi":330474,"hpi1":0.42,"hpi5":41.22,"wk":1515,"wage1":3.3,"sig":0.049,"sigsrc":"Charlotte"},{"n":"North Dakota","a":"ND","pop":799358,"inc":77871,"zhvi":279837,"hpi1":4.8,"hpi5":32.12,"wk":1333,"wage1":2.4,"sig":0.059,"sigsrc":"national index"},{"n":"Ohio","a":"OH","pop":11900510,"inc":72212,"zhvi":237149,"hpi1":4.41,"hpi5":41.88,"wk":1417,"wage1":4.0,"sig":0.041,"sigsrc":"Cleveland"},{"n":"Oklahoma","a":"OK","pop":4123288,"inc":66148,"zhvi":215458,"hpi1":1.99,"hpi5":32.13,"wk":1235,"wage1":3.6,"sig":0.059,"sigsrc":"national index"},{"n":"Oregon","a":"OR","pop":4273586,"inc":85220,"zhvi":495416,"hpi1":0.29,"hpi5":15.84,"wk":1481,"wage1":4.6,"sig":0.067,"sigsrc":"Portland"},{"n":"Pennsylvania","a":"PA","pop":13059432,"inc":77545,"zhvi":276853,"hpi1":3.93,"hpi5":37.22,"wk":1550,"wage1":3.3,"sig":0.059,"sigsrc":"national index"},{"n":"Rhode Island","a":"RI","pop":1114521,"inc":83504,"zhvi":497023,"hpi1":4.65,"hpi5":45.48,"wk":1487,"wage1":4.2,"sig":0.059,"sigsrc":"national index"},{"n":"South Carolina","a":"SC","pop":5570274,"inc":72350,"zhvi":300513,"hpi1":2.38,"hpi5":45.39,"wk":1296,"wage1":4.0,"sig":0.059,"sigsrc":"national index"},{"n":"South Dakota","a":"SD","pop":935094,"inc":76881,"zhvi":308565,"hpi1":1.12,"hpi5":35.27,"wk":1211,"wage1":4.2,"sig":0.059,"sigsrc":"national index"},{"n":"Tennessee","a":"TN","pop":7315076,"inc":71997,"zhvi":325430,"hpi1":0.88,"hpi5":38.45,"wk":1426,"wage1":4.4,"sig":0.059,"sigsrc":"national index"},{"n":"Texas","a":"TX","pop":31709821,"inc":79721,"zhvi":296234,"hpi1":0.45,"hpi5":25.11,"wk":1646,"wage1":3.8,"sig":0.057,"sigsrc":"Dallas"},{"n":"Utah","a":"UT","pop":3538904,"inc":96658,"zhvi":537712,"hpi1":1.06,"hpi5":24.04,"wk":1415,"wage1":4.0,"sig":0.059,"sigsrc":"national index"},{"n":"Vermont","a":"VT","pop":644663,"inc":82730,"zhvi":385364,"hpi1":7.29,"hpi5":52.18,"wk":1322,"wage1":3.0,"sig":0.059,"sigsrc":"national index"},{"n":"Virginia","a":"VA","pop":8880107,"inc":92090,"zhvi":408404,"hpi1":3.1,"hpi5":37.3,"wk":1665,"wage1":4.0,"sig":0.059,"sigsrc":"national index"},{"n":"Washington","a":"WA","pop":8001020,"inc":99389,"zhvi":600235,"hpi1":-0.94,"hpi5":19.96,"wk":1998,"wage1":2.7,"sig":0.073,"sigsrc":"Seattle"},{"n":"West Virginia","a":"WV","pop":1766147,"inc":60798,"zhvi":168181,"hpi1":5.58,"hpi5":39.71,"wk":1188,"wage1":3.4,"sig":0.059,"sigsrc":"national index"},{"n":"Wisconsin","a":"WI","pop":5972787,"inc":77488,"zhvi":321914,"hpi1":4.82,"hpi5":46.03,"wk":1353,"wage1":3.7,"sig":0.059,"sigsrc":"national index"},{"n":"Wyoming","a":"WY","pop":588753,"inc":75532,"zhvi":351366,"hpi1":3.23,"hpi5":36.25,"wk":1287,"wage1":5.8,"sig":0.059,"sigsrc":"national index"}];
+const FED={
+  cpi:{v:3.7,d:"Sep 2026",s:"BLS, CPI release, Oct 14, 2026"}, core:{v:2.6,d:"Sep 2026",s:"BLS, CPI release, Oct 14, 2026"},
+  pce:{v:3.4,d:"Aug 2026",s:"BEA, Personal Income and Outlays, Sep 30, 2026"}, corepce:{v:3.0,d:"Aug 2026",s:"BEA, Personal Income and Outlays, Sep 30, 2026"},
+  ppi:{v:6.3,d:"Sep 2026",s:"BLS, PPI final demand, Oct 15, 2026"},
+  rgdp:{v:2.2,d:"Q2 2026, annual rate",s:"BEA, GDP third estimate, Sep 30, 2026"}, ngdp:{v:8.5,d:"Q2 2026, annual rate",s:"BEA, GDP third estimate, Sep 30, 2026"},
+  unemp:{v:4.2,d:"Sep 2026",s:"BLS, Employment Situation, Oct 2, 2026"}, ahe:{v:3.0,d:"Sep 2026, over the year",s:"BLS, Employment Situation, Oct 2, 2026"},
+  hpi1:{v:2.13,d:"2026 Q2 over the year",s:"FHFA House Price Index"}, hpi5:{v:33.41,d:"2021 Q2 to 2026 Q2",s:"FHFA House Price Index"},
+  wage1:{v:4.33,d:"2025 Q2 to 2026 Q2",s:"BLS median usual weekly earnings (real series × CPI)"}, wage5:{v:4.63,d:"%/yr, 2021 Q2 to 2026 Q2",s:"BLS median usual weekly earnings (real series × CPI)"},
+  cpi5:{v:4.31,d:"%/yr, 2021 Q2 to 2026 Q2",s:"BLS CPI-U"},
+  homeLR:{v:4.52,d:"%/yr, 1979 to 2025",s:"S&P Case-Shiller national index"}, wageLR:{v:3.50,d:"%/yr, 1979 to 2025",s:"BLS median usual weekly earnings"},
+  gdppc:{v:114.5,d:"real, 1979 Q1 to 2025 Q1",s:"BEA via FRED (A939RX0Q048SBEA)"}, realpay:{v:12.7,d:"real, 1979 to 2025",s:"BLS via FRED (LEU0252881600A)"},
+  gdpRecent:{v:1.84,d:"%/yr real GDP per person, 2019 Q4 to 2026 Q3",s:"BEA via FRED"}, payRecent:{v:0.63,d:"%/yr real median pay, 2019 to 2026 Q2",s:"BLS via FRED"},
+  zhvi:{v:373248,d:"Q2 2026",s:"Zillow Home Value Index"}, inc:{v:81604,d:"2024",s:"Census ACS 2024 1-year"},
+  pop:{v:341784857,d:"July 1, 2025",s:"Census Vintage 2025"}
+};
+const AGES=[["18–24",31363181,.554,1.8,.070],["25–34",46453864,1.115,1.9,.060],["35–44",45539224,1.115,2.0,.050],["45–54",40780356,1.208,2.1,.050],["55–64",41661725,1.208,2.3,.055],["65+",61179918,.727,2.5,.065]];
+const SEX=[["Women",.505,.1,.002],["Men",.495,-.1,-.002]];
+const EDU=[["No four-year degree",.62,.1,.005],["Four-year degree or more",.38,-.1,-.005]];
+const INC=[["Lower (bottom 40%)",.4,35800/87460],["Middle (40th–80th)",.4,110300/87460],["Upper (top 20%)",.2,182400/87460]];
+const PARAMS={sigHomeUS:.059,sigCost:.015,sigGdp:.02};
+
+/* ---------- model solver ---------- */
 function setup(p){const a=p.sig*p.sig/2,mut=a-p.delta,D=p.sig*p.sig-p.delta;return {...p,a,mut,D,A:p.alpha/(p.rho-D)};}
-function rhs(P,y,F,Fp,unres){
-  const v=(Math.exp(y)-1)*(y>=0?1:P.lam);
-  const H=unres?Math.log(Math.max(1+P.rho*Fp,1e-12)):Math.log1p(P.rho*Math.max(Fp,0));
-  return (P.rho*F+H-P.mut*Fp-P.alpha*v)/P.a;
-}
-function rk4(P,y,F,Fp,h,unres){
-  const k1F=Fp,k1G=rhs(P,y,F,Fp,unres);
-  const k2F=Fp+h/2*k1G,k2G=rhs(P,y+h/2,F+h/2*k1F,Fp+h/2*k1G,unres);
-  const k3F=Fp+h/2*k2G,k3G=rhs(P,y+h/2,F+h/2*k2F,Fp+h/2*k2G,unres);
-  const k4F=Fp+h*k3G,k4G=rhs(P,y+h,F+h*k3F,Fp+h*k3G,unres);
-  return [F+h/6*(k1F+2*k2F+2*k3F+k4F),Fp+h/6*(k1G+2*k2G+2*k3G+k4G)];
-}
-const Y=2.0,H=1e-3;
-function signB(P,b,h){ // +1: b too high, -1: b too low
-  h=h||H;let y=b,F=0,Fp=0;
-  while(y<Y){[F,Fp]=rk4(P,y,F,Fp,h,false);y+=h;
-    if(Fp<-1e-9)return 1; if(Fp>3*P.A*Math.exp(y)+50)return -1;}
-  return Fp<P.A*Math.exp(Y)-1/P.rho?1:-1;
-}
-function solveB(P,h,iters){let lo=Math.log(1e-4),hi=-1e-9;const n=iters||56;for(let i=0;i<n;i++){const m=(lo+hi)/2;if(signB(P,m,h)>0)hi=m;else lo=m;}return (lo+hi)/2;}
-function curve(P,b,yEnd,h){h=h||H;const pts=[];let y=b,F=0,Fp=0;pts.push([y,F,Fp]);let k=0;
-  while(y<yEnd){[F,Fp]=rk4(P,y,F,Fp,h,false);y+=h;if(++k%5===0)pts.push([y,F,Fp]);if(Fp<0||!isFinite(F))break;}return pts;}
-function valueAt(P,bt,y0){ // value with an imposed threshold bt, optimal (unrestricted) consumption
-  const target=P.A*Math.exp(Y)-1/P.rho;let lo=-1/P.rho+1e-6,hi=50;
-  for(let i=0;i<64;i++){const m=(lo+hi)/2;let y=bt,F=0,Fp=m,st="ok";
-    while(y<Y-1e-12){const h=Math.min(H*2,Y-y);[F,Fp]=rk4(P,y,F,Fp,h,true);y+=h;
-      if(Fp<=-1/P.rho+1e-9){st="low";break;} if(Math.abs(Fp)>1e6){st="high";break;}}
+function rhs(P,y,F,Fp,unres){const v=(Math.exp(y)-1)*(y>=0?1:P.lam);const Hh=unres?Math.log(Math.max(1+P.rho*Fp,1e-12)):Math.log1p(P.rho*Math.max(Fp,0));return (P.rho*F+Hh-P.mut*Fp-P.alpha*v)/P.a;}
+function rk4(P,y,F,Fp,h,unres){const k1F=Fp,k1G=rhs(P,y,F,Fp,unres);const k2F=Fp+h/2*k1G,k2G=rhs(P,y+h/2,F+h/2*k1F,Fp+h/2*k1G,unres);const k3F=Fp+h/2*k2G,k3G=rhs(P,y+h/2,F+h/2*k2F,Fp+h/2*k2G,unres);const k4F=Fp+h*k3G,k4G=rhs(P,y+h,F+h*k3F,Fp+h*k3G,unres);return [F+h/6*(k1F+2*k2F+2*k3F+k4F),Fp+h/6*(k1G+2*k2G+2*k3G+k4G)];}
+const YMAX=2.0,H=1e-3;
+function signB(P,b,h){let y=b,F=0,Fp=0;while(y<YMAX){[F,Fp]=rk4(P,y,F,Fp,h,false);y+=h;if(Fp<-1e-9)return 1;if(Fp>3*P.A*Math.exp(y)+50)return -1;}return Fp<P.A*Math.exp(YMAX)-1/P.rho?1:-1;}
+function solveB(P,h,n){let lo=Math.log(1e-4),hi=-1e-9;for(let i=0;i<n;i++){const m=(lo+hi)/2;if(signB(P,m,h)>0)hi=m;else lo=m;}return (lo+hi)/2;}
+function curve(P,b,yEnd,h){const out=[];let y=b,F=0,Fp=0;out.push([y,F,Fp]);let k=0;while(y<yEnd){[F,Fp]=rk4(P,y,F,Fp,h,false);y+=h;if(++k%5===0)out.push([y,F,Fp]);if(Fp<0||!isFinite(F))break;}return out;}
+function solveModel(p,opt){opt=opt||{};const P=setup(p);if(!(P.rho>P.D+1e-5))return {P,finite:false};
+  const h=opt.h||2e-3,b=solveB(P,h,opt.iters||44),cv=curve(P,b,YMAX,h);
+  function Fp(y){if(y<=b)return 0;const last=cv[cv.length-1];if(y>=last[0])return Math.max(0,P.A*Math.exp(y)-1/P.rho);let lo=0,hi=cv.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(cv[m][0]<y)lo=m;else hi=m;}const t=(y-cv[lo][0])/(cv[hi][0]-cv[lo][0]);return cv[lo][2]*(1-t)+cv[hi][2]*t;}
+  return {P,finite:true,b,xs:Math.exp(b),cv,Fp,grind:y=>{if(y<=b)return 0;const f=Fp(y);return P.rho*f/(1+P.rho*f);}};}
+function valueAt(P,bt,y0){const target=P.A*Math.exp(YMAX)-1/P.rho;let lo=-1/P.rho+1e-6,hi=50;
+  for(let i=0;i<60;i++){const m=(lo+hi)/2;let y=bt,F=0,Fp=m,st="ok";while(y<YMAX-1e-12){const h=Math.min(H*2,YMAX-y);[F,Fp]=rk4(P,y,F,Fp,h,true);y+=h;if(Fp<=-1/P.rho+1e-9){st="low";break;}if(Math.abs(Fp)>1e6){st="high";break;}}
     if(st==="low"||(st==="ok"&&Fp<target))lo=m;else hi=m;}
-  let y=bt,F=0,Fp=(lo+hi)/2;
-  if(y0<=bt)return 0;
-  while(y<y0-1e-12){const h=Math.min(H,y0-y);[F,Fp]=rk4(P,y,F,Fp,h,true);y+=h;}
-  return F;
-}
+  let y=bt,F=0,Fp=(lo+hi)/2;if(y0<=bt)return 0;while(y<y0-1e-12){const h=Math.min(H,y0-y);[F,Fp]=rk4(P,y,F,Fp,h,true);y+=h;}return F;}
 function xbar(P){const a=P.a,D=P.D,r=P.rho;const beta=(-(D-a)-Math.sqrt((D-a)*(D-a)+4*a*r))/(2*a);return (r-D)/r*beta/(beta-1);}
-/* a full solution object, used by parts 2 and 3 */
-function solveModel(p,opt){
-  opt=opt||{};const P=setup(p);
-  if(!(P.rho>P.D+1e-4))return {P,finite:false};
-  const h=opt.h||H,b=solveB(P,h,opt.iters),pts=curve(P,b,opt.yEnd||Y,h);
-  function Fp(y){if(y<=b)return 0;const last=pts[pts.length-1];if(y>=last[0])return Math.max(0,P.A*Math.exp(y)-1/P.rho);
-    let lo=0,hi=pts.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(pts[m][0]<y)lo=m;else hi=m;}const t=(y-pts[lo][0])/(pts[hi][0]-pts[lo][0]);return pts[lo][2]*(1-t)+pts[hi][2]*t;}
-  return {P,finite:true,b,xs:Math.exp(b),pts,Fp,grind:y=>{const f=Fp(y);return y<=b?0:P.rho*f/(1+P.rho*f);}};
-}
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function normcdf(z){const t=1/(1+0.2316419*Math.abs(z));const d=0.3989423*Math.exp(-z*z/2);const q=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-q:q;}
+function invnorm(p){const a=[-39.69683028665376,220.9460984245205,-275.9285104469687,138.357751867269,-30.66479806614716,2.506628277459239],b=[-54.47609879822406,161.5858368580409,-155.6989798598866,66.80131188771972,-13.28068155211881],c=[-0.007784894002430293,-0.3223964580411365,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783],d=[0.007784695709041462,0.3224671290700398,2.445134137142996,3.754408661907416],pl=0.02425;let q,r;
+  if(p<pl){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
+  if(p>1-pl){q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
+  q=p-0.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}
+function gauss(R){const u=Math.max(R(),1e-12),v=R();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
 
 /* ---------- charts ---------- */
 const NS="http://www.w3.org/2000/svg";
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
-function frame(svg,W,Hh,xd,yd,xt,yt,xl,yl){
-  svg.innerHTML="";const m={l:52,r:16,t:14,b:38};
+function frame(svg,W,Hh,xd,yd,xt,yt,xl,yl){svg.innerHTML="";const m={l:52,r:16,t:14,b:38};
   const X=v=>m.l+(v-xd[0])/(xd[1]-xd[0])*(W-m.l-m.r),Yf=v=>Hh-m.b-(v-yd[0])/(yd[1]-yd[0])*(Hh-m.t-m.b);
-  const g=el("g",{class:"grid"},svg);
-  yt.forEach(v=>{el("line",{x1:m.l,x2:W-m.r,y1:Yf(v),y2:Yf(v)},g);const t=el("text",{x:m.l-8,y:Yf(v)+4,"text-anchor":"end"},svg);t.textContent=yl(v);});
+  const g=el("g",{class:"grid"},svg);yt.forEach(v=>{el("line",{x1:m.l,x2:W-m.r,y1:Yf(v),y2:Yf(v)},g);const t=el("text",{x:m.l-8,y:Yf(v)+4,"text-anchor":"end"},svg);t.textContent=yl(v);});
   xt.forEach(v=>{const t=el("text",{x:X(v),y:Hh-m.b+18,"text-anchor":"middle"},svg);t.textContent=xl(v);});
-  el("line",{class:"axis",x1:m.l,x2:W-m.r,y1:Hh-m.b,y2:Hh-m.b},svg);
-  return {X,Y:Yf,m,W,H:Hh};
-}
-function path(pts,X,Yf){return pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+","+Yf(p[1]).toFixed(1)).join("");}
+  el("line",{class:"axis",x1:m.l,x2:W-m.r,y1:Hh-m.b,y2:Hh-m.b},svg);return {X,Y:Yf,m,W,H:Hh};}
+function path(p,X,Yf){return p.map((q,i)=>(i?"L":"M")+X(q[0]).toFixed(1)+","+Yf(q[1]).toFixed(1)).join("");}
 function niceMax(v){if(v<=0)return 1;const e=Math.pow(10,Math.floor(Math.log10(v)));const f=v/e;return (f<=1?1:f<=2?2:f<=5?5:10)*e;}
+function blobs(host,items){host.innerHTML="";items.forEach(([cls,big,small,desc])=>{const d=document.createElement("div");d.className="blob "+cls;d.innerHTML='<div class="c"><div>'+big+(small?'<small>'+small+'</small>':'')+'</div></div><div class="d">'+desc+'</div>';host.appendChild(d);});}
 
-let P,b,xs,pts,xb;
-function drawF(){
-  const svg=$("chF"),xd=[0.5,1.6];
-  const ptsX=pts.filter(p=>Math.exp(p[0])<=xd[1]).map(p=>[Math.exp(p[0]),p[1]]);
-  const ymax=niceMax(Math.max(...ptsX.map(p=>p[1]),1e-6)*1.08);
-  const f=frame(svg,640,300,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>v.toPrecision(2));
-  el("rect",{x:f.X(xd[0]),y:f.m.t,width:Math.max(0,f.X(Math.max(xd[0],xs))-f.X(xd[0])),height:f.H-f.m.t-f.m.b,fill:css("--quit-soft")},svg);
-  const tq=el("text",{x:f.X(xd[0])+8,y:f.m.t+16},svg);tq.textContent="stops keeping score";tq.setAttribute("style","fill:var(--quit)");
-  el("line",{x1:f.X(1),x2:f.X(1),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--rule"),"stroke-width":1.5},svg);
-  const tp=el("text",{x:f.X(1)+6,y:f.m.t+16},svg);tp.textContent="par";
-  const full=[[xd[0],0],[xs,0]].concat(ptsX);
-  el("path",{d:path(full,f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3,"stroke-linejoin":"round"},svg);
-  el("line",{x1:f.X(xs),x2:f.X(xs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
-  const tx=el("text",{x:f.X(xs)+6,y:f.H-f.m.b-10},svg);tx.textContent="stops at "+fmtPct(xs);tx.setAttribute("style","fill:var(--tape-ink);font-weight:500");
-  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="savings as a share of the target";
+/* ---------- current conditions ---------- */
+blobs($("nowBlobs"),[
+  ["quit",FED.cpi.v+"%","CPI","Consumer prices, past year ("+FED.cpi.d+")"],
+  ["mid",FED.pce.v+"%","PCE","Fed's price gauge, past year ("+FED.pce.d+")"],
+  ["quit",FED.ppi.v+"%","PPI","Producer prices, past year ("+FED.ppi.d+")"],
+  ["stay",FED.ahe.v+"%","pay","Average hourly pay, past year ("+FED.ahe.d.split(",")[0]+")"],
+  ["ink",FED.rgdp.v+"%","real GDP","Growth, "+FED.rgdp.d+"; nominal "+FED.ngdp.v+"%"],
+  ["mid",FED.unemp.v+"%","jobless","Unemployment rate ("+FED.unemp.d+")"],
+  ["gold",FED.hpi1.v.toFixed(1)+"%","homes","Home prices, past year; "+(100*(Math.pow(1+FED.hpi5.v/100,1/5)-1)).toFixed(1)+"% a year over five"],
+  ["quit","+"+FED.gdppc.v.toFixed(0)+"%","since 1979","Real GDP per person; real median pay rose "+FED.realpay.v.toFixed(0)+"%"]
+]);
+$("nowNote").textContent="Pay has kept up with prices over time, but not with the economy it helps produce or with home prices. The planner below uses these figures by default; every source is listed under Data and methods.";
+
+/* ---------- planner state ---------- */
+const ST={level:"federal",state:"Texas",bench:"home",win:"five",local:{},h:24,auto:{}};
+const sel=$("stateSel");STATES.forEach(s=>{const o=document.createElement("option");o.value=s.n;o.textContent=s.n;sel.appendChild(o);});sel.value=ST.state;
+function stateRec(){return STATES.find(s=>s.n===ST.state);}
+const usRatio=FED.zhvi.v/FED.inc.v;
+function placeData(){
+  // returns housing inputs for the chosen place
+  if(ST.level==="federal")return {name:"United States",pop:FED.pop.v,val:FED.zhvi.v,inc:FED.inc.v,h1:FED.hpi1.v,h5:FED.hpi5.v,w1:FED.wage1.v,w5:Math.expm1(5*FED.wage5.v/100)*100,sig:PARAMS.sigHomeUS,sigsrc:"national index",src:"national"};
+  const s=stateRec();const base={name:s.n,pop:s.pop,val:s.zhvi||s.inc*usRatio,inc:s.inc,h1:s.hpi1,h5:s.hpi5,w1:s.wage1,w5:Math.expm1(5*FED.wage5.v/100)*100,sig:s.sig,sigsrc:s.sigsrc,src:"state",valMissing:!s.zhvi};
+  if(ST.level==="state")return base;
+  const L=ST.local;const pick=(k,v)=>(L[k]!=null&&isFinite(L[k]))?L[k]:v;
+  return {...base,name:(L.name||(ST.level==="county"?"County":"City"))+", "+s.n,pop:pick("pop",NaN),val:pick("val",base.val),inc:pick("inc",base.inc),h1:pick("h1",base.h1),h5:pick("h5",base.h5),w1:pick("w1",base.w1),w5:pick("w5",base.w5),src:"local"};
 }
-function drawQ(){
-  const svg=$("chQ"),xd=[0.5,1.6];
-  const q=pts.filter(p=>Math.exp(p[0])<=xd[1]).map(p=>[Math.exp(p[0]),(P.rho-P.rho/(1+P.rho*p[2]))/P.rho]);
-  const ymax=niceMax(Math.max(...q.map(p=>p[1]),0.01)*1.1);
-  const f=frame(svg,640,240,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%");
-  el("rect",{x:f.X(xd[0]),y:f.m.t,width:Math.max(0,f.X(Math.max(xd[0],xs))-f.X(xd[0])),height:f.H-f.m.t-f.m.b,fill:css("--quit-soft")},svg);
-  const full=[[xd[0],0],[xs,0]].concat(q);
-  el("path",{d:path(full,f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3},svg);
-  el("line",{x1:f.X(xs),x2:f.X(xs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
-  const at1=q.reduce((a,p)=>Math.abs(p[0]-1)<Math.abs(a[0]-1)?p:a,q[0]||[1,0]);
-  el("circle",{cx:f.X(1),cy:f.Y(at1[1]),r:5,fill:css("--stay")},svg);
-  const t=el("text",{x:f.X(1)+9,y:f.Y(at1[1])-8},svg);t.textContent="at par: "+fmtPct(at1[1])+" less";
-  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="savings as a share of the target";
+function benchInputs(){
+  const pd=placeData();const w=ST.win;let drift,vol,stand,notes=[];
+  if(ST.bench==="home"){
+    const hy=w==="latest"?pd.h1/100:w==="five"?Math.log1p(pd.h5/100)/5:FED.homeLR.v/100;
+    const wy=w==="latest"?pd.w1/100:w==="five"?Math.log1p(pd.w5/100)/5:FED.wageLR.v/100;
+    drift=hy-wy;vol=pd.sig;stand=3/(pd.val/pd.inc);
+    notes.push("Home prices "+(100*hy).toFixed(1)+"% a year against pay "+(100*wy).toFixed(1)+"% a year.");
+    if(w==="long"&&ST.level!=="federal")notes.push("The since-1979 trend is national; state and local histories are not loaded.");
+    if(w==="five"&&ST.level!=="federal"&&pd.src!=="local")notes.push("Five-year pay growth uses the national figure; state five-year pay is not loaded.");
+    if(pd.valMissing)notes.push("Home value for this state was not available; the national price-to-income ratio is used.");
+  }else if(ST.bench==="cost"){
+    const idx=$("idxSel").value;const latestP={cpi:FED.cpi.v,core:FED.core.v,pce:FED.pce.v,corepce:FED.corepce.v}[idx]/100;
+    const py=w==="latest"?latestP:FED.cpi5.v/100;
+    if(w==="long"){drift=-Math.log1p(FED.realpay.v/100)/46;}else{const wy=w==="latest"?FED.ahe.v/100:FED.wage5.v/100;drift=py-wy;notes.push("Prices "+(100*py).toFixed(1)+"% a year against pay "+(100*wy).toFixed(1)+"% a year.");}
+    if(w==="long")notes.push("Since 1979, real median pay rose "+FED.realpay.v.toFixed(0)+"%: pay outgrew prices slightly.");
+    vol=PARAMS.sigCost;stand=374/359;if(ST.level!=="federal")notes.push("Price and pay trends for this benchmark are national; state price indexes are not published monthly.");
+  }else{
+    if(w==="long"){drift=(Math.log1p(FED.gdppc.v/100)-Math.log1p(FED.realpay.v/100))/46;notes.push("Real GDP per person grew "+(100*Math.log1p(FED.gdppc.v/100)/46).toFixed(2)+"% a year since 1979; real median pay "+(100*Math.log1p(FED.realpay.v/100)/46).toFixed(2)+"%.");}
+    else{drift=(FED.gdpRecent.v-FED.payRecent.v)/100;notes.push("Since 2019, real GDP per person grew "+FED.gdpRecent.v.toFixed(2)+"% a year and real median pay "+FED.payRecent.v.toFixed(2)+"%."+(w==="latest"?" A single year is too noisy here, so the period since 2019 is used.":""));}
+    vol=PARAMS.sigGdp;stand=(1+FED.realpay.v/100)/(1+FED.gdppc.v/100);notes.push("Few people measure themselves against national output directly, so read results on this benchmark as an upper bound.");if(ST.level!=="federal")notes.push("This benchmark is national.");
+  }
+  return {drift,vol,stand,notes,pd};
 }
+
+/* ---------- demographics ---------- */
+function mkChecks(host,list,name,checkedIdx){list.forEach((r,i)=>{const l=document.createElement("label");l.innerHTML='<input type="checkbox" name="'+name+'" value="'+i+'"'+(checkedIdx.includes(i)?" checked":"")+'>'+r[0];host.appendChild(l);});}
+mkChecks($("ck_age"),AGES,"age",[1,2]);mkChecks($("ck_sex"),SEX,"sex",[0,1]);mkChecks($("ck_edu"),EDU,"edu",[0,1]);mkChecks($("ck_inc"),INC,"inc",[0,1,2]);
+const checked=n=>[...document.querySelectorAll('input[name="'+n+'"]:checked')].map(i=>+i.value);
+function group(){
+  let ages=checked("age");if(!ages.length)ages=[0,1,2,3,4,5];
+  const sexes=checked("sex"),edus=checked("edu"),incs=checked("inc");
+  const wA=ages.map(i=>AGES[i][1]);const tot=wA.reduce((a,c)=>a+c,0);
+  let lam=0,rho=0,incF=0;ages.forEach((i,k)=>{lam+=AGES[i][3]*wA[k]/tot;rho+=AGES[i][4]*wA[k]/tot;incF+=AGES[i][2]*wA[k]/tot;});
+  const one=(arr,list,j)=>arr.length===1?list[arr[0]][j]:0;
+  lam+=one(sexes,SEX,2)+one(edus,EDU,2);rho+=one(sexes,SEX,3)+one(edus,EDU,3);
+  let share=1;if(sexes.length===1)share*=SEX[sexes[0]][1];if(edus.length===1)share*=EDU[edus[0]][1];
+  if(incs.length&&incs.length<3){const ws=incs.map(i=>INC[i][1]);const st=ws.reduce((a,c)=>a+c,0);incF=incs.reduce((a,i,k)=>a+INC[i][2]*ws[k]/st,0);share*=st;}
+  const label=ages.map(i=>AGES[i][0]).join(", ")+(sexes.length===1?"; "+SEX[sexes[0]][0].toLowerCase():"")+(edus.length===1?"; "+EDU[edus[0]][0].toLowerCase():"")+(incs.length&&incs.length<3?"; "+incs.map(i=>INC[i][0].split(" ")[0].toLowerCase()).join(" and ")+" income":"");
+  return {ages,lam:+lam.toFixed(2),rho:+rho.toFixed(4),incF,share,ageCount:tot,label};
+}
+function prefs(G){const l=$("pf_lam").value,r=$("pf_rho").value;return {lam:l==="auto"?G.lam:+l,rho:r==="auto"?G.rho:+r,alpha:+$("pf_alpha").value};}
+function headcount(G,pd){const usAdults=FED.pop.v;let placeShare=1;
+  if(ST.level==="state")placeShare=pd.pop/FED.pop.v;else if(ST.level!=="federal")placeShare=isFinite(pd.pop)?pd.pop/FED.pop.v:NaN;
+  return G.ageCount*placeShare*G.share;}
 
 /* ---------- simulation ---------- */
-let seed=7,nudge=false;
-function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-function gauss(R){const u=Math.max(R(),1e-12),v=R();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
-function FpAt(y){if(y<=b)return 0;const last=pts[pts.length-1];if(y>=last[0])return Math.max(0,P.A*Math.exp(y)-1/P.rho);
-  let lo=0,hi=pts.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(pts[m][0]<y)lo=m;else hi=m;}const t=(y-pts[lo][0])/(pts[hi][0]-pts[lo][0]);return pts[lo][2]*(1-t)+pts[hi][2]*t;}
-function simulate(){
-  const R=rng(seed),dt=1/52,T=10,x0=+$("x0").value,jump=+$("jump").value,stopAt=nudge?Math.log(0.80):b;
-  let y=Math.log(x0),out=[[0,x0]],exitT=null,belowYears=0;
-  const z=[];for(let i=0;i<T/dt;i++)z.push(gauss(R));
-  for(let i=0;i<T/dt;i++){
-    const t=(i+1)*dt;const q=P.rho/(1+P.rho*FpAt(y));
-    y+=(P.mut-q)*dt-P.sig*Math.sqrt(dt)*z[i];
-    if(Math.abs(t-2)<dt/2&&jump>0)y-=Math.log(1+jump);
-    out.push([t,Math.exp(y)]);
-    if(nudge&&y<=b)belowYears+=dt;
-    if(y<=stopAt){exitT=t;break;}
-  }
-  return {out,exitT,belowYears};
-}
-function drawP(){
-  const sim=simulate(),svg=$("chP"),xd=[0,10];
-  const vals=sim.out.map(p=>p[1]);const lo=Math.min(0.6,Math.min(...vals)-0.03),hi=Math.max(1.3,Math.max(...vals)+0.05);
-  const yd=[Math.floor(lo*10)/10,Math.ceil(hi*10)/10];const yt=[];for(let v=yd[0];v<=yd[1]+1e-9;v+=0.1)yt.push(+v.toFixed(1));
-  const f=frame(svg,640,300,xd,yd,[0,2,4,6,8,10],yt.filter((v,i)=>i%2===0),v=>"yr "+v,v=>Math.round(v*100)+"%");
-  el("line",{x1:f.X(0),x2:f.X(10),y1:f.Y(1),y2:f.Y(1),stroke:css("--rule"),"stroke-width":1.5},svg);
-  el("line",{x1:f.X(0),x2:f.X(10),y1:f.Y(xs),y2:f.Y(xs),stroke:css("--tape"),"stroke-width":3},svg);
-  const tl=el("text",{x:f.X(10)-4,y:f.Y(xs)-7,"text-anchor":"end"},svg);tl.textContent="her stopping point "+fmtPct(xs);tl.setAttribute("style","fill:var(--tape-ink)");
-  if(nudge){el("line",{x1:f.X(0),x2:f.X(10),y1:f.Y(0.8),y2:f.Y(0.8),stroke:css("--quit"),"stroke-width":1.5,"stroke-dasharray":"5 4"},svg);
-    const tn=el("text",{x:f.X(10)-4,y:f.Y(0.8)+15,"text-anchor":"end"},svg);tn.textContent="nudged stop 80%";tn.setAttribute("style","fill:var(--quit)");}
-  if(+$("jump").value>0){el("line",{x1:f.X(2),x2:f.X(2),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--muted"),"stroke-width":1,"stroke-dasharray":"2 3"},svg);
-    const tj=el("text",{x:f.X(2)+4,y:f.m.t+12},svg);tj.textContent="finish line moves";}
-  let seg=[],segs=[];let state=null;
-  sim.out.forEach(p=>{const s=(nudge&&p[1]<=xs)?"kept":"in";if(state&&s!==state){seg.push(p);segs.push([state,seg]);seg=[p];}else seg.push(p);state=s;});
-  if(seg.length)segs.push([state,seg]);
-  segs.forEach(([s,sg])=>el("path",{d:path(sg,f.X,f.Y),fill:"none",stroke:css(s==="kept"?"--quit":"--stay"),"stroke-width":2.6,"stroke-linejoin":"round"},svg));
-  const last=sim.out[sim.out.length-1];
-  if(sim.exitT!==null){el("circle",{cx:f.X(last[0]),cy:f.Y(last[1]),r:6,fill:css("--tape"),stroke:css("--ink"),"stroke-width":1.5},svg);}
-  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="years from today";
-  let msg=sim.exitT===null?"Still in the race after 10 years.":"She stops keeping score in year "+sim.exitT.toFixed(1)+".";
-  if(nudge&&sim.belowYears>0)msg+=" She spent "+sim.belowYears.toFixed(1)+" years in the race after passing her own stopping point.";
-  $("pathStatus").textContent=msg;
+function simulate(base,scn,stand,spread,months,seed,N){
+  const R=rng(seed||20261029);N=N||2500;const dt=1/12,sq=Math.sqrt(dt);
+  const y0=new Float64Array(N);for(let i=0;i<N;i++)y0[i]=Math.log(stand)+spread*invnorm((i+0.5)/N);
+  const run=(S,shift,out0)=>{const y=Float64Array.from(y0,v=>v+shift);const out=new Uint8Array(N);let n0=0;
+      for(let i=0;i<N;i++){if(out0&&out0[i])out[i]=1;else if(S.finite&&y[i]<=S.b)out[i]=1;n0+=out[i];}
+      const path=[[0,n0/N]];const R2=rng(7);
+      for(let m=1;m<=months;m++){let n=0;for(let i=0;i<N;i++){const z=gauss(R2);if(out[i]){n++;continue;}
+          const q=S.finite?S.P.rho/(1+S.P.rho*S.Fp(y[i])):0;y[i]+=(S.P.mut-q)*dt-S.P.sig*sq*z;if(S.finite&&y[i]<=S.b){out[i]=1;}n+=out[i];}
+        path.push([m,n/N]);}
+      let barely=0,gr=0;const edge=S.finite?S.b+Math.log(1.1):-Infinity;for(let i=0;i<N;i++){if(out[i])continue;const g=S.finite?S.grind(y[i]):0;if(y[i]<=edge)barely++;gr+=g;}
+      return {path,out,barely:barely/N,grind:gr/N,y};};
+  const A=run(base,0,null);const out0=new Uint8Array(N);for(let i=0;i<N;i++)out0[i]=(base.finite&&y0[i]<=base.b)?1:0;
+  const B=scn?run(scn,scn.shift||0,out0):null;
+  return {A,B,today:A.path[0][1]};
 }
 
-/* ---------- welfare ---------- */
-let wCache=null;
-function computeWelfare(){
-  const F0=valueAt(P,b,0);const grid=[];
-  const lo=Math.max(0.5,xs-0.15),hiX=Math.min(0.995,xs+0.05);
-  const n=14;for(let i=0;i<=n;i++){const xt=lo+(hiX-lo)*i/n;grid.push(xt);} grid.push(xs);grid.sort((p,q)=>p-q);
-  const L=grid.map(xt=>[xt,Math.max(0,F0-valueAt(P,Math.log(xt),0))]);
-  wCache={F0,L};
+/* ---------- the run ---------- */
+let LAST=null,timer=null;
+function scenarioDelta(){const v=$("scnSel").value;
+  const map={none:null,bench3:{dd:.03},pay1:{dd:-.01},slow2:{dd:-.02},jump10:{jump:.10},recess:{dd:.02,jump:-.05},vol2:{vmul:2}};
+  if(v==="custom")return {dd:+$("c_bg").value-(+$("c_pg").value),jump:+$("c_jump").value,dv:+$("c_vol").value};
+  return map[v];}
+function readBench(){return {drift:+$("drift").value,vol:+$("vol").value,stand:+$("stand").value,spread:+$("spread").value};}
+function modelParams(drift,vol,pr){return {delta:drift-pr.rho,sig:vol,lam:pr.lam,alpha:pr.alpha,rho:pr.rho};}
+function run(){
+  const t0=performance.now();const G=group(),pr=prefs(G),bi=readBench(),pd=placeData();
+  let stand=bi.stand;if(ST.bench==="home")stand=bi.stand*G.incF;
+  const base=solveModel(modelParams(bi.drift,bi.vol,pr));
+  const sd=scenarioDelta();let scn=null;
+  if(sd){const d2=bi.drift+(sd.dd||0),v2=Math.max(0.005,sd.vmul?bi.vol*sd.vmul:bi.vol+(sd.dv||0));scn=solveModel(modelParams(d2,v2,pr));scn.shift=-Math.log1p(sd.jump||0);scn.drift=d2;scn.vol=v2;}
+  const sim=simulate(base,scn,stand,bi.spread,24);
+  const hc=headcount(G,pd);
+  // target: largest drift with no rise in the share out over the horizon
+  let target=null;
+  if(base.finite){const today=sim.today;const f=d=>{const S=solveModel(modelParams(d,bi.vol,pr));const s=simulate(base,{...S,shift:0},stand,bi.spread,ST.h,20261029,1500);return s.B.path[ST.h][1]-today;};
+    let lo=bi.vol*bi.vol-0.0005,hi=bi.drift;if(f(hi)<=0.005)target={d:hi,already:true};else{for(let i=0;i<12;i++){const m=(lo+hi)/2;if(f(m)<=0.005)lo=m;else hi=m;}target={d:lo,already:false};}}
+  let sens=null;if(base.finite){const shareAt=d=>{const S=solveModel(modelParams(d,bi.vol,pr));if(!S.finite)return 0;return normcdf((S.b-Math.log(stand))/bi.spread);};sens=[shareAt(bi.drift-0.0025),shareAt(bi.drift+0.0025)];}
+  LAST={G,pr,bi,pd,stand,base,scn,sim,hc,target,sd,sens};
+  render();$("runStatus").textContent="Solved and simulated in "+Math.round(performance.now()-t0)+" ms.";
 }
-function drawW(){
-  const svg=$("chW");const {F0,L}=wCache;
-  const xd=[L[0][0],L[L.length-1][0]];const rel=L.map(p=>[p[0],p[1]/F0]);
-  const ymax=niceMax(Math.max(...rel.map(p=>p[1]),0.1)*1.05);
-  const xtTicks=[];for(let v=Math.ceil(xd[0]*20)/20;v<=xd[1]+1e-9;v+=0.05)xtTicks.push(+v.toFixed(2));
-  const f=frame(svg,640,300,xd,[0,ymax],xtTicks.filter((v,i)=>i%2===0),[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%");
-  el("path",{d:path(rel,f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":3},svg);
-  rel.forEach(p=>el("circle",{cx:f.X(p[0]),cy:f.Y(p[1]),r:2.6,fill:css("--quit")},svg));
-  el("line",{x1:f.X(xs),x2:f.X(xs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
-  const nearR=f.X(xs)>f.W-170;const t=el("text",{x:f.X(xs)+(nearR?-6:6),y:f.m.t+14,"text-anchor":nearR?"end":"start"},svg);t.textContent="her own stopping point";t.setAttribute("style","fill:var(--tape-ink)");
-  const xt=+$("xt").value;const cl=Math.min(Math.max(xt,xd[0]),xd[1]);
-  const lv=Math.max(0,F0-valueAt(P,Math.log(xt),0))/F0;
+function schedule(){clearTimeout(timer);timer=setTimeout(run,180);}
+
+function render(){
+  const {G,pr,bi,pd,stand,base,scn,sim,hc,target}=LAST;const h=ST.h;
+  // who blobs
+  blobs($("whoBlobs"),[["ink",isFinite(hc)?fmtN(hc).replace(" million","M").replace(" thousand","K"):"?","people","In this group"+(isFinite(hc)?"":": enter a population in Step 1")],
+    ["quit",pr.lam.toFixed(1)+"×","sting","Falling behind hurts this much more than getting ahead pleases"],["mid",pct(pr.rho,1),"a year","Impatience"],["stay",pct(Math.min(stand,9),0),"standing","Where the group stands against par"]]);
+  const A=sim.A,B=sim.B;const outNow=sim.today,outA=A.path[h][1],outB=B?B.path[h][1]:null;
+  const people=v=>isFinite(hc)?" (about "+fmtN(v*hc)+" people)":"";
+  if(!base.finite){$("resSay").className="verdict good";$("resHead").textContent="No quitting point on this trajectory";
+    let t="With these numbers the benchmark is not pulling away from pay fast enough, given how much it jumps around, for anyone to stop keeping score: on average the gap is closing.";if(stand<0.8)t+=" Standing is low ("+pct(stand,0)+" of par), but in the model a closing gap is enough to keep people in. If the trend turns, many would stop at once.";if(B&&outB>0.0005)t+=" Under your scenario that changes: "+pct(outB,0)+" of the group would have stopped within "+h+" months"+people(outB)+".";else t+=" Try the five-year or long-run trend, or a scenario in which the benchmark speeds up.";$("resText").textContent=t;}
+  else{$("resSay").className=outA>outNow+0.005?"verdict":"verdict neutral";
+    $("resHead").textContent=pct(outNow,0)+" have stopped keeping score";
+    let t="The model puts this group's quitting point at "+pct(base.xs,0)+" of par, and today "+pct(outNow,0)+" of the group stand below it"+people(outNow)+". On the current trajectory that becomes "+pct(outA,0)+" in "+h+" months"+people(outA)+".";
+    if(B)t+=" Under your scenario it becomes "+pct(outB,0)+people(outB)+", "+(outB>outA?"worse":"better")+" than the current trajectory by "+(100*Math.abs(outB-outA)).toFixed(1)+" points.";
+    t+=" Another "+pct(A.barely,0)+" are still in the race but within 10% of the quitting point.";
+    if(LAST.sens)t+=" The trend is measured with error: if it were a quarter point a year lower or higher, today's share would be "+pct(LAST.sens[0],0)+" to "+pct(LAST.sens[1],0)+".";$("resText").textContent=t;}
+  blobs($("resBlobs"),[["quit",pct(outNow,0),"today","Stopped keeping score"],["mid",pct(outA,0),h+" mo","On the current trajectory"],
+    B?["quit",pct(outB,0),h+" mo","Under your scenario"]:["stay",base.finite?pct(base.xs,0):"none","quit point","Where the model puts the quitting point"],
+    ["gold",pct(B?B.barely:A.barely,0),"near edge","Still in, but within 10% of the quitting point"],["stay",pct(1-(B?outB:outA),0),"hope","Still in the race at "+h+" months"]]);
+  drawTraj();renderPlan();
+}
+function drawTraj(){const {sim}=LAST;const A=sim.A.path,B=sim.B?sim.B.path:null;
+  const mx=Math.max(...A.map(p=>p[1]),...(B?B.map(p=>p[1]):[0]),0.05);const ymax=Math.min(1,niceMax(mx*1.1));
+  const f=frame($("chT"),640,280,[0,24],[0,ymax],[0,6,12,18,24],[0,ymax/2,ymax],v=>v+" mo",v=>Math.round(v*100)+"%");
+  el("line",{x1:f.X(ST.h),x2:f.X(ST.h),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":2,"stroke-dasharray":"4 4"},$("chT"));
+  el("path",{d:path(A,f.X,f.Y),fill:"none",stroke:css("--mid"),"stroke-width":3},$("chT"));
+  if(B)el("path",{d:path(B,f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":3},$("chT"));
+  const lab=el("text",{x:f.m.l,y:f.H-6},$("chT"));lab.textContent="months from today";}
+
+/* ---------- plan ---------- */
+const ROLES={
+ federal:[["fed","Federal Reserve Board and regional Banks"],["treasury","Department of the Treasury"],["commerce","Department of Commerce (BEA, Census, EDA)"],["congress","Congress: budget, tax, banking and housing committees"],["hud","Department of Housing and Urban Development"],["labor","Department of Labor (BLS, ETA)"]],
+ state:[["gov","Governor and budget office"],["treas","State treasurer"],["leg","Legislature: tax, finance and housing committees"],["hfa","State housing finance agency"],["wf","State workforce agency"]],
+ county:[["board","County commissioners or board"],["assess","Assessor and county treasurer"],["wfb","Local workforce board"],["ha","Housing authority"]],
+ city:[["mayor","Mayor and council"],["plan","Planning and zoning"],["housing","Housing department"],["ed","Economic development"],["fin","Finance director"]]};
+const LEVERS={
+ fed:["Add this group's drift gap and the share past the quitting point to staff monitoring of labor-force engagement and housing affordability, and brief it at the next policy meeting.","Ask the regional Banks to estimate the same two indicators for their districts each quarter.","In public communication, treat disengagement driven by a runaway benchmark as an affordability signal, not as weak labor supply that persistence campaigns can fix."],
+ treasury:["Direct the Office of Economic Policy to publish this indicator quarterly for the nation and each state.","Require tax and housing-finance proposals to report their expected effect on the drift gap for this group: how much faster pay, or how much slower the benchmark, each would produce."],
+ commerce:["Have the Census Bureau and BEA publish price-to-income by age group for every state and large county each year.","Weight economic development grants toward places where the drift gap is widest and track the indicator as a grant outcome."],
+ congress:["Request a CBO or CRS analysis of the drift gap for this group and the fiscal cost of the disengagement it produces.","Consider tying federal housing and infrastructure grants to measured local housing-supply growth, which slows the benchmark; hold a hearing on the indicator."],
+ hud:["Prioritize programs that add housing supply in the markets with the widest drift gap.","Evaluate down-payment assistance by its effect on standing after any effect on prices."],
+ labor:["Publish entry-level and median pay growth against the benchmark each quarter, by age group.","Expand apprenticeship and training tied to measured pay gains for this group."],
+ gov:["Add the indicator to the state's economic dashboard and budget outlook.","Direct agencies to identify the three state actions with the largest effect on the drift gap for this group, with costs."],
+ treas:["Publish a quarterly state Hope Gap report with the share past the quitting point by age group.","Review state-backed first-time-buyer and savings programs: they raise standing, but can feed prices unless paired with more supply."],
+ leg:["Hold a hearing on the indicator with the state economist.","Score housing-supply measures (permit timelines, allowed housing types) and pay-growth measures for this group by their effect on the drift gap, and act on the strongest."],
+ hfa:["Aim first-time-buyer help at people still in the race but near the edge, between the quitting point and par.","Track the price effect of assistance in each market."],
+ wf:["Fund training and placement tied to measured pay gains for this group, and report pay growth against the benchmark."],
+ board:["Adopt the indicator for the county and report it with the budget.","Align capital plans with housing supply in the fastest-rising markets."],
+ assess:["Publish county price-to-income by age group from assessment and income data each year.","Report how many first-time buyers the county gained or lost."],
+ wfb:["Tie training contracts to measured pay gains for this group."],
+ ha:["Add supply where the drift gap is widest, and track how many households near the edge each program reaches."],
+ mayor:["Set a numeric target for the drift gap and report on it each quarter.","Direct departments to present options that slow the benchmark or raise pay for this group, with costs."],
+ plan:["Shorten permit timelines and expand allowed housing types; report homes permitted each quarter against the target.","Publish how many homes the city would need for prices to grow no faster than pay plus the target gap."],
+ housing:["Aim assistance at households still in the race but near the edge.","Track the price effect of assistance."],
+ ed:["Recruit and retain employers by expected pay growth for this group, not only job counts."],
+ fin:["Add the indicator to the annual budget book and the economic outlook."]};
+function addDays(n){const d=new Date();d.setDate(d.getDate()+n);return d.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});}
+function fillRoles(){const r=$("roleSel");r.innerHTML="";ROLES[ST.level].forEach(([k,n])=>{const o=document.createElement("option");o.value=k;o.textContent=n;r.appendChild(o);});}
+function renderPlan(){
+  const {G,bi,pd,base,sim,hc,target}=LAST;const role=$("roleSel").value;const h=ST.h;
+  const place=pd.name,grp=G.label;const outNow=sim.today,outA=sim.A.path[h][1],m6=sim.A.path[6][1];
+  const tt=$("targetText");
+  if(!base.finite){tt.textContent="On this trajectory no one in the group reaches the quitting point, so there is no gap to close. Keep monitoring: re-run whenever new data arrive, and check the five-year and long-run trends.";}
+  else if(target&&target.already){tt.textContent="On the current trajectory the share who have stopped keeping score rises less than half a point over "+h+" months. Hold the drift gap at or below "+pts(bi.drift)+" a year.";}
+  else if(target){const gap=bi.drift-target.d;tt.textContent="To keep the share who have stopped keeping score from rising more than half a point over the next "+h+" months, the benchmark must grow no faster than pay plus "+(100*target.d).toFixed(1)+" points a year. Today it grows "+(100*bi.drift).toFixed(1)+" points faster: "+(gap<0.0005?"right at the limit, so any acceleration pushes the share up.":"close a gap of "+(100*gap).toFixed(1)+" points a year.")+(gap<0.003?" The group sits where small changes in the trend move the quitting point a lot: a small improvement helps, and a small reversal hurts as much.":"");}
+  const items=[];const tgt=target&&!target.already?(100*target.d).toFixed(1)+" points":"its current level";
+  items.push(["By "+addDays(30),"Baseline","Adopt two indicators for "+grp+" in "+place+": the drift gap (now "+pts(bi.drift)+" a year) and the share who have stopped keeping score (now "+pct(outNow,0)+(isFinite(hc)?", about "+fmtN(outNow*hc)+" people":"")+"). Publish both as the baseline."]);
+  (LEVERS[role]||[]).forEach((t,i)=>items.push(["By "+addDays(i===0?60:90),"Action",t]));
+  items.push(["By "+addDays(90),"Guardrail","Do not answer this with persistence campaigns aimed at people already past the quitting point. Aim help at the "+pct(sim.A.barely,0)+" still in the race but within 10% of the quitting point."]);
+  items.push(["By "+addDays(182),"Review","Re-run with the latest data. On the current trajectory the share should be about "+pct(m6,0)+" by then; if it is higher, escalate the actions above."]);
+  items.push(["By "+addDays(365),"Evaluate","Report the drift gap against the target of "+tgt+" a year, and the share against today's "+pct(outNow,0)+"."]);
+  items.push(["Next check-in "+addDays(91),"Follow-up","Quarterly, after the next home-price and wage releases. Keep the same group and method so the numbers are comparable."]);
+  const host=$("planList");host.innerHTML="";items.forEach(([w,k,t])=>{const d=document.createElement("div");d.className="item";d.innerHTML='<div class="when"><b>'+k+'</b>'+w+'</div><div>'+t+'</div>';host.appendChild(d);});
+  LAST.planText="PLAN: "+$("roleSel").selectedOptions[0].textContent+"\nPlace: "+place+"\nGroup: "+grp+"\nBenchmark: "+{home:"owning a home",cost:"keeping up with prices",gdp:"sharing in the nation's growth"}[ST.bench]+"\nTarget: "+tt.textContent+"\n\n"+items.map(([w,k,t])=>"- "+k+" ("+w+"): "+t).join("\n")+"\n\nSource: The Hope Gap planning tool, built on Lester (2026), Rational Foreclosure. Model estimates under stated assumptions.";
+}
+$("copyPlan").addEventListener("click",()=>{if(!LAST)return;navigator.clipboard&&navigator.clipboard.writeText(LAST.planText).then(()=>$("planStatus").textContent="Plan copied.",()=>$("planStatus").textContent="Copy failed; select the text instead.");});
+
+/* ---------- wiring: planner ---------- */
+function syncBench(reset){const bi=benchInputs();
+  if(reset||ST.autoKey!==ST.bench+ST.win+ST.level+ST.state+JSON.stringify(ST.local)+$("idxSel").value){$("drift").value=bi.drift.toFixed(3);$("vol").value=bi.vol.toFixed(3);$("stand").value=clamp(bi.stand,0.2,1.6).toFixed(3);ST.autoKey=ST.bench+ST.win+ST.level+ST.state+JSON.stringify(ST.local)+$("idxSel").value;}
+  $("benchHead").textContent={home:"Owning a home",cost:"Keeping up with prices",gdp:"Sharing in the nation's growth"}[ST.bench]+" · "+{latest:"latest year",five:"five years",long:"since 1979"}[ST.win];
+  $("benchText").textContent=bi.notes.join(" ")+(ST.bench==="home"?" A typical home costs "+(bi.pd.val/bi.pd.inc).toFixed(1)+" times a typical household income here, so the typical household stands at "+pct(3/(bi.pd.val/bi.pd.inc),0)+" of par before adjusting for the group's income.":"");
+  $("standHint").textContent={home:"100% is par: a typical home costs three times a typical household income. The group's income adjusts this in Step 3.",cost:"100% is par: pay buys what it bought in 2019.",gdp:"100% is par: pay's share of output per person in 1979."}[ST.bench];
+  $("idxWrap").hidden=ST.bench!=="cost";
+  $("winHint").textContent={latest:"The most recent year. Captures current conditions, but one year is noisy.",five:"Mid-2021 to mid-2026. The default: recent enough to be current, long enough to be a trend.",long:"1979 to 2025, national. The generation-long view."}[ST.win];
+  labelsP();renderPlace();}
+function labelsP(){$("o_drift").textContent=pts(+$("drift").value)+"/yr";$("o_vol").textContent=pct(+$("vol").value,1);$("o_stand").textContent=pct(+$("stand").value,0);$("o_spread").textContent=(+$("spread").value).toFixed(2);
+  $("o_c_bg").textContent=pts(+$("c_bg").value);$("o_c_pg").textContent=pts(+$("c_pg").value);$("o_c_jump").textContent=(+$("c_jump").value>=0?"+":"")+Math.round(100*$("c_jump").value)+"%";$("o_c_vol").textContent=pts(+$("c_vol").value);}
+function renderPlace(){const pd=placeData();const tb=$("placeTable");tb.innerHTML="";
+  const rows=[["Place",pd.name,""],["Population",isFinite(pd.pop)?Math.round(pd.pop).toLocaleString("en-US"):"enter in Step 1",ST.level==="federal"||ST.level==="state"?"Census Vintage 2025":"your figure"],
+    ["Median home value",money(pd.val),ST.level==="federal"?"Zillow, Q2 2026":ST.level==="state"?(pd.valMissing?"not available; national ratio used":"Zillow, January 2026"):"your figure or the state's"],
+    ["Median household income",money(pd.inc),ST.level==="federal"||ST.level==="state"?"Census ACS 2024":"your figure or the state's"],
+    ["Home prices, last year",pd.h1.toFixed(1)+"%","FHFA, 2026 Q2"],["Home prices, five years",pd.h5.toFixed(1)+"%","FHFA, 2021 Q2 to 2026 Q2"],
+    ["Pay, last year",pd.w1.toFixed(1)+"%",ST.level==="federal"?"BLS median weekly pay, Q2 2026":"BLS QCEW, 2026 Q1"],["Pay, five years",pd.w5.toFixed(1)+"%","BLS median weekly pay (national)"],
+    ["Home-price jumpiness",pct(pd.sig,1),"Case-Shiller: "+pd.sigsrc]];
+  rows.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML="<td>"+r[0]+"</td><td>"+r[1]+"</td><td class='src'>"+r[2]+"</td>";tb.appendChild(tr);});}
+function setPressed(host,attr,val){host.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset[attr]===val)));}
+$("levelSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ST.level=b.dataset.level;setPressed($("levelSeg"),"level",ST.level);
+  $("stateWrap").hidden=ST.level==="federal";$("localWrap").hidden=!(ST.level==="county"||ST.level==="city");if(ST.level==="county"||ST.level==="city")prefillLocal();fillRoles();syncBench(true);schedule();});
+sel.addEventListener("change",()=>{ST.state=sel.value;refreshPrompt();if(ST.level==="county"||ST.level==="city")prefillLocal();syncBench(true);schedule();});
+function prefillLocal(){const s=stateRec();ST.local={name:$("l_name").value||""};$("l_val").value=s.zhvi||Math.round(s.inc*usRatio);$("l_inc").value=s.inc;$("l_h1").value=s.hpi1;$("l_h5").value=s.hpi5;$("l_w1").value=s.wage1;$("l_w5").value=(Math.expm1(5*FED.wage5.v/100)*100).toFixed(1);readLocal();}
+function readLocal(){const n=k=>{const v=parseFloat($(k).value);return isFinite(v)?v:null;};ST.local={name:$("l_name").value.trim(),pop:n("l_pop"),val:n("l_val"),inc:n("l_inc"),h1:n("l_h1"),h5:n("l_h5"),w1:n("l_w1"),w5:n("l_w5")};}
+["l_name","l_pop","l_val","l_inc","l_h1","l_h5","l_w1","l_w5"].forEach(k=>$(k).addEventListener("input",()=>{readLocal();syncBench(true);schedule();}));
+$("benchCards").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ST.bench=b.dataset.bench;setPressed($("benchCards"),"bench",ST.bench);syncBench(true);schedule();});
+$("winSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ST.win=b.dataset.win;setPressed($("winSeg"),"win",ST.win);syncBench(true);schedule();});
+$("idxSel").addEventListener("change",()=>{syncBench(true);schedule();});
+["drift","vol","stand","spread"].forEach(k=>$(k).addEventListener("input",()=>{labelsP();schedule();}));
+$("resetData").addEventListener("click",()=>{syncBench(true);schedule();});
+$("demo").addEventListener("change",schedule);["pf_lam","pf_alpha","pf_rho"].forEach(k=>$(k).addEventListener("change",schedule));
+$("horSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ST.h=+b.dataset.h;setPressed($("horSeg"),"h",String(ST.h));schedule();});
+$("scnSel").addEventListener("change",()=>{$("customWrap").hidden=$("scnSel").value!=="custom";schedule();});
+["c_bg","c_pg","c_jump","c_vol"].forEach(k=>$(k).addEventListener("input",()=>{labelsP();schedule();}));
+$("roleSel").addEventListener("change",()=>{if(LAST)renderPlan();});
+
+/* ---------- data prompt ---------- */
+function promptText(){const lvl=ST.level==="city"?"city":ST.level==="county"?"county":"state";const nm=($("l_name").value||"[NAME]")+(ST.level==="federal"||ST.level==="state"?"":", "+ST.state);
+  return "You are helping a "+lvl+" government prepare inputs for an economic planning model. For "+nm+", find the most recent official figures and reply ONLY with the lines below, filled in. Put the period and source after each value in parentheses.\n\n"+
+  "median_home_value: (dollars; Census ACS table B25077, or the Zillow Home Value Index; give the date)\nmedian_household_income: (dollars; Census ACS table B19013; give the year)\nhome_price_change_1yr_pct: (percent change over the latest year; FHFA House Price Index for the county or metro, or Zillow)\nhome_price_change_5yr_pct: (total percent change over five years, same source)\npay_change_1yr_pct: (over-the-year percent change in average weekly wage; BLS Quarterly Census of Employment and Wages for the county)\npay_change_5yr_pct: (total percent change over five years, same source)\npopulation: (latest Census estimate)\n\n"+
+  "Rules: use official sources first (Census Bureau, Bureau of Labor Statistics, Bureau of Economic Analysis, FHFA, state agencies). Never estimate, interpolate or average figures yourself. If a figure is not available for this place, write \"not available\". After the lines, list every source with its URL.";}
+function refreshPrompt(){$("promptText").textContent=promptText();}
+$("copyPrompt").addEventListener("click",()=>{refreshPrompt();navigator.clipboard&&navigator.clipboard.writeText(promptText()).then(()=>$("pasteStatus").textContent="Prompt copied. Paste it into an AI assistant with web access.",()=>$("pasteStatus").textContent="Copy failed; the prompt is under Data and methods.");});
+$("l_name").addEventListener("input",refreshPrompt);
+$("applyPaste").addEventListener("click",()=>{const map={median_home_value:"l_val",median_household_income:"l_inc",home_price_change_1yr_pct:"l_h1",home_price_change_5yr_pct:"l_h5",pay_change_1yr_pct:"l_w1",pay_change_5yr_pct:"l_w5",population:"l_pop"};let n=0;
+  $("pasteBox").value.split(/\r?\n/).forEach(line=>{const m=line.match(/^\s*([a-z_0-9]+)\s*[:=]\s*([-+]?[\d,]*\.?\d+)/i);if(m&&map[m[1].toLowerCase()]){$(map[m[1].toLowerCase()]).value=m[2].replace(/,/g,"");n++;}});
+  readLocal();syncBench(true);schedule();$("pasteStatus").textContent=n?"Used "+n+" figures. Check them against the sources before relying on them.":"No figures recognized. Lines should look like  median_home_value: 312000";});
+
+/* ---------- data tables ---------- */
+(function(){const tb=$("fedTable");const rows=[["Consumer prices (CPI), past year",FED.cpi],["CPI excluding food and energy",FED.core],["PCE price index, past year",FED.pce],["PCE excluding food and energy",FED.corepce],["Producer prices (final demand), past year",FED.ppi],["Real GDP growth",FED.rgdp],["Nominal GDP growth",FED.ngdp],["Unemployment rate",FED.unemp],["Average hourly earnings, past year",FED.ahe],["Home prices, past year",FED.hpi1],["Home prices, five years (total)",FED.hpi5],["Median weekly pay, past year",FED.wage1],["Median weekly pay, five-year trend",FED.wage5],["CPI, five-year trend",FED.cpi5],["Home prices since 1979",FED.homeLR],["Median weekly pay since 1979",FED.wageLR],["Real GDP per person, 1979 to 2025 (total)",FED.gdppc],["Real median weekly pay, 1979 to 2025 (total)",FED.realpay],["Typical home value",FED.zhvi],["Median household income",FED.inc],["Population",FED.pop]];
+  rows.forEach(([n,o])=>{const v=o.v>1000?Math.round(o.v).toLocaleString("en-US"):o.v+"%";const tr=document.createElement("tr");tr.innerHTML="<td>"+n+"</td><td>"+(n.startsWith("Typical")||n.startsWith("Median household")?"$"+v:n==="Population"?v:v)+"</td><td class='src'>"+o.d+" · "+o.s+"</td>";tb.appendChild(tr);});
+  const st=$("stTable");STATES.forEach(s=>{const tr=document.createElement("tr");tr.innerHTML="<td>"+s.n+"</td><td>"+s.pop.toLocaleString("en-US")+"</td><td>$"+s.inc.toLocaleString("en-US")+"</td><td>"+(s.zhvi?"$"+s.zhvi.toLocaleString("en-US"):"n/a")+"</td><td>"+s.hpi1.toFixed(1)+"%</td><td>"+s.hpi5.toFixed(1)+"%</td><td>"+s.wage1.toFixed(1)+"%</td><td>"+pct(s.sig,1)+"</td>";st.appendChild(tr);});
+  const pt=$("prefTable");AGES.forEach(a=>{const tr=document.createElement("tr");tr.innerHTML="<td>Age "+a[0]+"</td><td>"+a[3].toFixed(1)+"×</td><td>"+pct(a[4],1)+"</td><td class='src'>Loss aversion rises with age, most after 55 (Gächter, Johnson and Herrmann 2022); patience peaks in middle age in rich countries (Falk et al. 2018). Sizes assumed.</td>";pt.appendChild(tr);});
+  [["Women","+0.1","+0.2 pts","Women more loss averse in some studies, not all; slightly less patient on average (Falk et al. 2018). Sizes assumed."],["Men","−0.1","−0.2 pts","Mirror of the above."],["No four-year degree","+0.1","+0.5 pts","Education lowers loss aversion (Gächter et al. 2022); patience rises with cognitive skill (Falk et al. 2018). Sizes assumed."],["Four-year degree","−0.1","−0.5 pts","Mirror of the above."],["Income tiers","none","none","Evidence on income and loss aversion conflicts; income tiers change standing only."]].forEach(r=>{const tr=document.createElement("tr");tr.innerHTML="<td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td><td class='src'>"+r[3]+"</td>";pt.appendChild(tr);});
+})();
+
+/* ---------- model explorer ---------- */
+let MP,Mb,Mxs,Mpts,wCache=null;
+const mids=["m_delta","m_sig","m_lam","m_alpha","m_rho"];
+function mLabels(){$("o_m_delta").textContent=pts(+$("m_delta").value)+"/yr";$("o_m_sig").textContent=Math.round(100*$("m_sig").value)+"%";$("o_m_lam").textContent=(+$("m_lam").value).toFixed(1)+"×";$("o_m_alpha").textContent=(+$("m_alpha").value).toFixed(1);$("o_m_rho").textContent=pct(+$("m_rho").value,1);$("o_xt").textContent=pct(+$("xt").value,1);}
+function mRecompute(){mLabels();const p={delta:+$("m_delta").value,sig:+$("m_sig").value,lam:+$("m_lam").value,alpha:+$("m_alpha").value,rho:+$("m_rho").value};MP=setup(p);
+  const bad=!(MP.rho>MP.D+1e-4);$("m_warn").hidden=!bad;["chF","chQ","chW"].forEach(i=>$(i).style.opacity=bad?0.25:1);if(bad){blobs($("mBlobs"),[["stay","none","","No quitting point"]]);return;}
+  Mb=solveB(MP,H,56);Mxs=Math.exp(Mb);Mpts=curve(MP,Mb,Math.log(1.7),H);
+  const at1=Mpts.reduce((a,q)=>Math.abs(Math.exp(q[0])-1)<Math.abs(Math.exp(a[0])-1)?q:a,Mpts[0]);
+  blobs($("mBlobs"),[["quit",pct(Mxs,1),"quit point","Stops keeping score at this share of the benchmark"],["mid",pct(xbar(MP),0),"floor","Always stopped by here"],["stay",pct(MP.rho*at1[2]/(1+MP.rho*at1[2]),1),"at par","Spends this much less to keep up"]]);
+  drawF();drawQ();computeWelfare();drawW();}
+function drawF(){const svg=$("chF"),xd=[0.5,1.6];const P2=Mpts.filter(p=>Math.exp(p[0])<=xd[1]).map(p=>[Math.exp(p[0]),p[1]]);const ymax=niceMax(Math.max(...P2.map(p=>p[1]),1e-6)*1.08);
+  const f=frame(svg,640,280,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>v.toPrecision(2));
+  el("rect",{x:f.X(xd[0]),y:f.m.t,width:Math.max(0,f.X(Math.max(xd[0],Mxs))-f.X(xd[0])),height:f.H-f.m.t-f.m.b,fill:css("--quit-soft")},svg);
+  const tq=el("text",{x:f.X(xd[0])+8,y:f.m.t+16},svg);tq.textContent="stops keeping score";tq.setAttribute("style","fill:var(--quit)");
+  el("line",{x1:f.X(1),x2:f.X(1),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--rule"),"stroke-width":1.5},svg);const tp=el("text",{x:f.X(1)+6,y:f.m.t+16},svg);tp.textContent="par";
+  el("path",{d:path([[xd[0],0],[Mxs,0]].concat(P2),f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3},svg);
+  el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
+  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="resources as a share of the benchmark";}
+function drawQ(){const svg=$("chQ"),xd=[0.5,1.6];const q=Mpts.filter(p=>Math.exp(p[0])<=xd[1]).map(p=>[Math.exp(p[0]),MP.rho*p[2]/(1+MP.rho*p[2])]);const ymax=niceMax(Math.max(...q.map(p=>p[1]),0.01)*1.1);
+  const f=frame(svg,640,220,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%");
+  el("rect",{x:f.X(xd[0]),y:f.m.t,width:Math.max(0,f.X(Math.max(xd[0],Mxs))-f.X(xd[0])),height:f.H-f.m.t-f.m.b,fill:css("--quit-soft")},svg);
+  el("path",{d:path([[xd[0],0],[Mxs,0]].concat(q),f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3},svg);
+  el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
+  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="resources as a share of the benchmark";}
+function computeWelfare(){const F0=valueAt(MP,Mb,0);const grid=[];const lo=Math.max(0.5,Mxs-0.15),hi=Math.min(0.995,Mxs+0.05);for(let i=0;i<=14;i++)grid.push(lo+(hi-lo)*i/14);grid.push(Mxs);grid.sort((a,c)=>a-c);wCache={F0,L:grid.map(x=>[x,Math.max(0,F0-valueAt(MP,Math.log(x),0))])};}
+function drawW(){const svg=$("chW");const {F0,L}=wCache;const xd=[L[0][0],L[L.length-1][0]];const rel=L.map(p=>[p[0],p[1]/F0]);const ymax=niceMax(Math.max(...rel.map(p=>p[1]),0.1)*1.05);
+  const tk=[];for(let v=Math.ceil(xd[0]*20)/20;v<=xd[1]+1e-9;v+=0.05)tk.push(+v.toFixed(2));
+  const f=frame(svg,640,280,xd,[0,ymax],tk.filter((v,i)=>i%2===0),[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%");
+  el("path",{d:path(rel,f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":3},svg);el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
+  const xt=+$("xt").value;const cl=Math.min(Math.max(xt,xd[0]),xd[1]);const lv=Math.max(0,F0-valueAt(MP,Math.log(xt),0))/F0;
   el("circle",{cx:f.X(cl),cy:f.Y(Math.min(lv,ymax)),r:7,fill:"none",stroke:css("--ink"),"stroke-width":2},svg);
-  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="imposed stopping point (share of the target)";
-  verdict(xt,lv*F0,F0);
-}
-function verdict(xt,loss,F0){
-  const v=$("verdict");const cut=1-Math.exp(-P.rho*loss);
-  if(Math.abs(xt-xs)<0.004){v.className="verdict good";$("vHead").textContent="No harm";$("vText").textContent="This is her own stopping point. A program that matches it costs her nothing.";return;}
-  const share=loss/F0;
-  if(xt<xs){v.className="verdict";$("vHead").textContent="Forced persistence";
-    $("vText").textContent="Keeping her in until "+fmtPct(xt,1)+" instead of "+fmtPct(xs,1)+" costs her "+fmtPct(share,0)+" of what the whole race was worth to her at par, as much as a permanent "+fmtPct(cut,2)+" cut in consumption."+(share>1?" She would have been better off stopping on the spot.":"");}
-  else{v.className="verdict";$("vHead").textContent="Pushed out early";
-    $("vText").textContent="Making her stop at "+fmtPct(xt,1)+" instead of "+fmtPct(xs,1)+" throws away "+fmtPct(share,0)+" of the race's value at par: she gives up the chance that the target comes back.";}
-}
-
-/* ---------- part 1 wiring ---------- */
-const ids=["delta","sig","lam","alpha","rho"];
-function readP(){const o={};ids.forEach(k=>o[k]=+$(k).value);return o;}
-function labels(){
-  $("o_delta").textContent=((+$("delta").value)>=0?"+":"")+(100*$("delta").value).toFixed(1)+" pts/yr";
-  $("o_sig").textContent=Math.round(100*$("sig").value)+"%";
-  $("o_lam").textContent=(+$("lam").value).toFixed(1)+"×";
-  $("o_alpha").textContent=(+$("alpha").value).toFixed(1);
-  $("o_rho").textContent=(100*$("rho").value).toFixed(1)+"%";
-  $("o_x0").textContent=Math.round(100*$("x0").value)+"%";
-  $("o_jump").textContent="+"+Math.round(100*$("jump").value)+"%";
-  $("o_xt").textContent=fmtPct(+$("xt").value,1);
-}
-let timer=null;
-function recompute(){
-  labels();const p=readP();P=setup(p);
-  const bad=!(P.rho>P.D+1e-4);$("warn").hidden=!bad;
-  document.querySelectorAll("#chF,#chQ,#chP,#chW").forEach(s=>s.style.opacity=bad?0.25:1);
-  if(bad){$("bigX").innerHTML="&infin;";$("bigSay").textContent="No stopping point: with these settings the model predicts she never stops keeping score.";return;}
-  b=solveB(P);xs=Math.exp(b);xb=xbar(P);pts=curve(P,b,Math.log(1.7));
-  $("bigX").innerHTML=(100*xs).toFixed(1)+"<small>%</small>";
-  $("bigSay").innerHTML="The model predicts she stops keeping score when her savings fall to this share of the target. She will always have stopped by <b>"+fmtPct(xb)+"</b>.";
-  drawF();drawQ();drawP();computeWelfare();drawW();
-}
-function schedule(){labels();clearTimeout(timer);timer=setTimeout(recompute,120);}
-ids.forEach(k=>$(k).addEventListener("input",()=>{$("quizApplied").hidden=true;schedule();}));
-["x0","jump"].forEach(k=>$(k).addEventListener("input",()=>{labels();if(P&&P.rho>P.D)drawP();}));
-let wt=null;$("xt").addEventListener("input",()=>{labels();clearTimeout(wt);wt=setTimeout(()=>{if(wCache)drawW();},60);});
-$("newpath").addEventListener("click",()=>{seed=(seed*1103515245+12345)%2147483647;drawP();});
-$("nudgeBtn").addEventListener("click",e=>{nudge=!nudge;e.currentTarget.setAttribute("aria-pressed",String(nudge));drawP();});
-$("reset").addEventListener("click",()=>{Object.entries(BASE).forEach(([k,v])=>$(k).value=v);$("quizApplied").hidden=true;recompute();});
-
-/* ---------- part 2: the quiz ---------- */
-const money=v=>"$"+v.toLocaleString("en-US");
-const LADDERS=[
-  {key:"lam",title:"Coin flips",intro:"A fair coin is flipped once. Would you take the bet?",
-   rungs:[100,125,150,200,250,300,400,600],
-   q:v=>"Heads you win <b>"+money(v)+"</b>, tails you lose <b>$100</b>.",opts:["Take it","Pass"],yes:0},
-  {key:"rho",title:"Now or later",intro:"You are owed a payment and both options are certain. Which do you take?",
-   rungs:[1010,1030,1050,1080,1120,1200,1350],
-   q:v=>"<b>$1,000</b> today, or <b>"+money(v)+"</b> one year from today.",opts:["Today","In a year"],yes:1},
-  {key:"alpha",title:"Raises",intro:"Pick one, and imagine it is permanent. “Everyone” means everyone in your line of work, including the people you compare yourself with.",
-   rungs:[11,12,15,20,30,50],
-   q:v=>"A <b>10%</b> raise for you alone, or a <b>"+v+"%</b> raise for you and everyone.",opts:["10%, just me",null],yes:1}
-];
-function buildLadders(){
-  const host=$("ladders");host.innerHTML="";
-  LADDERS.forEach((L,li)=>{
-    const box=document.createElement("div");box.className="ladder";
-    box.innerHTML='<div class="head"><div class="eyebrow">Set '+(li+1)+' of 3</div><h3>'+L.title+'</h3><p>'+L.intro+'</p></div>';
-    L.rungs.forEach((v,ri)=>{
-      const row=document.createElement("div");row.className="row";
-      const name="q_"+L.key+"_"+ri;const o2=L.opts[1]||(v+"%, everyone");
-      row.setAttribute("role","radiogroup");row.setAttribute("aria-labelledby","lb_"+name);
-      row.innerHTML='<div class="q" id="lb_'+name+'">'+L.q(v)+'</div><div class="pick"><label><input type="radio" name="'+name+'" value="0">'+L.opts[0]+'</label><label><input type="radio" name="'+name+'" value="1">'+o2+'</label></div>';
-      box.appendChild(row);
-    });
-    host.appendChild(box);
-  });
-}
-function readLadder(L){
-  const ans=L.rungs.map((v,ri)=>{const c=document.querySelector('input[name="q_'+L.key+'_'+ri+'"]:checked');return c?(+c.value===L.yes):null;});
-  return ans;
-}
-function estimate(L,ans){
-  // ans[i]=true means the "yes" side (take the bet / wait / everyone's raise). Monotone: yes from some rung on.
-  const first=ans.findIndex(a=>a===true);let switches=0;for(let i=1;i<ans.length;i++)if(ans[i]!==ans[i-1])switches++;
-  const consistent=switches<=1&&(first<0||ans.slice(first).every(a=>a===true));
-  const R=L.rungs;let val,note="";
-  if(L.key==="lam"){
-    if(first===0){val=1.0;note="You took even the fair flip, so a shortfall stings you no more than an equal gain pleases (set to 1.0, the minimum).";}
-    else if(first<0){val=6;note="You passed on every flip, so a loss stings you more than six times as much as a gain pleases (set to 6.0, the maximum).";}
-    else{val=Math.sqrt(R[first-1]*R[first])/100;note="You switched between "+money(R[first-1])+" and "+money(R[first])+". The typical estimate is about 2.";}
-    val=clamp(val,1,6);
-  }else if(L.key==="rho"){
-    if(first===0){val=0.03;note="You would wait for 1%, which is more patient than the model's range allows (set to 3%, the minimum).";}
-    else if(first<0){val=0.12;note="You took the money today every time, which is more impatient than the model's range allows (set to 12%, the maximum).";}
-    else{val=Math.log(Math.sqrt(R[first-1]*R[first])/1000);note="You switched between "+money(R[first-1])+" and "+money(R[first])+". Questions like these usually give higher impatience than people show over years.";}
-    val=clamp(val,0.03,0.12);
-  }else{
-    const a=X=>10*Math.log((1+X/100)/1.1);
-    if(first===0){val=0.1;note="You preferred the bigger shared raise even at 11%, so standing matters little to you (set to 0.1, the minimum).";}
-    else if(first<0){val=3;note="You kept the raise for yourself alone even against 50% for everyone, so standing matters a great deal to you (set to 3.0, the maximum).";}
-    else{val=(a(R[first-1])+a(R[first]))/2;note="You switched between "+R[first-1]+"% and "+R[first]+"% for everyone.";}
-    val=clamp(val,0.1,3);
-  }
-  return {val,note,consistent};
-}
-let quiz=null;
-$("quizGo").addEventListener("click",()=>{
-  const res={},missing=[],incons=[];
-  LADDERS.forEach(L=>{const ans=readLadder(L);if(ans.some(a=>a===null)){missing.push(L.title);return;}const e=estimate(L,ans);res[L.key]=e;if(!e.consistent)incons.push(L.title);});
-  if(missing.length){$("quizStatus").textContent="Answer every row first. Still open: "+missing.join(", ")+".";return;}
-  quiz={lam:+res.lam.val.toFixed(1),alpha:+res.alpha.val.toFixed(1),rho:Math.round(res.rho.val*200)/200};
-  $("r_lam").textContent=quiz.lam.toFixed(1)+"×";$("r_lam_s").textContent=res.lam.note;
-  $("r_alpha").textContent=quiz.alpha.toFixed(1);$("r_alpha_s").textContent=res.alpha.note;
-  $("r_rho").textContent=(100*quiz.rho).toFixed(1)+"%";$("r_rho_s").textContent=res.rho.note;
-  $("quizResult").hidden=false;$("quizUseWrap").hidden=false;
-  $("quizStatus").textContent=incons.length?"You switched back and forth in: "+incons.join(", ")+". Those estimates use your first switch and are less reliable; try that set again if you like.":"Your answers were consistent within each set.";
-  updateGoal();if($("c_pre").value==="mine")labHint();
-});
-$("quizClear").addEventListener("click",()=>{document.querySelectorAll('#ladders input').forEach(i=>i.checked=false);quiz=null;$("quizResult").hidden=true;$("quizUseWrap").hidden=true;$("quizStatus").textContent="";updateGoal();});
-$("quizUse").addEventListener("click",()=>{if(!quiz)return;$("lam").value=quiz.lam;$("alpha").value=quiz.alpha;$("rho").value=quiz.rho;recompute();
-  const s=$("quizApplied");s.hidden=false;s.textContent="Using your quiz answers for sting, standing and impatience.";document.getElementById("explore").scrollIntoView({behavior:"smooth"});});
-
-/* ---------- part 2: your finish line ---------- */
-function prefs(){return quiz||{lam:BASE.lam,alpha:BASE.alpha,rho:BASE.rho};}
-function goalModel(rise,save,vol){const pr=prefs();return {delta:rise-save-pr.rho,sig:vol,lam:pr.lam,alpha:pr.alpha,rho:pr.rho};}
-function reachProb(S,x0,seedv){ // Monte Carlo: chance standing reaches 1 before the stopping point, within 30 years
-  if(x0>=1)return {p:1,yrs:0};if(!S.finite)return null;if(x0<=S.xs)return {p:0,yrs:null};
-  const R=rng(seedv||11),N=500,dt=1/12,T=30,sq=Math.sqrt(dt);let hit=0;const times=[];
-  for(let n=0;n<N;n++){let y=Math.log(x0);for(let i=0;i<T/dt;i++){const q=S.P.rho/(1+S.P.rho*S.Fp(y));y+=(S.P.mut-q)*dt-S.P.sig*sq*gauss(R);
-      if(y>=0){hit++;times.push((i+1)*dt);break;} if(y<=S.b)break;}}
-  times.sort((a,c)=>a-c);return {p:hit/N,yrs:times.length?times[Math.floor(times.length/2)]:null};
-}
-let gt=null;
-function updateGoal(){clearTimeout(gt);gt=setTimeout(doGoal,150);}
-function doGoal(){
-  const goal=Math.max(1,+$("g_goal").value||1),have=Math.max(0,+$("g_have").value||0);
-  const rise=+$("g_rise").value,save=+$("g_save").value,vol=+$("g_vol").value;
-  $("o_g_rise").textContent=fmtPct(rise)+"/yr";$("o_g_save").textContent=fmtPct(save)+"/yr";
-  const pr=prefs();$("goalPrefs").textContent=quiz?"Using your quiz answers: sting "+pr.lam.toFixed(1)+"×, standing "+pr.alpha.toFixed(1)+", impatience "+fmtPct(pr.rho)+".":"Using the paper's baseline preferences. Take the quiz in Step 4 to use your own.";
-  const x0=have/goal;$("gs_x").textContent=fmtPct(x0,0);
-  const S=solveModel(goalModel(rise,save,vol),{h:2e-3,iters:44});
-  const v=$("goalVerdict");
-  if(!S.finite){$("gs_xs").textContent="none";$("gs_xs_s").textContent="the model predicts you never stop";$("gs_p").textContent="–";$("gs_p_s").textContent="not computed when there is no stopping point";
-    v.className="verdict good";$("gHead").textContent="The race keeps paying";$("gText").textContent="Your savings are expected to keep pace with this goal closely enough that, in the model, measuring yourself against it never stops paying for itself, at any standing.";
-    levers(rise,save,vol,x0);return;}
-  $("gs_xs").textContent=fmtPct(S.xs,0);$("gs_xs_s").textContent="share of the goal";
-  const pr0=reachProb(S,x0);$("gs_p").textContent=x0>=1?"done":fmtPct(pr0.p,0);
-  $("gs_p_s").textContent=x0>=1?"you are at or past the goal":(pr0.yrs?"within 30 years; when it happens, typically in about "+Math.round(pr0.yrs)+" years":"within 30 years, before the stopping point");
-  if(x0>=1){v.className="verdict good";$("gHead").textContent="You are there";$("gText").textContent="You have reached this goal. If it keeps moving, the model predicts you would keep measuring yourself against it until your savings fell to "+fmtPct(S.xs,0)+" of it.";}
-  else if(x0>S.xs){v.className="verdict good";$("gHead").textContent="Still worth the race";$("gText").textContent="For someone who chooses as you did, measuring yourself against this goal still pays for itself. The model predicts the comparison stops paying if your savings fall to "+fmtPct(S.xs,0)+" of the goal.";}
-  else{v.className="verdict";$("gHead").textContent="Past the model's stopping point";$("gText").textContent="By the model's logic, for someone who chooses as you did, this comparison no longer pays for itself at "+fmtPct(x0,0)+" of the goal. That is a statement about the race as it is now set up, not about the goal: a target that rises more slowly, faster savings, or a smaller goal changes the answer, as the table shows.";}
-  levers(rise,save,vol,x0,S);
-}
-function levers(rise,save,vol,x0){
-  const rows=[["As entered",rise,save,vol],["Goal rises 1 point slower",Math.max(0,rise-0.01),save,vol],["Savings grow 1 point faster",rise,save+0.01,vol],["Goal 10% smaller",rise,save,vol,1/0.9]];
-  const tb=$("goalLevers");tb.innerHTML="";
-  rows.forEach((r,i)=>{const S=solveModel(goalModel(r[1],r[2],r[3]),{h:2e-3,iters:44});const xx=x0*(r[4]||1);
-    const tr=document.createElement("tr");let c1,c2;
-    if(!S.finite){c1="never stops";c2="not computed";}else{c1=fmtPct(S.xs,0);const pp=reachProb(S,xx,11+i);c2=xx>=1?"done":fmtPct(pp.p,0);}
-    tr.innerHTML="<td>"+r[0]+"</td><td>"+c1+"</td><td>"+c2+"</td>";tb.appendChild(tr);});
-}
-["g_goal","g_have","g_rise","g_save","g_vol"].forEach(k=>$(k).addEventListener("input",updateGoal));
-
-/* ---------- part 3: cohort lab ---------- */
-const PRESETS={paper:{lam:2,alpha:0.5,rho:0.05},meta:{lam:1.96,alpha:0.5,rho:0.05}};
-function labHint(){
-  const v=$("c_pre").value,h=$("c_pre_hint");
-  $("c_custom").hidden=v!=="custom";$("c_dataWrap").hidden=v!=="data";$("c_distWrap").hidden=v==="data";
-  h.textContent={paper:"The calibration used in the paper's Table 4.",meta:"Brown, Imai, Vieider and Camerer (2024) estimate a mean of 1.955 across 607 estimates. Standing and impatience stay at the paper's values, which are illustrative.",
-    mine:quiz?"Your answers: sting "+quiz.lam.toFixed(1)+"×, standing "+quiz.alpha.toFixed(1)+", impatience "+fmtPct(quiz.rho)+". Everyone in the cohort is given your preferences.":"Take the quiz in Step 4 first; until then this uses the paper baseline.",
-    custom:"Use estimates for a group from your own survey or literature.",data:"Each respondent gets their own stopping point, so the cohort can differ in preferences as well as standing."}[v];
-}
-function labPrefs(){const v=$("c_pre").value;if(v==="mine")return quiz||PRESETS.paper;if(v==="custom")return {lam:clamp(+$("c_lam").value||2,1,10),alpha:clamp(+$("c_alpha").value||0.5,0.05,5),rho:clamp(+$("c_rho").value||0.05,0.02,0.2)};return PRESETS[v]||PRESETS.paper;}
-function parseCSV(txt){const rows=[];txt.split(/\r?\n/).forEach(line=>{const t=line.trim();if(!t)return;const c=t.split(/[,;\t]/).map(s=>+s.trim());if(c.length<4||c.some(v=>!isFinite(v)))return;rows.push({lam:clamp(c[0],1,10),alpha:clamp(c[1],0.05,5),rho:clamp(c[2],0.02,0.2),x:Math.max(1e-3,c[3])});});return rows;}
-$("c_demo").addEventListener("click",()=>{const R=rng(2026);const lines=["lambda,alpha,rho,standing"];
-  for(let i=0;i<150;i++){const lam=clamp(Math.exp(Math.log(1.9)+0.35*gauss(R)),1,6),al=clamp(Math.exp(Math.log(0.5)+0.6*gauss(R)),0.1,3),rh=clamp(0.05+0.015*gauss(R),0.03,0.1),x=Math.exp(0.25*gauss(R));
-    lines.push(lam.toFixed(2)+","+al.toFixed(2)+","+rh.toFixed(3)+","+x.toFixed(3));}
-  $("c_data").value=lines.join("\n");});
-const cache=new Map();
-function cachedSolve(p){const k=[p.delta,p.sig,p.lam,p.alpha,p.rho].map(v=>v.toFixed(3)).join("|");if(cache.has(k))return cache.get(k);const S=solveModel(p,{h:2e-3,iters:44});if(cache.size>4000)cache.clear();cache.set(k,S);return S;}
-function cohortStats(bench,shift){ // shift: log change in everyone's standing (benchmark jump)
-  const v=$("c_pre").value;let out=0,barely=0,grindSum=0,wsum=0,xsList=[],inf=0;
-  if(v==="data"){
-    const rows=parseCSV($("c_data").value);if(!rows.length)return null;
-    rows.forEach(r=>{const S=cachedSolve({delta:bench.delta,sig:bench.sig,lam:r.lam,alpha:r.alpha,rho:r.rho});const y=Math.log(r.x)+shift;wsum++;
-      if(!S.finite){inf++;return;} xsList.push(S.xs);
-      if(y<=S.b)out++;else{const g=S.grind(y);if(g<0.01)barely++;grindSum+=g;}});
-    xsList.sort((a,c)=>a-c);
-    return {n:wsum,out:out/wsum,barely:barely/wsum,grind:grindSum/wsum,xs:xsList.length?xsList[Math.floor(xsList.length/2)]:null,inf,hetero:true};
-  }
-  const pr=labPrefs();const S=cachedSolve({delta:bench.delta,sig:bench.sig,lam:pr.lam,alpha:pr.alpha,rho:pr.rho});
-  if(!S.finite)return {finite:false};
-  const m=Math.log(+$("c_med").value),s=+$("c_sd").value,N=1601;
-  for(let i=0;i<N;i++){const z=-5+10*i/(N-1),w=Math.exp(-z*z/2),y=m+s*z+shift;wsum+=w;
-    if(y<=S.b)out+=w;else{const g=S.grind(y);if(g<0.01)barely+=w;grindSum+=w*g;}}
-  return {out:out/wsum,barely:barely/wsum,grind:grindSum/wsum,xs:S.xs,finite:true};
-}
-function labLabels(){
-  $("o_c_delta").textContent=((+$("c_delta").value)>=0?"+":"")+(100*$("c_delta").value).toFixed(1)+" pts/yr";
-  $("o_c_sig").textContent=Math.round(100*$("c_sig").value)+"%";
-  $("o_c_med").textContent=fmtPct(+$("c_med").value,0);$("o_c_sd").textContent=(+$("c_sd").value).toFixed(2);
-  const j=+$("s_jump").value;$("o_s_jump").textContent=(j>=0?"+":"")+Math.round(100*j)+"%";
-  const dd=+$("s_dd").value;$("o_s_dd").textContent=(dd>=0?"+":"")+(100*dd).toFixed(1)+" pts";
-  const ds=+$("s_ds").value;$("o_s_ds").textContent=(ds>=0?"+":"")+Math.round(100*ds)+" pts";
-}
-function runLab(){
-  labLabels();const st=$("labStatus");st.textContent="Solving…";
-  setTimeout(()=>{
-    const b0={delta:+$("c_delta").value,sig:+$("c_sig").value};
-    const b1={delta:b0.delta+(+$("s_dd").value),sig:Math.max(0.02,b0.sig+(+$("s_ds").value))};
-    const shift=-Math.log(1+(+$("s_jump").value));
-    const t0=performance.now();const A=cohortStats(b0,0),B=cohortStats(b1,shift);
-    if(!A||!B){st.textContent="Paste at least one valid response row (lambda,alpha,rho,standing), or load the synthetic example.";return;}
-    if(A.finite===false||B.finite===false){st.textContent="With these settings the upside of the race is worth infinitely much for this cohort, so no one stops keeping score. Widen the drift gap or raise impatience.";$("labTable").innerHTML="";$("chC").innerHTML="";return;}
-    drawLab(A,B);
-    st.textContent=(A.hetero?A.n+" respondents. ":"")+((A.inf||B.inf)?(Math.max(A.inf,B.inf)+" respondents have no stopping point under these settings and count as grinding with no measured grind. "):"")+"Solved in "+Math.round(performance.now()-t0)+" ms.";
-  },20);
-}
-function drawLab(A,B){
-  const tb=$("labTable");tb.innerHTML="";
-  const row=(name,a,c,fmt,goodUp)=>{const d=c-a;const cls=Math.abs(d)<1e-9?"":((d>0)===goodUp?"up":"down");
-    const tr=document.createElement("tr");tr.innerHTML="<td>"+name+"</td><td>"+fmt(a)+"</td><td>"+fmt(c)+"</td><td class='"+cls+"'>"+(d>=0?"+":"")+fmt(d)+"</td>";tb.appendChild(tr);};
-  const pp=v=>(100*v).toFixed(1)+"%";
-  if(A.xs!=null&&B.xs!=null)row(A.hetero?"Median stopping point":"Stopping point",A.xs,B.xs,v=>(100*v).toFixed(1)+"%",false);
-  row("Stopped keeping score",A.out,B.out,pp,false);
-  row("In, but barely grinding",A.barely,B.barely,pp,false);
-  row("Average grind",A.grind,B.grind,v=>(100*v).toFixed(2)+"%",true);
-  const tr=document.createElement("tr");const rel=A.grind>0?(B.grind/A.grind-1):0;
-  tr.innerHTML="<td>Change in the cohort's total grind</td><td></td><td></td><td class='"+(rel>=0?"up":"down")+"'>"+(rel>=0?"+":"")+(100*rel).toFixed(0)+"%</td>";tb.appendChild(tr);
-  // stacked bars
-  const svg=$("chC");svg.innerHTML="";const W=640,m={l:70,r:16};const bw=W-m.l-m.r;
-  [["Before",A,30],["After",B,110]].forEach(([lab,S,y0])=>{
-    const segs=[[S.out,"--quit"],[S.barely,"--tape"],[Math.max(0,1-S.out-S.barely),"--stay"]];let x=m.l;
-    const t=el("text",{x:m.l-10,y:y0+28,"text-anchor":"end"},svg);t.textContent=lab;t.setAttribute("style","font-size:13px;fill:var(--ink)");
-    segs.forEach(([v,c])=>{const w=bw*v;if(w>0.5)el("rect",{x,y:y0,width:w,height:44,fill:css(c)},svg);
-      if(w>44){const tt=el("text",{x:x+w/2,y:y0+27,"text-anchor":"middle"},svg);tt.textContent=Math.round(100*v)+"%";tt.setAttribute("style","font-size:13px;fill:"+(c==="--tape"?"#1B1400":"#FFFFFF"));}
-      x+=w;});
-  });
-  [0,0.25,0.5,0.75,1].forEach(v=>{const t=el("text",{x:m.l+bw*v,y:186,"text-anchor":"middle"},svg);t.textContent=Math.round(100*v)+"%";});
-}
-["c_delta","c_sig","c_med","c_sd","s_jump","s_dd","s_ds"].forEach(k=>$(k).addEventListener("input",labLabels));
-$("c_pre").addEventListener("change",labHint);
-$("labGo").addEventListener("click",runLab);
+  const lab=el("text",{x:f.m.l,y:f.H-6},svg);lab.textContent="imposed stopping point (share of the benchmark)";
+  const v=$("verdict");if(Math.abs(xt-Mxs)<0.004){v.className="verdict good";$("vHead").textContent="No harm";$("vText").textContent="This matches their own quitting point.";}
+  else if(xt<Mxs){v.className="verdict";$("vHead").textContent="Forced persistence";$("vText").textContent="Keeping people in until "+pct(xt,1)+" instead of "+pct(Mxs,1)+" costs them "+pct(lv,0)+" of what the race was worth at par."+(lv>1?" They would have been better off stopping on the spot.":"");}
+  else{v.className="verdict";$("vHead").textContent="Pushed out early";$("vText").textContent="Making people stop at "+pct(xt,1)+" throws away "+pct(lv,0)+" of the race's value at par: they lose the chance the benchmark comes back.";}}
+let mt=null;mids.forEach(k=>$(k).addEventListener("input",()=>{mLabels();clearTimeout(mt);mt=setTimeout(mRecompute,140);}));
+let wt=null;$("xt").addEventListener("input",()=>{mLabels();clearTimeout(wt);wt=setTimeout(()=>{if(wCache)drawW();},60);});
+$("m_reset").addEventListener("click",()=>{[["m_delta",.02],["m_sig",.1],["m_lam",2],["m_alpha",.5],["m_rho",.05]].forEach(([k,v])=>$(k).value=v);mRecompute();});
 
 /* ---------- start ---------- */
-if(window.matchMedia){const mq=matchMedia("(prefers-color-scheme: dark)");(mq.addEventListener?mq.addEventListener("change",()=>{recompute();runLab();}):mq.addListener(()=>{recompute();runLab();}));}
-new MutationObserver(()=>{recompute();runLab();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
-buildLadders();labHint();labLabels();recompute();doGoal();runLab();
+const redraw=()=>{if(LAST){drawTraj();}if(MP&&Mpts){drawF();drawQ();drawW();}};
+if(window.matchMedia){const mq=matchMedia("(prefers-color-scheme: dark)");(mq.addEventListener?mq.addEventListener("change",redraw):mq.addListener(redraw));}
+new MutationObserver(redraw).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+fillRoles();syncBench(true);refreshPrompt();run();mRecompute();
 })();
 </script>
 
