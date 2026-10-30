@@ -431,7 +431,7 @@ def sf_all(y, kind, prefixes):
         frames.append(df)
     return pd.concat(frames, axis=1)
 
-ACS_YEARS = [2025, 2024]
+ACS_YEARS = [dt.date.today().year - 1, dt.date.today().year - 2]
 
 @stage("Census ACS")
 def census():
@@ -457,7 +457,7 @@ def census():
         out["src"] = {"us": src, "state": src, "county1": src}
         break
     # 5-year for every county; skipped when the previous run already holds this vintage
-    for y in [2024, 2023]:
+    for y in [dt.date.today().year - 1, dt.date.today().year - 2, dt.date.today().year - 3]:
         tag = f"ACS {y-4}-{y} 5-year"
         have = [c for c in PREV_CTY.values() if c.get("acs") == tag and (c.get("ba") or 0) > 0.08]
         if len(have) > 2500:
