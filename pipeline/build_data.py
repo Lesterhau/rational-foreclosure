@@ -191,18 +191,14 @@ def fhfa_county():
     if r is None:
         raise RuntimeError("download")
     raw = pd.read_excel(io.BytesIO(r.content), header=None)
-    hdr = next(i for i in range(30) if any("FIPS" in str(x) for x in raw.iloc[i].values))
-    df = raw.iloc[hdr + 1:].copy()
-    df.columns = [str(c).strip() for c in raw.iloc[hdr].values]
-    log("   county columns:", list(df.columns))
-    low = {c: c.lower() for c in df.columns}
-    fc = next(c for c in df.columns if "fips" in low[c])
-    yc = next(c for c in df.columns if "year" in low[c])
-    hc = next((c for c in df.columns if low[c] == "hpi"), None) or next(c for c in df.columns if "hpi" in low[c] and "base" not in low[c] and "change" not in low[c])
-    df = df[[fc, yc, hc]].dropna()
+    # Columns by position, per the file's own note: A state, B county, C FIPS, D year, E annual change,
+    # F index (base 100 when first recorded), G base 1990, H base 2000.
+    df = raw.iloc[:, [2, 3, 5]].copy()
     df.columns = ["f", "y", "v"]
-    df["f"] = df["f"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(5)
-    df["y"] = pd.to_numeric(df["y"], errors="coerce"); df["v"] = pd.to_numeric(df["v"], errors="coerce")
+    df["y"] = pd.to_numeric(df["y"], errors="coerce")
+    df["v"] = pd.to_numeric(df["v"], errors="coerce")
+    df = df[(df["y"] > 1960) & (df["y"] < 2100)]
+    df["f"] = df["f"].astype(str).str.replace(r"\.0$", "", regex=True).str.strip().str.zfill(5)
     out = {}
     for f, g in df.dropna().groupby("f"):
         out[f] = {int(a): float(b) for a, b in zip(g["y"], g["v"])}
@@ -371,7 +367,9 @@ def sf_table(y, kind, table, prefixes):
         log("  HTTP", r.status_code, url)
         return None
     rows, hdr = [], None
-    for line in r.iter_lines(decode_unicode=True):
+    for line in r.iter_lines():
+        if isinstance(line, bytes):
+            line = line.decode("utf-8", "replace")
         if hdr is None:
             hdr = line.split("|")
             keep = [k for k, c in enumerate(hdr) if c == "GEO_ID" or (sf_name(c) in NEED)]
