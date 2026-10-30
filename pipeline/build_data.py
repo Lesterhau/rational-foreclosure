@@ -347,6 +347,36 @@ OTHER_VARS = (["B03002_001E", "B03002_003E", "B03002_004E", "B03002_006E", "B030
                "B25003_001E", "B25003_002E", "B25119_002E", "B25119_003E",
                "B11001_001E", "B25001_001E", "B25077_001E", "B01001_001E"])
 
+def acs_record(r):
+    g = lambda v: num(r.get(v))
+    ages = []
+    for k in range(6):
+        ages.append(sum((g(f"B01001_{i:03d}E") or 0) + (g(f"B01001_{i+24:03d}E") or 0) for i in AGE_M[k]))
+    fem = sum(g(f"B01001_{i:03d}E") or 0 for i in range(31, 50))
+    adults = sum(ages) or None
+    tot = g("B03002_001E") or None
+    race = None
+    if tot:
+        w, b, a, h = (g("B03002_003E") or 0), (g("B03002_004E") or 0), (g("B03002_006E") or 0), (g("B03002_012E") or 0)
+        race = [rnd(w / tot), rnd(b / tot), rnd(h / tot), rnd(a / tot), rnd(max(0, tot - w - b - a - h) / tot)]
+    e25 = g("B15003_001E")
+    ba = rnd(sum(g(f"B15003_{i:03d}E") or 0 for i in (22, 23, 24, 25)) / e25) if e25 else None
+    earn = None
+    if g("B20004_001E"):
+        nb = [x for x in (g("B20004_002E"), g("B20004_003E"), g("B20004_004E")) if x]
+        bb = [x for x in (g("B20004_005E"), g("B20004_006E")) if x]
+        earn = {"all": g("B20004_001E"), "noBA": rnd(float(np.mean(nb)), 0) if nb else None, "BA": rnd(float(np.mean(bb)), 0) if bb else None}
+    hh = g("B25003_001E")
+    own = g("B25003_002E")
+    return {"pop": g("B01001_001E"), "ages": [rnd(x, 0) for x in ages], "fem": rnd(fem / adults) if adults else None,
+            "race": race, "ba": ba, "inc": g("B19013_001E"),
+            "incRace": [g("B19013H_001E"), g("B19013B_001E"), g("B19013I_001E"), g("B19013D_001E"), g("B19013G_001E")],
+            "incAge": [g("B19049_002E"), g("B19049_003E"), g("B19049_004E"), g("B19049_005E")],
+            "q": [g(f"B19080_{i:03d}E") for i in range(1, 6)], "earn": earn,
+            "own": rnd(own / hh) if hh and own is not None else None,
+            "incOwn": g("B25119_002E"), "incRent": g("B25119_003E"),
+            "hh": g("B11001_001E"), "units": g("B25001_001E"), "acsVal": g("B25077_001E")}
+
 TABLES = ["b01001", "b03002", "b15003", "b19013", "b19013b", "b19013d", "b19013g", "b19013h", "b19013i", "b19049",
           "b19080", "b20004", "b25003", "b25119", "b11001", "b25001", "b25077"]
 NEED = set(AGE_VARS) | set(OTHER_VARS)
