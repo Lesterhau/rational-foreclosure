@@ -194,9 +194,11 @@ def fhfa_county():
     hdr = next(i for i in range(30) if any("FIPS" in str(x) for x in raw.iloc[i].values))
     df = raw.iloc[hdr + 1:].copy()
     df.columns = [str(c).strip() for c in raw.iloc[hdr].values]
-    fc = next(c for c in df.columns if "FIPS" in c)
-    yc = next(c for c in df.columns if c.lower().startswith("year"))
-    hc = next(c for c in df.columns if c.strip().upper() == "HPI")
+    log("   county columns:", list(df.columns))
+    low = {c: c.lower() for c in df.columns}
+    fc = next(c for c in df.columns if "fips" in low[c])
+    yc = next(c for c in df.columns if "year" in low[c])
+    hc = next((c for c in df.columns if low[c] == "hpi"), None) or next(c for c in df.columns if "hpi" in low[c] and "base" not in low[c] and "change" not in low[c])
     df = df[[fc, yc, hc]].dropna()
     df.columns = ["f", "y", "v"]
     df["f"] = df["f"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(5)
@@ -326,12 +328,14 @@ def zhvi():
         if v:
             f = f"{int(r['StateCodeFIPS']):02d}{int(r['MunicipalCodeFIPS']):03d}"
             out["county"][f] = (v, last)
+            out.setdefault("cname", {})[(str(r["RegionName"]).lower(), f[:2])] = f
+            out.setdefault("cnameRev", {})[f] = str(r["RegionName"])
     df, last = zillow("City")
     stc = "State" if "State" in df.columns else "StateName"
     for _, r in df.iterrows():
         v = num(r[last])
         if v:
-            out["city"][(str(r["RegionName"]).lower(), str(r[stc]).upper())] = (v, last)
+            out["city"][(str(r["RegionName"]).lower(), str(r[stc]).upper())] = (v, last, str(r.get("CountyName", "")))
     log("   states", len(out["state"]), "counties", len(out["county"]), "cities", len(out["city"]), "date", last)
     return out
 
@@ -347,56 +351,57 @@ OTHER_VARS = (["B03002_001E", "B03002_003E", "B03002_004E", "B03002_006E", "B030
                "B25003_001E", "B25003_002E", "B25119_002E", "B25119_003E",
                "B11001_001E", "B25001_001E", "B25077_001E", "B01001_001E"])
 
-def acs(year, ds, geo, vars_):
-    url = f"https://api.census.gov/data/{year}/{ds}?get=NAME,{','.join(vars_)}&for={geo}" + (f"&key={KEY}" if KEY else "")
-    r = get(url, tries=3)
+TABLES = ["b01001", "b03002", "b15003", "b19013", "b19013b", "b19013d", "b19013g", "b19013h", "b19013i", "b19049",
+          "b19080", "b20004", "b25003", "b25119", "b11001", "b25001", "b25077"]
+NEED = set(AGE_VARS) | set(OTHER_VARS)
+SFBASE = "https://www2.census.gov/programs-surveys/acs/summary_file/{y}/table-based-SF/"
+PREFIX = {"us": "0100000US", "state": "0400000US", "county": "0500000US", "place": "1600000US"}
+
+def sf_name(c):
+    """B01001_E007 -> B01001_007E"""
+    if "_E" in c:
+        t, n = c.split("_E", 1)
+        return f"{t}_{n}E"
+    return None
+
+def sf_table(y, kind, table, prefixes):
+    url = SFBASE.format(y=y) + f"data/{kind}YRData/acsdt{kind.lower()}y{y}-{table}.dat"
+    r = requests.get(url, headers=UA, timeout=600, stream=True)
+    if r.status_code != 200:
+        log("  HTTP", r.status_code, url)
+        return None
+    rows, hdr = [], None
+    for line in r.iter_lines(decode_unicode=True):
+        if hdr is None:
+            hdr = line.split("|")
+            keep = [k for k, c in enumerate(hdr) if c == "GEO_ID" or (sf_name(c) in NEED)]
+            continue
+        if line.startswith(prefixes):
+            parts = line.split("|")
+            rows.append([parts[k] for k in keep])
+    cols = ["GEO_ID" if hdr[k] == "GEO_ID" else sf_name(hdr[k]) for k in keep]
+    return pd.DataFrame(rows, columns=cols).set_index("GEO_ID")
+
+def sf_names(y, kind):
+    url = SFBASE.format(y=y) + f"documentation/Geos{y}{kind}YR.txt"
+    r = get(url, tries=2)
     if r is None:
-        return None
+        return {}
     try:
-        rows = r.json()
-    except Exception:
-        log("   not JSON:", r.text[:200])
-        return None
-    return pd.DataFrame(rows[1:], columns=rows[0])
+        df = pd.read_csv(io.StringIO(r.content.decode("utf-8", "replace")), sep="|", dtype=str)
+        return dict(zip(df["GEO_ID"], df["NAME"]))
+    except Exception as e:
+        log("   geos parse", e)
+        return {}
 
-def acs_geo(year, ds, geo):
-    a = acs(year, ds, geo, AGE_VARS)
-    time.sleep(1)
-    b = acs(year, ds, geo, OTHER_VARS)
-    if a is None or b is None:
-        return None
-    keys = [c for c in a.columns if c not in AGE_VARS and c != "NAME"]
-    return a.merge(b.drop(columns=["NAME"]), on=keys)
-
-def acs_record(r):
-    g = lambda v: num(r.get(v))
-    ages = []
-    for k in range(6):
-        ages.append(sum((g(f"B01001_{i:03d}E") or 0) + (g(f"B01001_{i+24:03d}E") or 0) for i in AGE_M[k]))
-    fem = sum(g(f"B01001_{i:03d}E") or 0 for i in range(31, 50))
-    adults = sum(ages) or None
-    tot = g("B03002_001E") or None
-    race = None
-    if tot:
-        w, b, a, h = (g("B03002_003E") or 0), (g("B03002_004E") or 0), (g("B03002_006E") or 0), (g("B03002_012E") or 0)
-        race = [rnd(w / tot), rnd(b / tot), rnd(h / tot), rnd(a / tot), rnd(max(0, tot - w - b - a - h) / tot)]
-    e25 = g("B15003_001E")
-    ba = rnd(sum(g(f"B15003_{i:03d}E") or 0 for i in (22, 23, 24, 25)) / e25) if e25 else None
-    earn = None
-    if g("B20004_001E"):
-        nb = [g(f"B20004_{i:03d}E") for i in (2, 3, 4)]
-        bb = [g("B20004_005E"), g("B20004_006E")]
-        earn = {"all": g("B20004_001E"), "noBA": rnd(np.nanmean([x for x in nb if x]) if any(nb) else None, 0),
-                "BA": rnd(np.nanmean([x for x in bb if x]) if any(bb) else None, 0)}
-    hh = g("B25003_001E")
-    return {"pop": g("B01001_001E"), "ages": [rnd(x, 0) for x in ages], "fem": rnd(fem / adults) if adults else None,
-            "race": race, "ba": ba, "inc": g("B19013_001E"),
-            "incRace": [g("B19013H_001E"), g("B19013B_001E"), g("B19013I_001E"), g("B19013D_001E"), g("B19013G_001E")],
-            "incAge": [g("B19049_002E"), g("B19049_003E"), g("B19049_004E"), g("B19049_005E")],
-            "q": [g(f"B19080_{i:03d}E") for i in range(1, 6)], "earn": earn,
-            "own": rnd(g("B25003_002E") / hh) if hh and g("B25003_002E") is not None else None,
-            "incOwn": g("B25119_002E"), "incRent": g("B25119_003E"),
-            "hh": g("B11001_001E"), "units": g("B25001_001E"), "acsVal": g("B25077_001E")}
+def sf_all(y, kind, prefixes):
+    frames = []
+    for t in TABLES:
+        df = sf_table(y, kind, t, prefixes)
+        if df is None:
+            return None
+        frames.append(df)
+    return pd.concat(frames, axis=1)
 
 ACS_YEARS = [2025, 2024]
 
@@ -404,53 +409,48 @@ ACS_YEARS = [2025, 2024]
 def census():
     out = {"us": None, "state": {}, "county": {}, "place": {}, "src": {}}
     for y in ACS_YEARS:
-        df = acs_geo(y, "acs/acs1", "us:1")
-        if df is not None:
-            out["us"] = acs_record(df.iloc[0].to_dict()); out["src"]["us"] = f"ACS {y} 1-year"; break
-    for y in ACS_YEARS:
-        df = acs_geo(y, "acs/acs1", "state:*")
-        if df is not None:
-            for _, r in df.iterrows():
-                out["state"][r["state"]] = acs_record(r.to_dict())
-            out["src"]["state"] = f"ACS {y} 1-year"; break
+        df = sf_all(y, "1", (PREFIX["us"], PREFIX["state"], PREFIX["county"], PREFIX["place"]))
+        if df is None or not len(df):
+            continue
+        names = sf_names(y, "1")
+        src = f"ACS {y} 1-year"
+        for gid, r in df.iterrows():
+            rec = acs_record(r.to_dict())
+            code = gid.split("US", 1)[1]
+            if gid.startswith(PREFIX["us"]):
+                out["us"] = rec
+            elif gid.startswith(PREFIX["state"]):
+                out["state"][code] = rec
+            elif gid.startswith(PREFIX["county"]):
+                rec["name"] = names.get(gid, ""); rec["acs"] = src; out["county"][code] = rec
+            elif gid.startswith(PREFIX["place"]):
+                rec["name"] = names.get(gid, ""); rec["acs"] = src; out["place"][code] = rec
+        out["src"] = {"us": src, "state": src, "county1": src}
+        break
+    # 5-year for every county; skipped when the previous run already holds this vintage
     for y in [2024, 2023]:
-        df = acs_geo(y, "acs/acs5", "county:*")
-        if df is not None:
-            for _, r in df.iterrows():
-                rec = acs_record(r.to_dict()); rec["name"] = r["NAME"]; rec["acs"] = f"ACS {y-4}-{y} 5-year"
-                out["county"][r["state"] + r["county"]] = rec
+        tag = f"ACS {y-4}-{y} 5-year"
+        have = [c for c in PREV_CTY.values() if c.get("acs") == tag]
+        if len(have) > 2500:
+            log("   5-year", tag, "already loaded; keeping previous values for small counties")
+            out["src"]["county5"] = tag
             break
-    for y in ACS_YEARS:
-        df = acs_geo(y, "acs/acs1", "county:*")
-        if df is not None:
-            for _, r in df.iterrows():
-                rec = acs_record(r.to_dict()); rec["name"] = r["NAME"]; rec["acs"] = f"ACS {y} 1-year"
-                out["county"][r["state"] + r["county"]] = rec
-            break
-    for y in ACS_YEARS:
-        df = acs_geo(y, "acs/acs1", "place:*&in=state:*")
-        if df is None:
-            df = acs_geo(y, "acs/acs1", "place:*")
-        if df is not None:
-            for _, r in df.iterrows():
-                rec = acs_record(r.to_dict()); rec["name"] = r["NAME"]; rec["acs"] = f"ACS {y} 1-year"
-                out["place"][r["state"] + r["place"]] = rec
-            break
+        df = sf_all(y, "5", (PREFIX["county"],))
+        if df is None or not len(df):
+            continue
+        names = sf_names(y, "5")
+        n = 0
+        for gid, r in df.iterrows():
+            code = gid.split("US", 1)[1]
+            if code in out["county"]:
+                continue
+            rec = acs_record(r.to_dict()); rec["name"] = names.get(gid, ""); rec["acs"] = tag
+            out["county"][code] = rec; n += 1
+        out["src"]["county5"] = tag
+        log("   5-year counties added:", n)
+        break
     log("   us", bool(out["us"]), "states", len(out["state"]), "counties", len(out["county"]), "places", len(out["place"]), out["src"])
     return out
-
-@stage("Place-to-county file")
-def place_county():
-    r = get("https://www2.census.gov/geo/docs/maps-data/data/rel2020/place/tab20_place20_county20_natl.txt")
-    if r is None:
-        raise RuntimeError("download")
-    df = pd.read_csv(io.StringIO(r.text), sep="|", dtype=str)
-    pc = next(c for c in df.columns if c.startswith("GEOID_PLACE"))
-    cc = next(c for c in df.columns if c.startswith("GEOID_COUNTY"))
-    ac = next(c for c in df.columns if c.startswith("AREALAND_PART"))
-    df[ac] = pd.to_numeric(df[ac], errors="coerce")
-    df = df.dropna(subset=[pc, cc]).sort_values(ac, ascending=False).drop_duplicates(pc)
-    return dict(zip(df[pc], df[cc]))
 
 # ---------------------------------------------------------------- assemble
 def main():
@@ -462,7 +462,6 @@ def main():
     W = qcew()
     Z = zhvi() or {"state": {}, "county": {}, "city": {}, "us": None}
     C = census() or {"us": None, "state": {}, "county": {}, "place": {}, "src": {}}
-    PC = place_county() or {}
 
     prev_states = {s["f"]: s for s in PREV_CORE.get("states", [])}
 
@@ -511,6 +510,8 @@ def main():
         if f in C.get("county", {}):
             c = C["county"][f]; rec.update({k: v for k, v in c.items() if k != "name"})
             rec["n"] = c["name"].split(",")[0]
+        if not rec.get("n"):
+            rec["n"] = Z.get("cnameRev", {}).get(f, "")
         if f in FC:
             rec["hpi"] = hpi_stats_y(FC[f]); rec["hpi"]["src"] = "FHFA county index (annual)"
         p = pay_stats(W, f)
@@ -530,8 +531,6 @@ def main():
         if f in C.get("place", {}):
             c = C["place"][f]; rec.update({k: v for k, v in c.items() if k != "name"})
             rec["n"] = c["name"].split(",")[0]
-        if f in PC:
-            rec["c"] = PC[f]
         nm = rec.get("n", "")
         for suf in (" city and borough", " consolidated government (balance)", " metropolitan government (balance)", " unified government (balance)",
                     " city (balance)", " (balance)", " municipality", " borough", " city", " town", " village", " CDP", " urban county"):
@@ -541,6 +540,9 @@ def main():
         z = Z.get("city", {}).get((nm.lower(), FIPS[f[:2]]))
         if z:
             rec["val"], rec["valDate"] = rnd(z[0], 0), z[1]
+            cf = Z.get("cname", {}).get((z[2].lower(), f[:2]))
+            if cf:
+                rec["c"] = cf
         places.append(rec)
 
     core = {"built": dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%MZ"), "fed": F, "us": us, "states": states,
