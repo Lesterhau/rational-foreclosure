@@ -1,0 +1,46 @@
+name: Update Hope Gap data
+
+# Refreshes the planning tool's data twice a week from FRED, FHFA, BLS QCEW, Zillow and the
+# Census Bureau, and publishes it to the gh-pages branch under /data.
+on:
+  schedule:
+    - cron: "17 13 * * 1,4"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["pipeline/**", ".github/workflows/data.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hope-gap-data
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas numpy requests openpyxl
+      - name: Check out gh-pages
+        run: |
+          git fetch origin gh-pages
+          git worktree add pages origin/gh-pages
+      - name: Build data
+        env:
+          CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+        run: python pipeline/build_data.py out pages/data
+      - name: Publish
+        run: |
+          mkdir -p pages/data
+          cp out/* pages/data/
+          cd pages
+          git config user.name "hope-gap-data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "Update Hope Gap data $(date -u +%F)" && git push origin HEAD:gh-pages; fi
