@@ -447,6 +447,7 @@ def census():
             code = gid.split("US", 1)[1]
             if gid.startswith(PREFIX["us"]):
                 out["us"] = rec
+                log("   US B15003:", {k: r.get(k) for k in ["B15003_001E", "B15003_021E", "B15003_022E", "B15003_023E", "B15003_024E", "B15003_025E"]})
             elif gid.startswith(PREFIX["state"]):
                 out["state"][code] = rec
             elif gid.startswith(PREFIX["county"]):
@@ -565,7 +566,17 @@ def main():
             if nm.endswith(suf):
                 nm = nm[: -len(suf)]
                 break
-        z = Z.get("city", {}).get((nm.lower(), FIPS[f[:2]]))
+        cands = [nm]
+        base = nm.split("(")[0].strip()
+        cands += [base, base.replace("St. ", "Saint "), base.replace("Saint ", "St. "), base.split("-")[0].strip(), base.split("/")[0].strip(),
+                  base.replace("Urban ", ""), base.replace(" City", ""), base.replace("Ventura", "San Buenaventura")]
+        if "(" in nm:
+            cands.append(nm.split("(")[1].split(")")[0])
+        z = None
+        for cn in cands:
+            z = Z.get("city", {}).get((cn.lower(), FIPS[f[:2]]))
+            if z:
+                break
         if z:
             rec["val"], rec["valDate"] = rnd(z[0], 0), z[1]
             cf = Z.get("cname", {}).get((z[2].lower(), f[:2]))
