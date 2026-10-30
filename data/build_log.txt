@@ -1,17 +1,18 @@
 == FRED national series
-   FRED national series: ok in 10s
+   FRED national series: ok in 8s
 == FHFA state index
    states: 51 latest (2026, 2)
    FHFA state index: ok in 0s
 == FHFA county index
+   county columns: ['* These annual county indexes should be considered developmental. As with the standard FHFA HPIs, revisions to these indexes may reflect the impact of new data or technical adjustments. Indexes are calibrated using appraisal values and sales prices for mortgages bought or guaranteed by Fannie Mae and Freddie Mac. In cases where sample sizes are small for the county area, an index is either not reported if recording has not started or a missing value is reported with a period ("."). Index values always reflect the native county index, i.e. they are not made with data from another area or year. Three HPI values are provided and, since the indexes reflect cumulative appreciation since a certain period, the values reflect the base year being used (annual appreciations are the same). Column A is the state, Column B is the county name, Column C is the county\'s FIPS code, Column D is the year, Column E is the annual change, Column F is the index value with a base of 100 when first recorded, Column G is the index value with a base of 100 in 1990, and Column H is the index value with a base of 100 in 2000. If a county HPI has a missing value in Column F in 1990 or 2000 then the county HPI will have blank values in Column G or H, respectively.', 'nan', 'nan', 'nan', 'nan', 'nan', 'nan', 'nan']
    FHFA county index: FAILED StopIteration()
 Traceback (most recent call last):
   File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 66, in run
     out = fn(*a, **k)
           ^^^^^^^^^^^
-  File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 198, in fhfa_county
-    yc = next(c for c in df.columns if c.lower().startswith("year"))
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 201, in fhfa_county
+    hc = next((c for c in df.columns if low[c] == "hpi"), None) or next(c for c in df.columns if "hpi" in low[c] and "base" not in low[c] and "change" not in low[c])
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 StopIteration
 
 == BLS QCEW wages
@@ -23,167 +24,26 @@ StopIteration
    10y back: 4426
   HTTP 404 https://data.bls.gov/cew/data/api/1990/a/industry/10.csv
    annual 2025 4451 1990 4343
-   BLS QCEW wages: ok in 11s
+   BLS QCEW wages: ok in 8s
 == Zillow home values
    states 51 counties 3071 cities 21338 date 2026-09-30
-   Zillow home values: ok in 6s
+   Zillow home values: ok in 7s
 == Census ACS
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   not JSON: <html style="font-size: 14px;">
-
-<head>
-    <title>Missing Key</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-   us False states 0 counties 0 places 0 {}
-   Census ACS: ok in 17s
-== Place-to-county file
-  HTTP 404 https://www2.census.gov/geo/docs/maps-data/data/rel2020/place/tab20_place20_county20_natl.txt
-   Place-to-county file: FAILED RuntimeError('download')
+   Census ACS: FAILED TypeError("a bytes-like object is required, not 'str'")
 Traceback (most recent call last):
   File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 66, in run
     out = fn(*a, **k)
           ^^^^^^^^^^^
-  File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 446, in place_county
-    raise RuntimeError("download")
-RuntimeError: download
+  File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 412, in census
+    df = sf_all(y, "1", (PREFIX["us"], PREFIX["state"], PREFIX["county"], PREFIX["place"]))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 400, in sf_all
+    df = sf_table(y, kind, t, prefixes)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/rational-foreclosure/rational-foreclosure/pipeline/build_data.py", line 376, in sf_table
+    hdr = line.split("|")
+          ^^^^^^^^^^^^^^^
+TypeError: a bytes-like object is required, not 'str'
 
-wrote core (51 states), 0 counties, 0 places in 50s
-status {"FRED national series": "ok", "FHFA state index": "ok", "FHFA county index": "failed: StopIteration()", "BLS QCEW wages": "ok", "Zillow home values": "ok", "Census ACS": "ok", "Place-to-county file": "failed: RuntimeError('download')"}
+wrote core (51 states), 0 counties, 0 places in 28s
+status {"FRED national series": "ok", "FHFA state index": "ok", "FHFA county index": "failed: StopIteration()", "BLS QCEW wages": "ok", "Zillow home values": "ok", "Census ACS": "failed: TypeError(\"a bytes-like object is required, not 'str'\")"}
