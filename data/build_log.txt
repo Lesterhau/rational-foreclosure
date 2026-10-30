@@ -15,14 +15,14 @@
    10y back: 4426
   HTTP 404 https://data.bls.gov/cew/data/api/1990/a/industry/10.csv
    annual 2025 4451 1990 4343
-   BLS QCEW wages: ok in 8s
+   BLS QCEW wages: ok in 10s
 == Zillow home values
    states 51 counties 3071 cities 21338 date 2026-09-30
    Zillow home values: ok in 7s
 == Census ACS
-   US B15003: {'B15003_001E': '238379028', 'B15003_021E': None, 'B15003_022E': '5838427', 'B15003_023E': '4388310', 'B15003_024E': None, 'B15003_025E': None}
+   US education check (B06009): {'B06009_001E': '238379028', 'B06009_005E': '53224312', 'B06009_006E': '35816011'} BA+ share 0.3735
    5-year counties added: 2359
    us True states 52 counties 3222 places 672 {'us': 'ACS 2025 1-year', 'state': 'ACS 2025 1-year', 'county1': 'ACS 2025 1-year', 'county5': 'ACS 2020-2024 5-year'}
-   Census ACS: ok in 26s
-wrote core (51 states), 3144 counties, 666 places in 56s
+   Census ACS: ok in 28s
+wrote core (51 states), 3144 counties, 666 places in 62s
 status {"FRED national series": "ok", "FHFA state index": "ok", "FHFA county index": "ok", "BLS QCEW wages": "ok", "Zillow home values": "ok", "Census ACS": "ok"}
