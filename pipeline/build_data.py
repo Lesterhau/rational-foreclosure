@@ -339,7 +339,7 @@ def zhvi():
 AGE_M = {0: [7, 8, 9, 10], 1: [11, 12], 2: [13, 14], 3: [15, 16], 4: [17, 18, 19], 5: [20, 21, 22, 23, 24, 25]}
 AGE_VARS = [f"B01001_{i:03d}E" for i in range(7, 26)] + [f"B01001_{i:03d}E" for i in range(31, 50)]
 OTHER_VARS = (["B03002_001E", "B03002_003E", "B03002_004E", "B03002_006E", "B03002_012E",
-               "B15003_001E", "B15003_022E", "B15003_023E", "B15003_024E", "B15003_025E",
+               "B06009_001E", "B06009_005E", "B06009_006E",
                "B19013_001E", "B19013H_001E", "B19013B_001E", "B19013I_001E", "B19013D_001E", "B19013G_001E",
                "B19049_002E", "B19049_003E", "B19049_004E", "B19049_005E",
                "B19080_001E", "B19080_002E", "B19080_003E", "B19080_004E", "B19080_005E",
@@ -359,8 +359,8 @@ def acs_record(r):
     if tot:
         w, b, a, h = (g("B03002_003E") or 0), (g("B03002_004E") or 0), (g("B03002_006E") or 0), (g("B03002_012E") or 0)
         race = [rnd(w / tot), rnd(b / tot), rnd(h / tot), rnd(a / tot), rnd(max(0, tot - w - b - a - h) / tot)]
-    e25 = g("B15003_001E")
-    ba = rnd(sum(g(f"B15003_{i:03d}E") or 0 for i in (22, 23, 24, 25)) / e25) if e25 else None
+    e25 = g("B06009_001E")
+    ba = rnd(((g("B06009_005E") or 0) + (g("B06009_006E") or 0)) / e25) if e25 else None
     earn = None
     if g("B20004_001E"):
         nb = [x for x in (g("B20004_002E"), g("B20004_003E"), g("B20004_004E")) if x]
@@ -377,7 +377,7 @@ def acs_record(r):
             "incOwn": g("B25119_002E"), "incRent": g("B25119_003E"),
             "hh": g("B11001_001E"), "units": g("B25001_001E"), "acsVal": g("B25077_001E")}
 
-TABLES = ["b01001", "b03002", "b15003", "b19013", "b19013b", "b19013d", "b19013g", "b19013h", "b19013i", "b19049",
+TABLES = ["b01001", "b03002", "b06009", "b19013", "b19013b", "b19013d", "b19013g", "b19013h", "b19013i", "b19049",
           "b19080", "b20004", "b25003", "b25119", "b11001", "b25001", "b25077"]
 NEED = set(AGE_VARS) | set(OTHER_VARS)
 SFBASE = "https://www2.census.gov/programs-surveys/acs/summary_file/{y}/table-based-SF/"
@@ -447,7 +447,7 @@ def census():
             code = gid.split("US", 1)[1]
             if gid.startswith(PREFIX["us"]):
                 out["us"] = rec
-                log("   US B15003:", {k: r.get(k) for k in ["B15003_001E", "B15003_021E", "B15003_022E", "B15003_023E", "B15003_024E", "B15003_025E"]})
+                log("   US education check (B06009):", {k: r.get(k) for k in ["B06009_001E", "B06009_005E", "B06009_006E"]}, "BA+ share", rec["ba"])
             elif gid.startswith(PREFIX["state"]):
                 out["state"][code] = rec
             elif gid.startswith(PREFIX["county"]):
@@ -459,7 +459,7 @@ def census():
     # 5-year for every county; skipped when the previous run already holds this vintage
     for y in [2024, 2023]:
         tag = f"ACS {y-4}-{y} 5-year"
-        have = [c for c in PREV_CTY.values() if c.get("acs") == tag]
+        have = [c for c in PREV_CTY.values() if c.get("acs") == tag and (c.get("ba") or 0) > 0.08]
         if len(have) > 2500:
             log("   5-year", tag, "already loaded; keeping previous values for small counties")
             out["src"]["county5"] = tag
