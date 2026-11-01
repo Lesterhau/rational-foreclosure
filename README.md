@@ -1,97 +1,65 @@
-# Rational Foreclosure: A Stochastic Reference Point Model of Aspirational Abandonment under Positional Drift
+# Rational Foreclosure
 
-[![SSRN](https://img.shields.io/badge/SSRN-6614858-blue?style=flat-square)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858)
-[![Harvard Dataverse](https://img.shields.io/badge/DOI-10.7910%2FDVN%2FV5NSZX-C90016?style=flat-square)](https://doi.org/10.7910/DVN/V5NSZX)
-[![ORCID](https://img.shields.io/badge/ORCID-0009--0002--7840--5676-A6CE39?style=flat-square&logo=orcid)](https://orcid.org/0009-0002-7840-5676)
-[![Version](https://img.shields.io/badge/Version-7.0-green?style=flat-square)]()
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey?style=flat-square)](https://creativecommons.org/licenses/by/4.0/)
+**Paper:** Lester, R. (2026). *Rational Foreclosure: Why the Workers Who Stopped Grinding May Be the Sane Ones.* Working paper, University of Houston. [SSRN 6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858).
 
-**Author:** Ryan S. Lester, RL Perspectives, LLC · University of Houston
+**Planning tool:** [The Hope Gap](https://lesterhau.github.io/rational-foreclosure/), for federal, state, county and city officials. Data refresh twice a week.
 
----
+**Replication package:** Harvard Dataverse, [doi:10.7910/DVN/V5NSZX](https://doi.org/10.7910/DVN/V5NSZX) (version 2 is the October 2026 revision).
 
-## Abstract
+## What the paper shows
 
-Why do people abandon aspirations they once pursued with genuine commitment? Standard rational choice models treat goal revision as a straightforward utility-maximizing update. This paper argues otherwise.
+A loss-averse agent measures her wealth against a benchmark that moves at random (local house prices, the cost of living) and may stop keeping score for good. The paper proves that she quits at a threshold strictly below the benchmark, with an explicit lower bound; that a more volatile benchmark delays quitting, which gives hope an exact value; that a benchmark that runs away hastens it; and that holding her in the race past her threshold has an exact, strictly positive welfare cost. Because the benchmark is shared, one shock moves a whole cohort toward its threshold at once.
 
-I develop a continuous-time stochastic model in which agents maintain aspirational reference points that drift upward with peer comparison signals, while their subjective assessment of their own trajectory is shaped by both current position and accumulated positional history. The central result — the **Volatility-Delay Theorem (Theorem 2)** — establishes that aspiration volatility increases option value, causing rational agents to delay foreclosure longer than naive expected-utility maximization would predict. Crucially, this delay is not irrational: it reflects the real option value of waiting in an uncertain positional environment.
+## What the tool does
 
-The model generates empirically testable predictions about the timing and conditions of aspirational abandonment, with applications to educational attainment, occupational choice, entrepreneurship, and social mobility research.
+Pick a place, a goal (owning a home, or keeping up with the cost of living) and a group. The tool reports the **Hope Gap** for that place (the tipping point minus the gap between the goal's growth and pay growth, in points a year; above zero means hope holds), the model's quitting point, how many people are past it, what happens under several scenarios, and what it would take in homes built or pay growth to close the gap, with a dated plan for the chosen office. The model is solved in the browser; nothing the user enters leaves the page.
 
-**Key theoretical contributions:**
-- Stochastic reference point dynamics incorporating Kőszegi-Rabin loss aversion
-- BVP (boundary value problem) reformulation of the foreclosure decision
-- Volatility-delay theorem establishing that σ_R delays foreclosure via option value channel
-- Positional weight theorem (Theorem 4): positional weight delays foreclosure, scaling in σ_R
-- Defense of H non-C² discontinuity against technical objections (Section 3.3)
-
----
-
-## Theoretical Antecedents
-
-| Author(s) | Paper | Contribution to This Work |
-|---|---|---|
-| Kőszegi & Rabin (2006) | *A Model of Reference-Dependent Preferences* | Core reference point framework |
-| Henderson (2012) | *Prospect Theory, Liquidation, and the Disposition Effect* | Option-value approach to loss aversion |
-| Genicot & Ray (2017) | *Aspirations and Inequality* | Aspiration formation and social dynamics |
-
----
-
-## Repository Structure
+## Repository layout
 
 ```
-rational-foreclosure/
-├── paper/
-│   └── rational_foreclosure_v7.pdf        # Current manuscript
-├── data/
-│   └── README_dataverse.md                # Links to Harvard Dataverse (DOI pending)
-├── code/
-│   ├── simulation/
-│   │   ├── bvp_solver.py                  # BVP reformulation solver
-│   │   ├── monte_carlo_paths.py           # Stochastic path simulations
-│   │   └── foreclosure_threshold.py       # Threshold computation
-│   ├── figures/
-│   │   └── generate_figures.py            # All paper figures
-│   └── requirements.txt
-└── replication/
-    └── REPLICATION.md                     # Replication instructions
+.
+├── pipeline/build_data.py        # builds data/core.json, counties.json, places.json from FRED, FHFA, BLS QCEW, Zillow and the Census API
+├── .github/workflows/data.yml    # runs the pipeline twice a week and publishes to the gh-pages branch under /data
+├── code/                         # replication code for the paper (mirror of the Dataverse package, version 2)
+├── data/README.md                # where the tool's data live and how they are built
+└── README.md
 ```
 
----
+The `gh-pages` branch holds the live page (`index.html`) and the published data (`data/`). An offline copy of the page, with a data snapshot built in, is in the Dataverse package (`tool/the_hope_gap.html`).
 
-## Data
+## Replication
 
-The foreclosure dataset is archived at **Harvard Dataverse** (DOI activation pending). Upon DOI activation, all data and replication code will be fully public and citable.
+```bash
+pip install numpy scipy matplotlib
+cd code
+python3 sweeps.py        # Tables 2 and 3 and the table in Result 1
+python3 welfare.py       # Proposition 4 magnitudes, Result 3, Figure 2
+python3 cohort.py        # Table 4
+python3 figs.py          # Figures 1 and 2
+```
 
----
+`appendixA_numerical_checks.py` runs the 243-point scan behind Appendix C (10 to 20 minutes). `shoot.py` is the independent shooting solver used by the tool; it matches the collocation solver to four digits. See `code/README.md` for the full table of scripts and the results each reproduces.
 
-## Status
+## Data sources for the tool
 
-| Milestone | Status |
-|---|---|
-| Paper draft (v7.2) | ✅ Complete |
-| Harvard Dataverse DOI | ✅ Active — [10.7910/DVN/V5NSZX](https://doi.org/10.7910/DVN/V5NSZX) |
-| SSRN preprint | ✅ Posted — [abstract_id=6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858) |
-| Co-author search (PDE expert, Conjecture 1 → Theorem 1) | 🔄 Active — UH authorized |
-| Journal submission | 📋 Target: *Theoretical Economics* |
-
----
+FRED (BLS and BEA national series), FHFA House Price Index (state and county), BLS Quarterly Census of Employment and Wages, Zillow Home Value Index, Census American Community Survey. Sources, dates and fallbacks are listed on the page under *Data and methods*.
 
 ## Citation
 
 ```bibtex
 @unpublished{lester2026foreclosure,
-  author  = {Lester, Ryan S.},
-  title   = {Rational Foreclosure: A Stochastic Reference Point Model of 
-             Aspirational Abandonment under Positional Drift},
-  year    = {2026},
-  note    = {Pre-publication manuscript, v7. SSRN preprint forthcoming.},
-  url     = {https://github.com/Lesterhau/rational-foreclosure}
+  author = {Lester, Ryan},
+  title  = {Rational Foreclosure: Why the Workers Who Stopped Grinding May Be the Sane Ones},
+  year   = {2026},
+  note   = {Working paper, University of Houston. SSRN 6614858. Replication package: doi:10.7910/DVN/V5NSZX},
+  url    = {https://github.com/Lesterhau/rational-foreclosure}
 }
 ```
 
----
+## License
+
+CC BY 4.0 (code, text and data). Data published under `data/` on the `gh-pages` branch are derived from the public sources listed above and remain subject to their terms.
 
 ## Contact
 
-**Ryan S. Lester** · rslester@cougarnet.uh.edu · [ORCID](https://orcid.org/0009-0002-7840-5676) · [RL Perspectives](https://rlperspectives.com)
+Ryan Lester, rslester@cougarnet.uh.edu, [ORCID 0009-0002-7840-5676](https://orcid.org/0009-0002-7840-5676).
