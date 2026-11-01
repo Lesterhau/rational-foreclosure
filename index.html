@@ -13,7 +13,7 @@
    then the teaching section with sliders and the data notes. Each step is a card; inputs sit above the outputs they drive. */
 :root{
   --paper:#F3F6FA; --card:#FFFFFF; --ink:#12223A; --muted:#566880; --rule:#D3DBE6;
-  --stay:#1C6E8C; --stay-soft:#D7E9F0; --quit:#B7471B; --quit-soft:#F6E1D6; --tape:#D9A400; --tape-soft:#FBF1CF; --mid:#7E8FA6; --good:#2F7D4F; --good-soft:#DCEFE3;
+  --stay:#1C6E8C; --stay-soft:#D7E9F0; --quit:#B7471B; --quit-soft:#F6E1D6; --tape:#D9A400; --tape-soft:#FBF1CF; --mid:#5E7089; --good:#2F7D4F; --good-soft:#DCEFE3;
   --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --body:"Source Serif 4",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -39,7 +39,15 @@ p{margin:0;max-width:70ch}
 .hero{display:grid;gap:14px}
 .hero .dek{font-size:20px}
 .meta{font-family:var(--ui);font-size:14px;color:var(--muted)}
-nav.parts{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.04em;text-transform:uppercase}
+nav.parts{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.04em;text-transform:uppercase;align-items:center}
+a.cta{display:inline-block;font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--paper);text-decoration:none;border-radius:6px;padding:12px 18px;margin-right:10px}
+a.cta:hover{opacity:.92}
+.nowhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:6px 24px}
+.nowhead .meta{font-size:13px;max-width:46ch;margin:0}
+.chart .axt{font-size:11.5px;fill:var(--muted)}
+.chart .lab{font-size:11px;font-weight:600;fill:var(--ink)}
+.scale{font-family:var(--ui);font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+.scale b{color:var(--ink)}
 nav.parts a{color:var(--ink);text-decoration:none;border-bottom:3px solid var(--tape)}
 .part{margin-top:64px;display:grid;gap:8px;scroll-margin-top:12px}
 .part h2{font-size:clamp(36px,7vw,60px)}
@@ -175,19 +183,18 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
 </svg>
 <script type="application/json" id="snap"></script>
 
-<div class="wrap">
+<main class="wrap">
   <header class="hero">
     <div class="eyebrow">Planning tool · built on Lester, “Rational Foreclosure” (2026)</div>
     <h1>The Hope Gap</h1>
     <div class="tape" aria-hidden="true"></div>
     <p class="dek">Find out how many people in your area have stopped trying to get ahead because the things they work toward are pulling away from their pay, and what your office can do to bring them back.</p>
-    <p class="meta" id="dataLine"><span class="spin"></span>Loading the latest data…</p>
-    <nav class="parts" aria-label="Sections"><a href="#s1">Planner</a><a href="#how">How it works</a><a href="#data">Data and methods</a></nav>
+    <p class="ui">Three choices (a place, a goal, a group) and the planner does the rest: how many have stopped, what happens next, and a dated plan for your office.</p>
+    <div class="btns"><a class="cta" href="#s1">Start with your area</a><nav class="parts" aria-label="Sections"><a href="#how">How it works</a><a href="#data">Data and methods</a></nav></div>
   </header>
 
   <section class="sec" aria-labelledby="nowH">
-    <div class="eyebrow">Right now in the United States</div>
-    <h2 id="nowH">The economy at a glance</h2>
+    <div class="nowhead"><div><div class="eyebrow">Right now in the United States</div><h2 id="nowH">The economy at a glance</h2></div><p class="meta" id="dataLine"><span class="spin"></span>Loading the latest data…</p></div>
     <div class="blobs small" id="nowBlobs"></div>
   </section>
 
@@ -236,16 +243,16 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
     <header><div class="num">2</div><div><h2 id="s2h">Choose what people are chasing</h2><p>The goal people measure themselves against. Pick the one that matters most for your decision.</p></div></header>
     <div class="cards" id="benchCards">
       <button type="button" class="card" data-v="home" aria-pressed="true"><svg><use href="#i-home"/></svg><strong>Owning a home</strong><span>Home prices against pay. On track means a typical home costs no more than three years of household income.</span></button>
-      <button type="button" class="card" data-v="col" aria-pressed="false"><svg><use href="#i-cart"/></svg><strong>Keeping up with the cost of living</strong><span>Consumer prices against pay. On track means pay buys what it bought in 2019.</span></button>
+      <button type="button" class="card" data-v="col" aria-pressed="false"><svg><use href="#i-cart"/></svg><strong>Keeping up with the cost of living</strong><span>Consumer prices (the national CPI) against local pay. On track means pay buys what it bought in 2019.</span></button>
     </div>
     <div class="ui" style="display:grid;gap:8px">
-      <strong>Measure the trend over</strong>
-      <div class="seg" id="winSeg" role="group" aria-label="Trend period">
-        <button type="button" data-v="1" aria-pressed="false">Last year</button><button type="button" data-v="5" aria-pressed="false">5 years</button><button type="button" data-v="10" aria-pressed="true">10 years</button><button type="button" data-v="lr" aria-pressed="false">Since 1990</button>
+      <strong>Base the outlook on the trend over the</strong>
+      <div class="seg" id="winSeg" role="group" aria-label="Past period whose trend is projected forward">
+        <button type="button" data-v="1" aria-pressed="false">Last year</button><button type="button" data-v="5" aria-pressed="false">Last 5 years</button><button type="button" data-v="10" aria-pressed="true">Last 10 years</button><button type="button" data-v="lr" aria-pressed="false">Since 1990</button>
       </div>
       <p class="note" id="winNote"></p>
     </div>
-    <div class="tbl"><table><thead><tr><th>Trend period</th><th id="tbB">Home prices</th><th>Pay</th><th>Gap</th><th>Hope Gap</th></tr></thead><tbody id="trendTable"></tbody></table></div>
+    <div class="tbl"><table><thead><tr><th>Past period</th><th id="tbB">Home prices, a year</th><th>Pay, a year</th><th>Goal minus pay</th><th>Hope Gap</th></tr></thead><tbody id="trendTable"></tbody></table></div>
   </section>
 
   <!-- STEP 3 -->
@@ -255,7 +262,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
       <fieldset><legend>Age</legend><div class="chk" id="ck_age"></div></fieldset>
       <fieldset><legend>Race and ethnicity</legend><div class="chk" id="ck_race"></div></fieldset>
       <div class="row">
-        <fieldset><legend>Sex</legend><div class="chk" id="ck_sex"></div></fieldset>
+        <fieldset><legend>Sex or gender</legend><div class="chk" id="ck_sex"></div><span class="note">Census data record sex as female or male, as each person reported it, and do not yet publish gender identity for local areas.</span></fieldset>
         <fieldset><legend>Education</legend><div class="chk" id="ck_edu"></div></fieldset>
         <fieldset id="tenWrap"><legend>Housing</legend><div class="chk" id="ck_ten"></div></fieldset>
       </div>
@@ -271,7 +278,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
         <label class="f">How much falling behind stings<select id="pf_lam"><option value="auto">Set from ages (recommended)</option><option value="1.5">Mildly: 1.5 times</option><option value="2">Typically: 2 times</option><option value="2.5">Strongly: 2.5 times</option><option value="3.5">Severely: 3.5 times</option></select><span class="note">How much worse a shortfall feels than an equal gain feels good. The average of 607 published estimates is about 2 (Brown, Imai, Vieider and Camerer 2024). It rises with age, most after 55.</span></label>
         <label class="f">How much people compare themselves with others<select id="pf_alpha"><option value="0.25">Less than most</option><option value="0.5" selected>Typical</option><option value="1">More than most</option><option value="2">Intensely</option></select><span class="note">In a Harvard survey, about half of people said they would rather earn $50,000 while others earn $25,000 than earn $100,000 while others earn $200,000 (Solnick and Hemenway 1998). In this model that puts the typical person at about 0.35 to 0.45; the default, 0.5, leans slightly toward comparison.</span></label>
         <label class="f">How much people weigh today over the future<select id="pf_rho"><option value="auto">Set from ages (recommended)</option><option value="0.035">Patient: 3.5% a year</option><option value="0.05">Typical: 5% a year</option><option value="0.07">Impatient: 7% a year</option><option value="0.1">Very impatient: 10% a year</option></select><span class="note">Large surveys find the middle-aged most patient and the young and old less so (Falk et al. 2018).</span></label>
-        <label class="f">How fast people notice a new trend<select id="pf_tau"><option value="3" selected>Gradually, over about 3 years</option><option value="1">Within about a year</option><option value="0">At once</option></select><span class="note">People judge trends from what they have lived through (Malmendier and Nagel 2016), so a change in prices or pay takes time to change their outlook.</span></label>
+        <label class="f">How fast people notice a new trend<select id="pf_tau"><option value="1" selected>Within about a year (recommended)</option><option value="0">At once (exactly as in the paper)</option><option value="3">Gradually, over about 3 years</option></select><span class="note">In the paper, people know the trend. Here they take about a year to notice a change, as people do with inflation (Malmendier and Nagel 2016). That is an extension beyond the paper; choose “At once” to match it exactly, which makes every response in Steps 5 and 6 sudden.</span></label>
         <label class="f" id="spreadWrap">How much people's pay changes differ<select id="pf_spread"><option value="0.1">Little</option><option value="0.15" selected>Typical</option><option value="0.25">A lot</option></select><span class="note">Cost of living only. Local pay data are not published by group, so people are spread around the local average.</span></label>
       </div>
     </details>
@@ -279,25 +286,25 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
 
   <!-- STEP 4 -->
   <section class="step" id="s4" aria-labelledby="s4h">
-    <header><div class="num">4</div><div><h2 id="s4h">See where things stand</h2><p>Computed from the data and choices above.</p></div></header>
-    <div class="gap" id="gapCard"><div class="big" id="gapBig"></div><div style="display:grid;gap:8px"><p id="gapText"></p><p class="note">This number comes only from the data, not from any assumption about people.</p></div></div>
+    <header><div class="num">4</div><div><h2 id="s4h">See where things stand</h2><p>Computed from the data and the choices above. Changes and comparisons are more reliable than levels.</p></div></header>
+    <div class="gap" id="gapCard"><div class="big" id="gapBig"></div><div style="display:grid;gap:8px"><p id="gapText"></p><div class="scale"><span><b>Above zero:</b> hope holds</span><span><b>Zero:</b> the tipping point</span><span><b>Below zero:</b> people have a reason to stop</span></div><p class="note">This number comes only from the data, not from any assumption about people.</p></div></div>
     <div class="blobs" id="resBlobs"></div>
     <p class="ui" id="resText"></p>
     <div class="row" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
       <figure><svg class="chart" id="chShare" viewBox="0 0 560 260" role="img" aria-label="Share who have stopped, next 24 months"></svg>
         <figcaption><b>The next two years, if nothing changes.</b> Share of the group that has stopped measuring itself against the goal.</figcaption></figure>
       <figure><svg class="chart" id="chTyp" viewBox="0 0 560 260" role="img" aria-label="Typical member's standing over ten years"></svg>
-        <figcaption><b>The typical member, next ten years.</b> Where they stand against the goal (100% is on track) and the point at which the model says they stop.</figcaption>
-        <div class="legend"><span><i class="sw" style="background:var(--stay)"></i>standing</span><span><i class="sw" style="background:var(--quit)"></i>quitting point</span></div></figure>
+        <figcaption><b>The typical member, next ten years.</b> Where they stand against the goal (100% is on track) and the quitting point, where the model says they stop.</figcaption>
+        <div class="legend"><span><i class="sw" style="background:var(--stay)"></i>standing</span><span><i class="sw" style="background:var(--quit)"></i>quitting point</span><span><i class="sw" style="background:var(--rule)"></i>on track (100%)</span></div></figure>
     </div>
   </section>
 
   <!-- STEP 5 -->
   <section class="step" id="s5" aria-labelledby="s5h">
     <header><div class="num">5</div><div><h2 id="s5h">Compare what could happen</h2><p>Every scenario at once, against the current trajectory.</p></div></header>
-    <div class="tbl"><table><thead><tr><th>If…</th><th>Hope Gap</th><th>6 mo</th><th>12 mo</th><th>18 mo</th><th>24 mo</th><th>People, vs now</th></tr></thead><tbody id="scnTable"></tbody></table></div>
+    <div class="tbl"><table><thead><tr><th>If…</th><th>Hope Gap</th><th>Stopped at 6 mo</th><th>12 mo</th><th>18 mo</th><th>24 mo</th><th>People at 24 mo, vs. nothing changes</th></tr></thead><tbody id="scnTable"></tbody></table></div>
     <figure><svg class="chart" id="chScn" viewBox="0 0 900 300" role="img" aria-label="Share who have stopped under each scenario"></svg>
-      <figcaption>Share of the group that has stopped, month by month, under each scenario. Scenarios are lasting changes that people learn about at the pace set in Step 3.</figcaption>
+      <figcaption>Share of the group that has stopped, month by month, under each scenario. Scenarios are lasting changes; people notice them at the pace set in Step 3 (by default within about a year).</figcaption>
       <div class="legend" id="scnLegend"></div></figure>
   </section>
 
@@ -308,11 +315,11 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
     <div class="callout" id="goalCall"></div>
     <div class="plans" id="planCards"></div>
     <figure><svg class="chart" id="chPlan" viewBox="0 0 900 300" role="img" aria-label="Share who have stopped under each plan over five years"></svg>
-      <figcaption>Share of the group that has stopped over the next five years under each plan. Plans phase in over two years, and people notice at the pace set in Step 3. When the quitting point falls below where people who stopped now stand, the model gives them a reason to start again.</figcaption>
+      <figcaption>Share of the group that has stopped over the next five years under each plan. Plans phase in over two years, and people notice at the pace set in Step 3. When the quitting point falls below where people who stopped now stand, the model gives them a reason to start again; once the Hope Gap is back above zero the quitting point disappears, so everyone has that reason. The model is silent on how fast people act on it, so read the speed of a recovery as an upper bound.</figcaption>
       <div class="legend" id="planLegend"></div></figure>
     <h3>Your office's part</h3>
     <div class="timeline" id="timeline"></div>
-    <div class="callout bad"><b>Guardrails.</b> Do not answer this with campaigns urging people past the quitting point to try harder: in the model, holding someone in past that point costs them more than the race is worth. One-time help with buying raises prices unless more homes come with it. Calming price swings alone can push people near the edge out sooner, because swings are part of what keeps their hope alive.</div>
+    <div class="callout bad"><b>Guardrails.</b> Do not answer this with campaigns urging people past the quitting point to try harder: in the model, holding someone in past that point costs them more than the race is worth. One-time help with buying raises prices unless more homes come with it. Calming price swings alone can push people near the edge out sooner, because swings are part of what keeps their hope alive. Vacant homes are not a shortcut: most vacant units the Census counts are seasonal, between occupants or held off the market, and only a small share are for rent or sale at any time (Census Housing Vacancy Survey). Large investors own a small share of single-family rentals nationally but about a quarter in a few metros such as Atlanta (GAO 2024); where they are concentrated, track whether new homes reach people who live in them.</div>
   </section>
 
   <!-- STEP 7: REPORT -->
@@ -335,7 +342,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
   </div>
   <section class="sec" aria-labelledby="h1h">
     <h2 id="h1h">The tipping point</h2>
-    <p class="ui">When the goal pulls away from pay faster than its normal ups and downs can make up for, people start to stop. Below that tipping point, the chance that the gap closes on its own is worth waiting for, and no one has a reason to quit. Above it, the quitting point climbs fast. That distance above the tipping point is the Hope Gap.</p>
+    <p class="ui">When the goal pulls away from pay faster than its normal ups and downs can make up for, people start to stop. Below that tipping point, the chance that the gap closes on its own is worth waiting for, and no one has a reason to quit. Above it, the quitting point climbs fast. The Hope Gap is the tipping point minus the goal-minus-pay gap, in points a year: positive while hope holds, zero at the tipping point, negative once people have a reason to stop.</p>
     <figure><svg class="chart" id="chTip" viewBox="0 0 900 300" role="img" aria-label="Quitting point against how fast the goal pulls away"></svg>
       <figcaption>Where the model puts the quitting point, as the gap between goal and pay widens, for the area and group chosen in the planner. The dot is today.</figcaption></figure>
   </section>
@@ -343,7 +350,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
     <h2 id="h2h">What staying in is worth</h2>
     <div class="grid2">
       <div class="controls">
-        <div class="ctl"><label for="m_delta">Goal pulls away by <output id="o_m_delta"></output></label><input id="m_delta" type="range" min="-0.02" max="0.06" step="0.005" value="0.02"><span class="note">Yearly growth of the goal minus growth of savings, in the paper's terms.</span></div>
+        <div class="ctl"><label for="m_delta">Goal pulls away by <output id="o_m_delta"></output></label><input id="m_delta" type="range" min="-0.02" max="0.06" step="0.005" value="0.02"><span class="note">Yearly growth of the goal minus growth of savings (the paper's drift gap). In the planner this is the goal-minus-pay gap less the rate people weigh today over the future.</span></div>
         <div class="ctl"><label for="m_sig">Goal swings by <output id="o_m_sig"></output></label><input id="m_sig" type="range" min="0.03" max="0.25" step="0.01" value="0.10"><span class="note">Typical yearly swing. More swing, more reason to wait.</span></div>
         <div class="ctl"><label for="m_lam">Falling behind stings <output id="o_m_lam"></output></label><input id="m_lam" type="range" min="1" max="6" step="0.1" value="2"></div>
         <div class="ctl"><label for="m_alpha">Standing matters <output id="o_m_alpha"></output></label><input id="m_alpha" type="range" min="0.1" max="3" step="0.1" value="0.5"></div>
@@ -353,7 +360,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
       <div style="display:grid;gap:16px;min-width:0">
         <div class="blobs small" id="mBlobs"></div>
         <div class="callout" id="m_warn" hidden>With these settings the race is worth staying in at any standing.</div>
-        <figure><svg class="chart" id="chF" viewBox="0 0 640 260" role="img" aria-label="Value of staying in the race"></svg><figcaption><b>What staying in is worth</b> at each standing: the model's measure of hope. It reaches zero smoothly at the quitting point.</figcaption></figure>
+        <figure><svg class="chart" id="chF" viewBox="0 0 640 260" role="img" aria-label="Value of staying in the race"></svg><figcaption><b>What staying in is worth</b> at each standing (100% = on track): the model's measure of hope. It reaches zero smoothly at the quitting point, the gold line; the shaded region is where people have stopped.</figcaption></figure>
         <figure><svg class="chart" id="chQ" viewBox="0 0 640 210" role="img" aria-label="Grind"></svg><figcaption><b>How hard people grind</b>: how much less they spend to keep up. It fades to nothing at the quitting point; just above it, people are still in the race but barely trying.</figcaption></figure>
       </div>
     </div>
@@ -363,7 +370,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
     <div class="grid2">
       <div class="controls"><div class="ctl"><label for="xt">Keep people in until they fall to <output id="o_xt"></output></label><input id="xt" type="range" min="0.5" max="1.0" step="0.005" value="0.9"></div>
         <div class="verdict" id="verdict"><strong id="vHead"></strong><p id="vText"></p></div></div>
-      <figure><svg class="chart" id="chW" viewBox="0 0 640 260" role="img" aria-label="Cost of an imposed stopping point"></svg><figcaption>Cost of overriding people's own quitting point, as a share of what the whole race was worth to them at par. Zero at their own point, rising on both sides.</figcaption></figure>
+      <figure><svg class="chart" id="chW" viewBox="0 0 640 260" role="img" aria-label="Cost of an imposed stopping point"></svg><figcaption>Cost of overriding people's own quitting point (the gold line), as a share of what the whole race was worth to them at par. Zero at their own point, rising on both sides.</figcaption></figure>
     </div>
   </section>
 
@@ -376,24 +383,24 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
   <section class="sec">
     <details open><summary>Where the data come from, and when they update</summary><div class="tbl"><table><thead><tr><th>Data</th><th>Source</th><th>Latest</th><th>Status</th></tr></thead><tbody id="srcTable"></tbody></table></div><p class="note" style="margin-top:8px" id="srcNote"></p></details>
     <details><summary>How the numbers become the model's inputs</summary><div class="ui" style="display:grid;gap:10px" id="methodText">
-      <p><b>The gap.</b> The goal's growth minus pay growth over the chosen period, in percentage points a year. Home prices: FHFA House Price Index (counties: FHFA's annual county index). Pay: average weekly wages of all workers covered by unemployment insurance (BLS Quarterly Census of Employment and Wages), the broadest measure of local pay. Cost of living: the Consumer Price Index.</p>
-      <p><b>The tipping point and the Hope Gap.</b> In the model, people have a reason to stop only when the gap is larger than the square of the goal's typical yearly swing. That swing is the standard deviation of yearly changes in the home price index since 1990 for the area (for cost of living, of yearly changes in real pay). The Hope Gap is the gap minus the tipping point. It does not depend on any assumption about people's preferences.</p>
-      <p><b>Standing.</b> Owning a home: three years of household income divided by the typical home value (Zillow Home Value Index, or the Census median where Zillow has none), so 100% means a typical home costs three years of income. Each household's standing follows its income: incomes in the group are spread as in the area's Census income distribution, shifted for the group's age, race and ethnicity, education and housing status using Census medians, and limited to the income levels or tax brackets chosen. Cost of living: local pay against its 2019 level, divided by consumer prices against theirs.</p>
+      <p><b>The gap.</b> The goal's growth minus pay growth over the chosen period, in percentage points a year. Home prices: FHFA House Price Index (counties: FHFA's annual county index). Pay: average weekly wages of all workers covered by unemployment insurance (BLS Quarterly Census of Employment and Wages), the broadest measure of local pay. Cost of living: the national Consumer Price Index (local indexes exist for only a few metros, so every area uses the national rate against its own pay).</p>
+      <p><b>The tipping point and the Hope Gap.</b> In the model, people have a reason to stop only when the gap is larger than the square of the goal's typical yearly swing (the paper's finiteness line, ρ = D, once pay growth stands in for the growth of resources net of post-exit spending). That swing is the standard deviation of yearly changes in the home price index since 1990 for the area (for cost of living, of yearly changes in real pay). The Hope Gap is the tipping point minus the gap: positive while hope holds, negative past the tipping point. It does not depend on any assumption about people's preferences.</p>
+      <p><b>Standing.</b> Owning a home: three years of household income divided by the typical home value (Zillow Home Value Index, or the Census median where Zillow has none), so 100% means a typical home costs three years of income (the price-to-income ratio of 3 that housing analysts have traditionally called affordable). Step 4 also shows the share who have stopped under a four-year rule, because this convention moves that share more than anything else. Each household's standing follows its income: incomes in the group are spread as in the area's Census income distribution, shifted for the group's age, race and ethnicity, education and housing status using Census medians, and limited to the income levels or tax brackets chosen. Cost of living: local pay against its 2019 level, divided by consumer prices against theirs.</p>
       <p><b>Who.</b> Head counts multiply the area's adults in the chosen ages by the shares of the chosen sex, race and ethnicity, education, housing status and income range. These shares are treated as independent, so counts for narrow groups are approximate.</p>
       <p><b>People.</b> How much falling behind stings and how much people weigh today over the future are set from the chosen ages, weighted by population; the table below lists the values. The directions come from the cited studies; the sizes are this tool's assumptions.</p>
-      <p><b>The simulation.</b> Two thousand people spread across the group's standing move month by month with the goal's trend and swings. Those below the quitting point have stopped. Scenarios and plans change the actual trend at once or over two years; people's sense of the trend catches up at the pace chosen in Step 3, and the quitting point moves with it. Someone who has stopped starts again only if the quitting point falls below where they now stand.</p>
+      <p><b>The simulation.</b> Two thousand people spread across the group's standing move month by month with the goal's trend and swings. Those below the quitting point have stopped. Scenarios and plans change the actual trend at once or over two years, and the quitting point moves with the trend. By default people take about a year to notice a change in the trend, an extension beyond the paper; Step 3 can set “At once”, exactly as in the paper, or about three years. Someone who has stopped starts again only if the quitting point falls below where they now stand. A scenario or plan that lifts the Hope Gap above zero takes the model outside its own assumption (the paper's ρ &gt; D): there the race is worth staying in at any standing, so the tool treats the quitting point as gone and everyone as having a reason to re-engage. How fast they do so is not something the model determines.</p>
       <p><b>Plans.</b> Closing the gap means bringing the goal's growth down, or pay growth up, by the Hope Gap. Homes needed use a long-run price elasticity of housing demand of about −0.6 (Hanushek and Quigley 1980): each extra 1% of homes lowers prices about 1.7%; the range uses −0.4 to −1.0. Pay plans are priced as a credit that grows by the needed share of the group's median income each year. Help for people near the edge lifts their standing by 10%. Tax brackets are 2026 brackets for married couples filing jointly, converted to household income by adding the $32,200 standard deduction; single filers' dollar ranges are about half.</p>
-      <p><b>Limits.</b> This is one decision, solved exactly, applied to a group. It takes prices and pay as given, so it cannot show how disengagement feeds back into them. The quitting point moves fast near the tipping point, so the share who have stopped is less certain than the Hope Gap; the results show how much it changes if the trend is off by a quarter point. Read changes and comparisons more than levels.</p>
+      <p><b>Limits.</b> This is one decision, solved exactly, applied to a group. It takes prices and pay as given, so it cannot show how disengagement feeds back into them. The quitting point moves fast near the tipping point, so the share who have stopped is less certain than the Hope Gap; the results show how much it changes if the trend is off by a quarter point, and under a four-year rather than three-year affordability rule. Read changes and comparisons more than levels.</p>
     </div></details>
     <details><summary>Assumptions about people, by age</summary><div class="tbl"><table><thead><tr><th>Age</th><th>Falling behind stings</th><th>Today over the future</th><th>Basis</th></tr></thead><tbody id="prefTable"></tbody></table></div></details>
-    <details><summary>State data</summary><div class="tbl"><table><thead><tr><th>State</th><th>Hope Gap, homes, 10 yrs</th><th>Home prices, 10 yrs</th><th>Pay, 10 yrs</th><th>Swing</th><th>Typical home</th><th>Median income</th></tr></thead><tbody id="stTable"></tbody></table></div></details>
+    <details><summary>State data</summary><div class="tbl"><table><thead><tr><th>State</th><th>Hope Gap, homes, last 10 yrs</th><th>Home prices, 10 yrs</th><th>Pay, 10 yrs</th><th>Swing</th><th>Typical home</th><th>Median income</th></tr></thead><tbody id="stTable"></tbody></table></div></details>
   </section>
 
   <footer>
     <div>Model and proofs: Lester, R. (2026), “Rational Foreclosure: Why the Workers Who Stopped Grinding May Be the Sane Ones.” Working paper, <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858">SSRN 6614858</a>. Code and data pipeline: <a href="https://doi.org/10.7910/DVN/V5NSZX">Harvard Dataverse</a> and <a href="https://github.com/Lesterhau/rational-foreclosure">GitHub</a>.</div>
     <div>The model is solved in your browser by shooting on the free boundary (fourth-order Runge-Kutta with bisection on the quitting point), which matches the paper's solver to four digits. Nothing you enter leaves this page.</div>
   </footer>
-</div>
+</main>
 
 <script>
 (function(){
@@ -403,6 +410,11 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const pct=(v,d=0)=>v==null||!isFinite(v)?"n/a":(100*v).toFixed(d)+"%";
 const pp=(v,d=1)=>v==null||!isFinite(v)?"n/a":(v>=0?"+":"−")+Math.abs(100*v).toFixed(d);
+/* The Hope Gap is shown as tipping point minus gap (positive = hope holds). Internally the code keeps the excess
+   gap - tipping point (gapNow, hg), so every display goes through HG(). Nothing in the model or simulation changes. */
+const HG=v=>pp(v==null||!isFinite(v)?v:-v);
+const winPhrase=w=>({"1":"over the last year","5":"over the last 5 years","10":"over the last 10 years","lr":"since 1990"})[w];
+const hide=(id,v)=>{const e=$(id);if(e)e.hidden=v;}; /* BUGFIX: guard against a missing element instead of throwing */
 const money=v=>v==null||!isFinite(v)?"n/a":"$"+Math.round(v).toLocaleString("en-US");
 const bigMoney=v=>!isFinite(v)?"n/a":v>=1e9?"$"+(v/1e9).toFixed(v>=1e10?0:1)+" billion":v>=1e6?"$"+(v/1e6).toFixed(v>=1e7?0:1)+" million":money(v);
 const people=n=>!isFinite(n)?"n/a":n>=1e6?(n/1e6).toFixed(n>=1e7?1:2)+" million":n>=1e4?Math.round(n/1e3).toLocaleString("en-US")+" thousand":Math.round(n).toLocaleString("en-US");
@@ -439,11 +451,15 @@ function ninv(p){p=clamp(p,1e-9,1-1e-9);const a=[-39.69683028665376,220.94609842
 /* ================= charts ================= */
 const NS="http://www.w3.org/2000/svg";
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
-function frame(svg,W,Hh,xd,yd,xt,yt,xl,yl){svg.innerHTML="";const m={l:52,r:16,t:14,b:36};
+function frame(svg,W,Hh,xd,yd,xt,yt,xl,yl,xTitle,yTitle){svg.innerHTML="";const m={l:yTitle?66:52,r:16,t:14,b:xTitle?48:36};
   const X=v=>m.l+(v-xd[0])/(xd[1]-xd[0])*(W-m.l-m.r),Yf=v=>Hh-m.b-(v-yd[0])/(yd[1]-yd[0])*(Hh-m.t-m.b);
+  const tt=el("title",{},svg);tt.textContent=(svg.getAttribute("aria-label")||"")+(xTitle?". Horizontal axis: "+xTitle:"")+(yTitle?". Vertical axis: "+yTitle:"");
   const g=el("g",{class:"grid"},svg);yt.forEach(v=>{el("line",{x1:m.l,x2:W-m.r,y1:Yf(v),y2:Yf(v)},g);const t=el("text",{x:m.l-8,y:Yf(v)+4,"text-anchor":"end"},svg);t.textContent=yl(v);});
   xt.forEach(v=>{const t=el("text",{x:X(v),y:Hh-m.b+17,"text-anchor":"middle"},svg);t.textContent=xl(v);});
+  if(xTitle){const t=el("text",{class:"axt",x:m.l+(W-m.l-m.r)/2,y:Hh-6,"text-anchor":"middle"},svg);t.textContent=xTitle;}
+  if(yTitle){const t=el("text",{class:"axt",x:12,y:m.t+(Hh-m.t-m.b)/2,"text-anchor":"middle",transform:"rotate(-90 12 "+(m.t+(Hh-m.t-m.b)/2)+")"},svg);t.textContent=yTitle;}
   el("line",{class:"axis",x1:m.l,x2:W-m.r,y1:Hh-m.b,y2:Hh-m.b},svg);return {X,Y:Yf,m,W,H:Hh};}
+function tagLine(svg,x,y,text,anchor){const t=el("text",{class:"lab",x,y,"text-anchor":anchor||"start"},svg);t.textContent=text;return t;}
 function pathD(p,X,Yf){return p.map((q,i)=>(i?"L":"M")+X(q[0]).toFixed(1)+","+Yf(q[1]).toFixed(1)).join("");}
 function niceMax(v){if(v<=0)return 1;const e=Math.pow(10,Math.floor(Math.log10(v)));const f=v/e;return (f<=1?1:f<=2?2:f<=5?5:10)*e;}
 function blobs(host,items){host.innerHTML="";items.forEach(([cls,big,small,desc])=>{const d=document.createElement("div");d.className="blob "+cls;d.innerHTML='<div class="c"><div>'+big+(small?'<small>'+small+'</small>':'')+'</div></div><div class="d">'+desc+'</div>';host.appendChild(d);});}
@@ -649,16 +665,18 @@ function compute(){
   // sensitivity of today's share to the trend
   const shareAt=d=>{const b=thresholdAt(d,SIG,pr);let k=0;for(let i=0;i<NS_AG;i++)if(dist.y[i]<=b)k++;return k/NS_AG;};
   const sens=[shareAt(D0-0.0025),shareAt(D0+0.0025)];
-  LAST={g,T,cur,G,pr,dist,ctx,S0,b0,tip,gapNow,Delta,headcount,households,SC,PL,typCur,typPlan,sens,ms:performance.now()-t0,missing:[]};
+  /* Sensitivity to the on-track convention (home only): a four-year rule raises every standing by log(4/3). Display only. */
+  let share4=null;if(ST.bench==="home"){const sh=Math.log(4/3);let k=0;for(let i=0;i<NS_AG;i++)if(dist.y[i]+sh<=b0)k++;share4=k/NS_AG;}
+  LAST={g,T,cur,G,pr,dist,ctx,S0,b0,tip,gapNow,Delta,headcount,households,SC,PL,typCur,typPlan,sens,share4,ms:performance.now()-t0,missing:[]};
   render();
 }
-function schedule(){clearTimeout(timer);$("dataLine").dataset.busy="1";timer=setTimeout(()=>{try{compute();}catch(e){console.error(e);$("resText").textContent="Something went wrong computing these results: "+e.message;}},120);}
+function schedule(){clearTimeout(timer);timer=setTimeout(()=>{try{compute();}catch(e){console.error(e);$("resText").textContent="Something went wrong computing these results: "+e.message;}},120);}
 
 /* ================= missing data and the AI prompt ================= */
 const FIELDS={val:["median_home_value","typical home value, in dollars (Zillow Home Value Index, or Census ACS table B25077)"],inc:["median_household_income","median household income, in dollars (Census ACS table B19013)"],pop:["population","total population (latest Census estimate)"],units:["housing_units","number of housing units (Census ACS table B25001)"],
   h1:["home_price_change_1yr_pct","percent change in home prices over the latest year (FHFA House Price Index or Zillow)"],h5:["home_price_change_5yr_pct","total percent change in home prices over the last five years (same source)"],h10:["home_price_change_10yr_pct","total percent change in home prices over the last ten years (same source)"],
   p1:["pay_change_1yr_pct","over-the-year percent change in average weekly wages (BLS Quarterly Census of Employment and Wages, county)"],p5:["pay_change_5yr_pct","total percent change in average weekly wages over five years (same source, same quarter)"],p10:["pay_change_10yr_pct","total percent change in average weekly wages over ten years (same source, same quarter)"]};
-function missingFields(g,cur){const m=[];if(ST.level==="county"&&ST.county==="__manual"||ST.level==="city"&&ST.place==="__manual"){}
+function missingFields(g,cur){const m=[];
   if(ST.bench==="home"){if(!g.val)m.push("val");if(!g.inc)m.push("inc");if(cur.gb==null)m.push("h"+(ST.win==="lr"?"10":ST.win));}
   if(cur.gp==null)m.push("p"+(ST.win==="lr"?"10":ST.win));return m;}
 function placeFull(){const g=geo();if(ST.level==="nation")return "the United States";
@@ -701,17 +719,17 @@ function winLabel(w){return {"1":"last year","5":"last 5 years","10":"last 10 ye
 function renderMissing(){const {g,missing}=LAST;renderData(g);
   const c=$("dataCall");c.className="callout bad";c.innerHTML="<b>Some figures for "+placeFull()+" are not published.</b> Missing: "+missing.map(k=>FIELDS[k][1].split(" (")[0]).join("; ")+". Use the AI assistant below to fill them in, or choose a longer trend period in Step 2.";
   $("aiBox").open=true;refreshPrompt();
-  ["s4","s5","s6","s7"].forEach(id=>$(id).style.opacity=.35);$("gapBig").textContent="?";$("gapText").textContent="Waiting for the missing figures in Step 1.";}
+  ["s4","s5","s6","s7"].forEach(id=>{const e=$(id);if(e)e.style.opacity=.35;});$("gapBig").textContent="?";$("gapText").textContent="Waiting for the missing figures in Step 1.";}
 function renderDataCall(g){const c=$("dataCall");const pr=g.prov;const fall=[];
-  const mine=Object.keys(ST.over).length;if(mine)fall.push("your own figures are used where you pasted them");
+  const mine=Object.keys(ST.over).length;if(mine)fall.push("your own figures are used where you pasted them"+(ST.win==="lr"&&["h1","h5","h10","p1","p5","p10"].some(k=>ST.over[k]!=null)?" (pasted trend figures apply to the 1-, 5- and 10-year periods, not to “Since 1990”)":""));
   if(ST.level!=="nation"){if(pr.hpi&&/state figure|national figure/.test(pr.hpi)&&ST.bench==="home")fall.push("home-price trends use the "+pr.hpi+" (none published for this area)");if(pr.pay&&/state figure|national figure/.test(pr.pay))fall.push("pay trends use the "+pr.pay);if(pr.val&&/state figure|national figure|county figure|Census median/.test(pr.val)&&ST.bench==="home")fall.push("home value uses the "+pr.val);}
   if(ST.level==="city"&&pr.hpi&&/county/.test(pr.hpi))fall.push("price and pay trends come from the "+pr.hpi+", the smallest area that publishes them");
   const manual=(ST.level==="county"&&ST.county==="__manual")||(ST.level==="city"&&ST.place==="__manual");
   if(manual&&!Object.keys(ST.over).length){c.className="callout";c.innerHTML="<b>Your "+ST.level+" is not in the preloaded list</b> (the list covers every county and every city of 65,000 people or more). Until you add local figures, the results below use "+SBY[ST.state].n+"'s. To add yours: type the name above, open the AI assistant below, copy the prompt, and paste the answer back.";$("aiBox").open=true;return;}
   c.className="callout good";c.innerHTML="<b>Data loaded for "+g.name+".</b> "+(fall.length?"Note: "+fall.join("; ")+". You can replace any figure with the AI assistant below.":"Every figure is local and current. Open “See the data being used” for sources and dates.");}
 function renderTrend(g){const T=trends(g);const tb=$("trendTable");tb.innerHTML="";$("tbB").textContent=ST.bench==="home"?"Home prices":"Consumer prices";
-  T.forEach(r=>{const tr=document.createElement("tr");if(r.w===ST.win)tr.className="hl";tr.innerHTML="<td>"+winLabel(r.w)+"</td><td>"+(r.gb!=null?pct(r.gb,1):"n/a")+"</td><td>"+(r.gp!=null?pct(r.gp,1):"n/a")+"</td><td>"+(r.d!=null?pp(r.d):"n/a")+"</td><td>"+(r.hg!=null?pp(r.hg):"n/a")+"</td>";tb.appendChild(tr);});
-  $("winNote").textContent={"1":"The latest year. Current, but one year is noisy.","5":"Recent conditions.","10":"The default: roughly what today's young adults have lived through as workers, which is what shapes their expectations (Malmendier and Nagel 2016).","lr":"The long view, 1990 to today."}[ST.win]+" Figures are yearly growth rates; gap and Hope Gap are in percentage points a year.";}
+  T.forEach(r=>{const tr=document.createElement("tr");if(r.w===ST.win)tr.className="hl";tr.innerHTML="<td>"+winLabel(r.w)+"</td><td>"+(r.gb!=null?pct(r.gb,1):"n/a")+"</td><td>"+(r.gp!=null?pct(r.gp,1):"n/a")+"</td><td>"+(r.d!=null?pp(r.d):"n/a")+"</td><td>"+(r.hg!=null?HG(r.hg):"n/a")+"</td>";tb.appendChild(tr);});
+  $("winNote").textContent={"1":"The latest year. Current, but one year is noisy.","5":"Recent conditions.","10":"The default: roughly what today's young adults have lived through as workers, which is what shapes their expectations (Malmendier and Nagel 2016).","lr":"The long view, 1990 to today."}[ST.win]+" Growth rates are yearly averages over that period, projected forward. Goal minus pay and the Hope Gap are in percentage points a year; a Hope Gap above zero means hope holds.";}
 function render(){
   const L=LAST;["s4","s5","s6","s7"].forEach(id=>$(id).style.opacity=1);
   renderData(L.g);renderDataCall(L.g);renderTrend(L.g);refreshPrompt();
@@ -720,34 +738,36 @@ function render(){
   $("whoCall").innerHTML="<b>About "+people(headcount)+" people</b> ("+L.G.label+(L.G.incs.length&&L.G.incs.length<(ST.incMode==="tax"?5:3)?"; selected "+(ST.incMode==="tax"?"tax brackets":"income levels"):"")+"). Assumptions for this group: falling behind stings <b>"+pr.lam.toFixed(1)+" times</b> as much as getting ahead pleases; they weigh today over the future at <b>"+pct(pr.rho,1)+" a year</b>; they compare themselves with others a <b>"+{"0.25":"bit less than most","0.5":"typical amount","1":"bit more than most","2":"great deal"}[String(pr.alpha)]+"</b>. "+($("pf_lam").value==="auto"?"Set from the ages chosen, weighted by population.":"Changed by you.");
   // gap
   const gap=L.gapNow,closed=gap<=0;$("gapCard").className="gap"+(closed?" closed":"");
-  $("gapBig").innerHTML=pp(gap)+"<small>Hope Gap, points a year</small>";
+  $("gapBig").innerHTML=HG(gap)+"<small>Hope Gap, points a year</small>";
   const what=ST.bench==="home"?"Home prices":"Consumer prices";
-  $("gapText").innerHTML=what+" in "+L.g.name+" have outrun pay by <b>"+pp(L.cur.d)+" points a year</b> over the "+winLabel(ST.win)+". People keep trying as long as that stays below <b>"+(100*L.tip).toFixed(2)+" points</b>, the size of the goal's normal ups and downs. "+(closed?"It is below that line, so in the model no one has a reason to stop.":"It is <b>"+(100*gap).toFixed(1)+" points</b> over the line.");
+  const lead=L.cur.d>=0?what+" in "+L.g.name+" have outrun pay by <b>"+(100*L.cur.d).toFixed(1)+" points a year</b> "+winPhrase(ST.win)+".":"Pay in "+L.g.name+" has outrun "+what.toLowerCase()+" by <b>"+(100*-L.cur.d).toFixed(1)+" points a year</b> "+winPhrase(ST.win)+".";
+  $("gapText").innerHTML=lead+" People keep trying as long as "+(what.toLowerCase())+" outrun pay by less than <b>"+(100*L.tip).toFixed(2)+" points a year</b>, the size of the goal's normal ups and downs (the tipping point). "+(closed?"They are inside that line by <b>"+(100*-gap).toFixed(1)+" points</b>, so in the model no one has a reason to stop.":"They are <b>"+(100*gap).toFixed(1)+" points</b> past the line.");
   // results
   const A=L.SC[0].res,P=A.path;const h=n=>P[n][1];
   const today=A.today;const ppl=v=>people(v*L.headcount);
-  blobs($("resBlobs"),[["quit",pct(today),"today","Have stopped keeping score (about "+ppl(today)+")"],["mid",pct(h(12)),"12 mo","If nothing changes"],["mid",pct(h(24)),"24 mo","If nothing changes (about "+ppl(h(24))+")"],["gold",pct(P[0][2]),"near edge","Still trying, but within 10% of the quitting point"],["stay",isFinite(L.b0)?pct(Math.exp(L.b0)):"none","quit point","Standing at which the model says people stop"]]);
+  blobs($("resBlobs"),[["quit",pct(today),"today","Model estimate of the share who have stopped keeping score (about "+ppl(today)+")"],["mid",pct(h(12)),"12 mo","If nothing changes"],["mid",pct(h(24)),"24 mo","If nothing changes (about "+ppl(h(24))+")"],["gold",pct(P[0][2]),"near edge","Still trying, but within 10% of the quitting point"],["stay",isFinite(L.b0)?pct(Math.exp(L.b0)):"none","quit point","Standing (100% = on track) at which the model says people stop"]]);
   let t;
-  if(!isFinite(L.b0))t="With a Hope Gap at or below zero, the model gives no one in this group a reason to stop. The risk is a change in the trend; Step 5 shows what would tip it.";
-  else{t="The typical member stands at "+pct(Math.exp(L.dist.y[NS_AG>>1]))+" of on track, and the model puts the quitting point at "+pct(Math.exp(L.b0))+". "+(L.typCur.stopAt!=null?(L.typCur.stopAt===0?"The typical member has already stopped. ":"If nothing changes, the typical member reaches it in about "+fmtYears(L.typCur.stopAt)+". "):"The typical member does not reach it within ten years if nothing changes. ")+"Because the quitting point moves quickly with the trend, today's share is uncertain: if the trend were a quarter point a year lower or higher, it would be "+pct(L.sens[0])+" to "+pct(L.sens[1])+".";}
+  const ontrack=ST.bench==="home"?" (100% means a typical home costs three years of the household's income)":" (100% means pay buys what it bought in 2019)";
+  if(!isFinite(L.b0))t="With a Hope Gap at or above zero, the model gives no one in this group a reason to stop. The risk is a change in the trend; Step 5 shows what would tip it.";
+  else{t="The typical member stands at "+pct(Math.exp(L.dist.y[NS_AG>>1]))+" of on track"+ontrack+", and the model puts the quitting point at "+pct(Math.exp(L.b0))+". "+(L.typCur.stopAt!=null?(L.typCur.stopAt===0?"The typical member has already stopped. ":"If nothing changes, the typical member reaches it in about "+fmtYears(L.typCur.stopAt)+". "):"The typical member does not reach it within ten years if nothing changes. ")+"Today's share is a model estimate and moves with two things. If the trend were a quarter point a year lower or higher, it would be "+pct(L.sens[0])+" to "+pct(L.sens[1])+"."+(L.share4!=null?" If on track meant four years of income instead of three, it would be "+pct(L.share4)+".":"")+(ST.bench==="col"?" For the cost of living, standing is measured from 2019, so few people are far enough behind to have stopped; the Hope Gap itself is the signal to watch.":"")+" Compare scenarios and plans against each other more than you trust the level.";}
   $("resText").textContent=t;
   drawShare();drawTyp();renderScn();renderPlans();renderReport();drawTip();
 }
 function fmtYears(t){return t<1?Math.max(1,Math.round(t*12))+" months":t<1.5?"a year":Math.round(t)+" years";}
 function drawShare(){const P=LAST.SC[0].res.path.slice(0,25);const mx=Math.max(...P.map(p=>p[1]),0.05);const ym=Math.min(1,niceMax(mx*1.15));
-  const f=frame($("chShare"),560,260,[0,24],[0,ym],[0,6,12,18,24],[0,ym/2,ym],v=>v+" mo",v=>Math.round(v*100)+"%");
+  const f=frame($("chShare"),560,260,[0,24],[0,ym],[0,6,12,18,24],[0,ym/2,ym],v=>v+" mo",v=>Math.round(v*100)+"%","months from now","share who have stopped");
   el("path",{d:pathD(P,f.X,f.Y),fill:"none",stroke:css("--ink"),"stroke-width":3},$("chShare"));}
-function drawTyp(){const T=LAST.typCur.pts;const mx=Math.max(...T.map(p=>Math.max(p[1],p[2])),1.05);const ym=Math.min(3,niceMax(mx*1.05));
-  const f=frame($("chTyp"),560,260,[0,10],[0,ym],[0,2,4,6,8,10],[0,ym/2,ym],v=>v+" yr",v=>Math.round(v*100)+"%");
-  el("line",{x1:f.X(0),x2:f.X(10),y1:f.Y(1),y2:f.Y(1),stroke:css("--rule"),"stroke-width":1.5},$("chTyp"));
-  if(T.some(p=>p[2]>0))el("path",{d:pathD(T.map(p=>[p[0],p[2]]),f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":2.5,"stroke-dasharray":"6 4"},$("chTyp"));
+function drawTyp(){const T=LAST.typCur.pts;const mx=Math.max(...T.map(p=>Math.max(p[1],p[2])),1.05);const ym=Math.min(3,Math.ceil(mx*1.08*4)/4);
+  const f=frame($("chTyp"),560,260,[0,10],[0,ym],[0,2,4,6,8,10],[0,ym/2,ym],v=>v+" yr",v=>Math.round(v*100)+"%","years from now","standing (100% = on track)");
+  el("line",{x1:f.X(0),x2:f.X(10),y1:f.Y(1),y2:f.Y(1),stroke:css("--rule"),"stroke-width":1.5},$("chTyp"));tagLine($("chTyp"),f.X(10),f.Y(1)-5,"on track","end");
+  if(T.some(p=>p[2]>0)){el("path",{d:pathD(T.map(p=>[p[0],p[2]]),f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":2.5,"stroke-dasharray":"6 4"},$("chTyp"));const q=T[T.length-1][2];if(q>0)tagLine($("chTyp"),f.X(10),f.Y(Math.min(q,ym))+(q<1?13:-5),"quitting point","end");}
   el("path",{d:pathD(T.map(p=>[p[0],p[1]]),f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3},$("chTyp"));}
 function colorOf(c){return c.startsWith("--")?css(c):c;}
 function renderScn(){const L=LAST;const tb=$("scnTable");tb.innerHTML="";const base=L.SC[0].res.path;
   L.SC.forEach((s,i)=>{const P=s.res.path;const d=P[24][1]-base[24][1];const tr=document.createElement("tr");if(i===0)tr.className="hl";
-    tr.innerHTML="<td><i class='sw' style='background:"+colorOf(s.color)+"'></i>"+s.name+"</td><td>"+pp(s.hg)+"</td><td>"+pct(P[6][1])+"</td><td>"+pct(P[12][1])+"</td><td>"+pct(P[18][1])+"</td><td>"+pct(P[24][1])+"</td><td>"+(i===0?people(P[24][1]*L.headcount)+" stopped":(d>=0?"+":"−")+people(Math.abs(d)*L.headcount))+"</td>";tb.appendChild(tr);});
+    tr.innerHTML="<td><i class='sw' style='background:"+colorOf(s.color)+"'></i>"+s.name+"</td><td>"+HG(s.hg)+"</td><td>"+pct(P[6][1])+"</td><td>"+pct(P[12][1])+"</td><td>"+pct(P[18][1])+"</td><td>"+pct(P[24][1])+"</td><td>"+(i===0?people(P[24][1]*L.headcount)+" stopped":(d>=0?"+":"−")+people(Math.abs(d)*L.headcount))+"</td>";tb.appendChild(tr);});
   const all=L.SC.map(s=>s.res.path.slice(0,25));const mx=Math.max(...all.flat().map(p=>p[1]),0.05);const ym=Math.min(1,niceMax(mx*1.1));
-  const f=frame($("chScn"),900,300,[0,24],[0,ym],[0,6,12,18,24],[0,ym/2,ym],v=>v+" mo",v=>Math.round(v*100)+"%");
+  const f=frame($("chScn"),900,300,[0,24],[0,ym],[0,6,12,18,24],[0,ym/2,ym],v=>v+" mo",v=>Math.round(v*100)+"%","months from now","share who have stopped");
   L.SC.slice().reverse().forEach(s=>el("path",{d:pathD(s.res.path.slice(0,25),f.X,f.Y),fill:"none",stroke:colorOf(s.color),"stroke-width":s.k==="cur"?3.5:2.2},$("chScn")));
   $("scnLegend").innerHTML=L.SC.map(s=>"<span><i class='sw' style='background:"+colorOf(s.color)+"'></i>"+s.name+"</span>").join("");}
 
@@ -766,11 +786,11 @@ function planNumbers(){const L=LAST;const Dl=L.Delta;const units=L.g.units||null
 function renderPlans(){const L=LAST;fillOffices();const N=planNumbers();const home=ST.bench==="home";const closed=L.gapNow<=0;
   const gc=$("goalCall");
   gc.className="callout"+(closed?" good":"");
-  gc.innerHTML=closed?"<b>The Hope Gap is already closed here.</b> The job is to keep it that way: watch the trend each quarter, and use Step 5 to see which shocks would reopen it.":
-    "<b>The goal:</b> bring the Hope Gap from "+pp(L.gapNow)+" to zero by "+addDays(3*365)+". That means "+(home?"home prices":"consumer prices")+" must grow about <b>"+(100*N.Dl).toFixed(1)+" points a year more slowly</b>, pay about "+(100*N.Dl).toFixed(1)+" points a year faster, or a mix of the two, phased in over two years.";
+  gc.innerHTML=closed?"<b>Hope holds here: the Hope Gap is above zero.</b> The job is to keep it that way: watch the trend each quarter, and use Step 5 to see which shocks would push it below zero.":
+    "<b>The goal:</b> bring the Hope Gap from "+HG(L.gapNow)+" back up to zero by "+addDays(3*365)+". That means "+(home?"home prices":"consumer prices")+" must grow about <b>"+(100*N.Dl).toFixed(1)+" points a year more slowly</b>, pay about "+(100*N.Dl).toFixed(1)+" points a year faster, or a mix of the two, phased in over two years (the plan aims 0.05 points past zero so the gap closes rather than hovers).";
   const host=$("planCards");host.innerHTML="";const P0=L.SC[0].res.path;
   const cards=[];
-  if(home)cards.push(["Build more homes",N.homes?"<div class='k'>"+short(N.homes[1])+"</div><div class='ui'>more homes a year than the current pace (range "+short(N.homes[0])+" to "+short(N.homes[2])+"), so prices grow "+(100*N.Dl).toFixed(1)+" points a year more slowly.</div>":"<div class='ui'>Housing-unit counts are not loaded for this area.</div>"]);
+  if(home)cards.push(["Build more homes",N.homes?"<div class='k'>"+short(N.homes[1])+"</div><div class='ui'>more homes a year than the current pace (range "+short(N.homes[0])+" to "+short(N.homes[2])+"), so prices grow "+(100*N.Dl).toFixed(1)+" points a year more slowly. Assumes the homes reach people who live in them; see the guardrails on vacancies and investors.</div>":"<div class='ui'>Housing-unit counts are not loaded for this area.</div>"]);
   else cards.push(["Slow price growth","<div class='k'>"+pp(-N.Dl)+"</div><div class='ui'>points a year on consumer price growth relative to pay. Today prices grow "+pct(L.cur.gb,1)+" and pay "+pct(L.cur.gp,1)+".</div>"]);
   cards.push(["Raise pay growth","<div class='k'>"+money(N.credit)+"</div><div class='ui'>per household in year one, rising by that much each year (a credit or raise worth "+(100*N.Dl).toFixed(1)+"% of median income a year). First-year cost for this group: "+bigMoney(N.creditCost)+".</div>"]);
   cards.push(["Split the difference","<div class='k'>½ + ½</div><div class='ui'>"+(home&&N.homes?"About "+short(N.homes[1]/2)+" more homes a year":"Prices "+(50*N.Dl).toFixed(1)+" points slower")+" plus a credit of "+money(N.credit/2)+" per household in year one.</div>"]);
@@ -778,21 +798,22 @@ function renderPlans(){const L=LAST;fillOffices();const N=planNumbers();const ho
   if(N.edgeHH<1)cards[cards.length-1]=["Help those near the edge","<div class='k'>0</div><div class='ui'>No one in this group is within 10% of the quitting point right now, so there is no one to target.</div>"];
   if(closed){cards.length=0;const up=L.SC.find(x=>x.k==="up2");
     cards.push(["Safety margin","<div class='k'>"+(100*-L.gapNow).toFixed(1)+"</div><div class='ui'>points a year: how much faster "+(home?"home prices":"consumer prices")+" could grow, relative to pay, before people start to stop.</div>"]);
-    cards.push(["What would reopen it","<div class='ui'>If the goal grew 2 points a year faster, the Hope Gap would be "+pp(up.hg)+" and about "+pct(up.res.path[24][1])+" of the group would have stopped within two years.</div>"]);
-    cards.push(["What to do","<div class='ui'>Keep the measures that hold "+(home?"home prices":"prices")+" in line with pay, and re-run this tool each quarter. Act as soon as the Hope Gap turns positive.</div>"]);}
+    const upC=Math.max(0,up.hg)*L.dist.medInc;
+    cards.push(["What would turn it negative","<div class='ui'>If the goal grew 2 points a year faster, the Hope Gap would be "+HG(up.hg)+" and about "+pct(up.res.path[24][1])+" of the group would have stopped within two years."+(up.hg>0?" A credit that closed that gap would be worth about "+money(upC)+" per household in year one, about "+bigMoney(upC*L.households)+" for this group.":"")+"</div>"]);
+    cards.push(["What to do","<div class='ui'>Keep the measures that hold "+(home?"home prices":"prices")+" in line with pay, and re-run this tool each quarter. Act as soon as the Hope Gap turns negative.</div>"]);}
   cards.forEach(([h,b])=>{const d=document.createElement("div");d.className="plan";d.innerHTML="<h3>"+h+"</h3>"+b;host.appendChild(d);});
   LAST.planText=[...host.children].map(c=>"<b>"+c.querySelector("h3").textContent+":</b> "+[...c.querySelectorAll(".k,.ui")].map(x=>x.textContent.trim()).join(" ")).join("<br>");
   // chart over five years
   const runs=[{name:"Nothing changes",color:"--ink",path:L.SC[0].res.path}].concat(L.PL.map(p=>({name:p.name,color:p.color,path:p.res.path})));
   const mx=Math.max(...runs.flatMap(r=>r.path.map(p=>p[1])),0.05);const ym=Math.min(1,niceMax(mx*1.1));
-  const f=frame($("chPlan"),900,300,[0,60],[0,ym],[0,12,24,36,48,60],[0,ym/2,ym],v=>(v/12)+" yr",v=>Math.round(v*100)+"%");
+  const f=frame($("chPlan"),900,300,[0,60],[0,ym],[0,12,24,36,48,60],[0,ym/2,ym],v=>(v/12)+" yr",v=>Math.round(v*100)+"%","years from now","share who have stopped");
   runs.slice().reverse().forEach(r=>el("path",{d:pathD(r.path,f.X,f.Y),fill:"none",stroke:colorOf(r.color),"stroke-width":r.name==="Nothing changes"?3.5:2.4},$("chPlan")));
   $("planLegend").innerHTML=runs.map(r=>{const e=r.path[60][1];return "<span><i class='sw' style='background:"+colorOf(r.color)+"'></i>"+r.name+": "+pct(e)+" at 5 years</span>";}).join("");
   renderTimeline(N);}
 function instr(key,N){const L=LAST;const lv=ST.level;const home=ST.bench==="home";const H=N.homes?short(N.homes[1]):"enough";
   if(!home&&["supply","supplyFin","supplyTax"].includes(key))return "Housing is about a third of consumer prices, so adding homes also slows the cost of living. To size that effort, choose “Owning a home” in Step 2; the plan there gives the number of homes.";
   const T={
-    measure:"Adopt the Hope Gap (now "+pp(L.gapNow)+" points) and the share who have stopped keeping score (now "+pct(L.SC[0].res.today)+", about "+people(L.SC[0].res.today*L.headcount)+" people) as official indicators. Publish both with every budget and economic outlook.",
+    measure:"Adopt the Hope Gap (now "+HG(L.gapNow)+" points a year; above zero means hope holds) and the share who have stopped keeping score (now "+pct(L.SC[0].res.today)+", about "+people(L.SC[0].res.today*L.headcount)+" people) as official indicators. Publish both with every budget and economic outlook.",
     fed:home?"Monetary policy moves home prices only indirectly. Track the housing Hope Gap in staff briefings, and run this tool on the cost of living, where the Fed's mandate applies: keep price growth at or below pay growth plus the tipping point.":"Bring consumer price growth down by "+(100*N.Dl).toFixed(1)+" points a year relative to pay (prices now "+pct(L.cur.gb,1)+", pay "+pct(L.cur.gp,1)+"). Report the cost-of-living Hope Gap with each policy statement.",
     supply:{nation:"Tie federal housing and transportation grants to local permitting, so the country adds about "+H+" more homes a year than the current pace.",state:"Pass by-right approval for homes near jobs and transit, permit deadlines and smaller minimum lot sizes, so the state adds about "+H+" more homes a year than now.",county:"Fund roads, water and sewer for about "+H+" more homes a year, and speed approvals where the county controls land use.",city:"Rezone and approve by right enough land for about "+H+" more homes a year; cut permit times and fees for housing."}[lv],
     supplyFin:"Expand financing that adds homes, such as housing tax credit allocations and a construction-loan fund, sized to about "+H+" more homes a year.",
@@ -809,10 +830,10 @@ function renderTimeline(N){const L=LAST;const off=OFFICES[ST.level].find(o=>o[0]
   if(!closed){keys.filter(k=>k!=="measure").forEach((k,i)=>items.push(["By "+addDays(i===0?90:120),i===0?"Decide":"Also",instr(k,N)]));
     const acts=keys.filter(k=>k!=="measure"&&!(k==="fed"&&ST.bench==="home"));
     if(acts.length)items.push(["By "+addDays(180),"Launch","Put the measures above in place. They are assumed to phase in over two years."]);}
-  items.push([[91,182,273].map(d=>addDays(d)).join("; "),"Check in","Re-run this tool each quarter; it updates itself after each release of home prices and wages. On the plan, the share who have stopped should be about "+[3,6,9].map(m=>pct(plan[m][1])).join(", ")+" at those dates; without it, about "+[3,6,9].map(m=>pct(cur[m][1])).join(", ")+"."]);
-  if(closed)items.push(["By "+addDays(365),"Evaluate","Report the Hope Gap against this baseline. It should stay at or below zero; if it turns positive, use Step 6 again to size the response."]);
+  items.push([[91,182,273].map(d=>addDays(d)).join("; "),"Check in","Re-run this tool each quarter; it updates itself after each release of home prices and wages. On the plan, the share who have stopped should be about "+[3,6,9].map(m=>pct(plan[m][1])).join(", ")+" at those dates; without it, about "+[3,6,9].map(m=>pct(cur[m][1])).join(", ")+(Math.abs(plan[9][1]-cur[9][1])<0.01?". Early differences are within rounding; judge the first year by whether the Hope Gap is rising toward zero.":"")]);
+  if(closed)items.push(["By "+addDays(365),"Evaluate","Report the Hope Gap against this baseline. It should stay at or above zero; if it turns negative, use Step 6 again to size the response."]);
   else items.push(["By "+addDays(365),"Evaluate","Report the Hope Gap and the share against this baseline. With the gap closing and help for those near the edge, the share should be about "+pct(plan[12][1])+" (versus "+pct(cur[12][1])+" without), and about "+pct(plan[60][1])+" by year five (versus "+pct(cur[60][1])+")."]);
-  if(!closed)items.push(["By "+addDays(3*365),"Target","Hope Gap at or below zero. If it is not, scale up whichever measure moved it most."]);
+  if(!closed)items.push(["By "+addDays(3*365),"Target","Hope Gap back at or above zero. If it is not, scale up whichever measure moved it most."]);
   const host=$("timeline");host.innerHTML="";items.forEach(([w,k,t])=>{const d=document.createElement("div");d.className="it";d.innerHTML="<div class='when'><b>"+k+"</b>"+w+"</div><div>"+t+"</div>";host.appendChild(d);});
   LAST.timeline=items;LAST.office=off[1];}
 
@@ -823,13 +844,13 @@ function renderReport(){const L=LAST;if(!L||L.missing.length)return;const home=S
   const tl=(L.timeline||[]).map(([w,k,t])=>"<tr><td><b>"+k+"</b><br>"+w+"</td><td>"+t+"</td></tr>").join("");
   const html="<div class='eyebrow'>The Hope Gap · report prepared "+fmtDate(new Date())+"</div><h2>"+L.g.name+": "+(home?"owning a home":"keeping up with the cost of living")+"</h2>"+
    "<p><b>Group:</b> "+L.G.label+", about "+people(L.headcount)+" people. <b>Prepared for:</b> "+(L.office||"")+". <b>Trend:</b> "+winLabel(ST.win)+". <b>Data:</b> "+(D.core.built?"updated "+D.core.built.slice(0,10):"")+" from BLS, BEA, FHFA, Zillow and the Census Bureau.</p>"+
-   "<h3>Where things stand</h3><p>"+$("gapText").textContent+" Hope Gap: <b>"+pp(L.gapNow)+" points a year</b>. Today about <b>"+pct(L.SC[0].res.today)+"</b> of the group (about "+people(L.SC[0].res.today*L.headcount)+" people) have stopped measuring themselves against the goal; if nothing changes, about "+pct(A[24][1])+" will have in two years. "+$("resText").textContent+"</p>"+
+   "<h3>Where things stand</h3><p>"+$("gapText").textContent+" Hope Gap: <b>"+HG(L.gapNow)+" points a year</b> (tipping point minus gap; above zero means hope holds). Today about <b>"+pct(L.SC[0].res.today)+"</b> of the group (about "+people(L.SC[0].res.today*L.headcount)+" people) have stopped measuring themselves against the goal; if nothing changes, about "+pct(A[24][1])+" will have in two years. "+$("resText").textContent+"</p>"+
    "<h3>Scenarios</h3><div class='tbl'><table><thead><tr><th>If…</th><th>Stopped at 12 months</th><th>At 24 months</th></tr></thead><tbody>"+rows+"</tbody></table></div>"+
    "<h3>Plans</h3><p>"+$("goalCall").textContent+"</p><div class='tbl'><table><thead><tr><th>Plan</th><th>Stopped at 1 year</th><th>2 years</th><th>5 years</th></tr></thead><tbody>"+prow+"</tbody></table></div>"+
    "<p>"+(L.planText||"")+"</p>"+
    "<h3>Actions and dates</h3><div class='tbl'><table class='left'><tbody>"+tl+"</tbody></table></div>"+
    "<h3>Guardrails</h3><p>No persistence campaigns aimed at people past the quitting point. One-time help with buying raises prices unless more homes come with it. Calming price swings alone can push people near the edge out sooner.</p>"+
-   "<h3>Method</h3><p class='note'>Model: Lester (2026), Rational Foreclosure, SSRN 6614858, solved exactly for each group. Head counts treat group shares as independent. People are assumed to notice new trends "+$("pf_tau").selectedOptions[0].textContent.toLowerCase()+". Homes needed use a housing demand elasticity of −0.6 (Hanushek and Quigley 1980). Results are model estimates under stated assumptions; compare changes more than levels. Tool: lesterhau.github.io/rational-foreclosure.</p>";
+   "<h3>Method</h3><p class='note'>Model: Lester (2026), Rational Foreclosure, SSRN 6614858, solved exactly for each group. On track for owning a home means a typical home costs three years of household income. Head counts treat group shares as independent. People are assumed to notice new trends "+$("pf_tau").selectedOptions[0].textContent.toLowerCase()+". Homes needed use a housing demand elasticity of −0.6 (Hanushek and Quigley 1980). Results are model estimates under stated assumptions; compare changes more than levels. Tool: lesterhau.github.io/rational-foreclosure.</p>";
   $("report").innerHTML=html;
   $("memoPrompt").textContent="Draft a one-page memo for "+(L.office||"my office")+" using ONLY the facts and numbers in the report below. Do not change, round differently, or add any number. Structure: purpose (one sentence); where things stand; what happens if nothing changes; the recommended plan with costs; actions and dates; risks and guardrails. Plain language, no jargon.\n\nREPORT\n"+$("report").innerText;}
 $("printBtn").addEventListener("click",()=>{document.body.classList.add("print-report");setTimeout(()=>{window.print();setTimeout(()=>document.body.classList.remove("print-report"),500);},50);});
@@ -841,12 +862,11 @@ $("officeSel").addEventListener("change",()=>{if(LAST&&!LAST.missing.length){ren
 /* ================= tipping chart (teaching) ================= */
 function drawTip(){const L=LAST;if(!L||!L.cur)return;const sg=L.cur.sig,pr=L.pr;const tip=sg*sg;const xmax=Math.max(0.04,(L.cur.d||0)*1.6);const pts=[];
   for(let i=0;i<=40;i++){const d=xmax*i/40;const b=thresholdAt(d,sg,pr);pts.push([d,isFinite(b)?Math.exp(b):0]);}
-  const f=frame($("chTip"),900,300,[0,xmax],[0,1],[0,xmax/4,xmax/2,3*xmax/4,xmax],[0,.25,.5,.75,1],v=>(100*v).toFixed(1)+" pts",v=>Math.round(v*100)+"%");
+  const f=frame($("chTip"),900,300,[0,xmax],[0,1],[0,xmax/4,xmax/2,3*xmax/4,xmax],[0,.25,.5,.75,1],v=>(100*v).toFixed(1)+" pts",v=>Math.round(v*100)+"%","how fast the goal outruns pay (points a year)","quitting point (% of on track)");
   el("rect",{x:f.X(0),y:f.m.t,width:Math.max(0,f.X(tip)-f.X(0)),height:f.H-f.m.t-f.m.b,fill:css("--good-soft")},$("chTip"));
-  const t=el("text",{x:f.X(tip)+6,y:f.m.t+14},$("chTip"));t.textContent="tipping point "+(100*tip).toFixed(2)+" pts";
+  tagLine($("chTip"),f.X(tip)+6,f.m.t+14,"tipping point "+(100*tip).toFixed(2)+" pts (Hope Gap = 0); hope holds to the left");
   el("path",{d:pathD(pts,f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":3},$("chTip"));
-  if(L.cur.d!=null&&L.cur.d<=xmax){const b=thresholdAt(L.cur.d,sg,pr);el("circle",{cx:f.X(L.cur.d),cy:f.Y(isFinite(b)?Math.exp(b):0),r:7,fill:css("--ink")},$("chTip"));}
-  const lab=el("text",{x:f.m.l,y:f.H-4},$("chTip"));lab.textContent="how fast the goal outruns pay (points a year)";}
+  if(L.cur.d!=null&&L.cur.d<=xmax){const b=thresholdAt(L.cur.d,sg,pr);const cy=f.Y(isFinite(b)?Math.exp(b):0);el("circle",{cx:f.X(L.cur.d),cy,r:7,fill:css("--ink")},$("chTip"));tagLine($("chTip"),f.X(L.cur.d)+10,cy+(cy<f.m.t+30?18:-10),"today: "+L.g.name);}}
 
 /* ================= now strip, tables ================= */
 function renderNow(){const F=D.core.fed||{};const v=(k,d=1)=>F[k]&&F[k].v!=null?F[k].v.toFixed(d)+"%":"n/a";const dt=k=>F[k]?monthName(F[k].d):"";const s=F.since1979||{};
@@ -854,7 +874,7 @@ function renderNow(){const F=D.core.fed||{};const v=(k,d=1)=>F[k]&&F[k].v!=null?
     ["ink",v("rgdp"),"real GDP","Growth, annual rate ("+dt("rgdp")+"); nominal "+v("ngdp")],["mid",v("unemp"),"jobless","Unemployment rate ("+dt("unemp")+")"],["gold",v("hpi1"),"homes","Home prices, past year ("+dt("hpi1")+")"],["mid",v("mort",2),"mortgage","30-year fixed rate ("+(F.mort?monthName(F.mort.d):"")+")"],
     ["stay",s.realPay!=null?"+"+s.realPay.toFixed(0)+"%":"n/a","since 1979","Median weekly pay after inflation: pay ×"+(s.payX||"?")+", prices ×"+(s.cpiX||"?")],["quit",s.gdppc!=null?"+"+s.gdppc.toFixed(0)+"%":"n/a","since 1979","Real GDP per person, over the same years"]]);}
 function renderTables(){const pt=$("prefTable");pt.innerHTML="";AGES.forEach((a,i)=>{const tr=document.createElement("tr");tr.innerHTML="<td>"+a+"</td><td>"+AGE_LAM[i].toFixed(1)+" times</td><td>"+pct(AGE_RHO[i],1)+" a year</td><td class='src'>Loss aversion rises with age, most after 55 (Gächter, Johnson and Herrmann 2022); patience peaks in middle age (Falk et al. 2018). Sizes assumed.</td>";pt.appendChild(tr);});
-  const st=$("stTable");st.innerHTML="";D.core.states.forEach(s=>{const h=s.hpi||{},p=s.pay||{};const d=(h.g10!=null&&p.g10!=null)?h.g10-p.g10-(h.sig||0)**2:null;const tr=document.createElement("tr");tr.innerHTML="<td>"+s.n+"</td><td>"+(d!=null?pp(d):"n/a")+"</td><td>"+pct(h.g10,1)+"</td><td>"+pct(p.g10,1)+"</td><td>"+pct(h.sig,1)+"</td><td>"+money(s.val)+"</td><td>"+money(s.inc)+"</td>";st.appendChild(tr);});
+  const st=$("stTable");st.innerHTML="";D.core.states.forEach(s=>{const h=s.hpi||{},p=s.pay||{};const d=(h.g10!=null&&p.g10!=null)?h.g10-p.g10-(h.sig||0)**2:null;const tr=document.createElement("tr");tr.innerHTML="<td>"+s.n+"</td><td>"+(d!=null?HG(d):"n/a")+"</td><td>"+pct(h.g10,1)+"</td><td>"+pct(p.g10,1)+"</td><td>"+pct(h.sig,1)+"</td><td>"+money(s.val)+"</td><td>"+money(s.inc)+"</td>";st.appendChild(tr);});
   const C=D.core,us=C.us,F=C.fed||{};const rows=[["Consumer and producer prices, pay, unemployment, GDP","FRED (BLS, BEA)",F.cpi?monthName(F.cpi.d):""],["Home price index: nation and states","FHFA, all-transactions",us.hpi&&us.hpi.end],["Home price index: counties","FHFA, annual county index",(D.cty.find(c=>c.hpi)||{}).hpi?.end||"n/a"],["Pay: nation, states, counties","BLS Quarterly Census of Employment and Wages",C.qcewEnd],["Typical home values","Zillow Home Value Index",monthName(us.valDate)],["Population, age, race and ethnicity, education, income, housing","Census American Community Survey",Object.values(C.acs||{}).join("; ")]];
   const sb=$("srcTable");sb.innerHTML="";rows.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML="<td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+(r[2]||"")+"</td><td>"+(Object.entries(C.status||{}).every(([k,v])=>v==="ok")?"current":"see note")+"</td>";sb.appendChild(tr);});
   const bad=Object.entries(C.status||{}).filter(([k,v])=>v!=="ok");$("srcNote").textContent=(D.live?"Data refresh automatically twice a week; last refresh "+C.built+". ":"This copy uses a saved snapshot from "+C.built+"; the public page refreshes itself twice a week. ")+(bad.length?"Last refresh could not reach: "+bad.map(b=>b[0]).join(", ")+"; earlier values are kept.":"");}
@@ -867,12 +887,12 @@ function fillCounties(){const s=$("ctySel");s.innerHTML="";(CBS[ST.state]||[]).f
   if(ST.county!=="__manual"&&(!ST.county||!CBY[ST.county]||CBY[ST.county].s!==ST.state)){const big=(CBS[ST.state]||[]).slice().sort((a,b)=>(b.pop||0)-(a.pop||0))[0];ST.county=big?big.f:"__manual";}s.value=ST.county;}
 function fillPlaces(){const s=$("plcSel");s.innerHTML="";(PBS[ST.state]||[]).forEach(c=>{const o=document.createElement("option");o.value=c.f;o.textContent=(c.n||c.f).replace(/ (city|town|village|CDP|municipality|borough)$/i,"");s.appendChild(o);});const m=document.createElement("option");m.value="__manual";m.textContent="My city is not listed";s.appendChild(m);
   if(ST.place!=="__manual"&&(!ST.place||!PBY[ST.place]||PBY[ST.place].s!==ST.state)){const big=(PBS[ST.state]||[]).slice().sort((a,b)=>(b.pop||0)-(a.pop||0))[0];ST.place=big?big.f:"__manual";}s.value=ST.place;}
-function syncLevel(){const L=ST.level;$("stWrap").hidden=L==="nation";$("ctyWrap").hidden=L!=="county";$("plcWrap").hidden=L!=="city";
+function syncLevel(){const L=ST.level;hide("stWrap",L==="nation");hide("ctyWrap",L!=="county");hide("plcWrap",L!=="city");
   if(L==="county")fillCounties();if(L==="city")fillPlaces();
-  const manual=(L==="county"&&ST.county==="__manual")||(L==="city"&&ST.place==="__manual");$("manualWrap").hidden=!manual;
+  const manual=(L==="county"&&ST.county==="__manual")||(L==="city"&&ST.place==="__manual");hide("manualWrap",!manual);
   if(manual){ /* manual areas start from the state's figures, minus local values */ }
   fillOffices();}
-function syncAll(){$("tenWrap").hidden=ST.bench!=="home";$("spreadWrap").hidden=ST.bench!=="col";
+function syncAll(){hide("tenWrap",ST.bench!=="home");hide("spreadWrap",ST.bench!=="col");
   const ranges=ST.incMode==="tax"?BRACKETS.map(b=>b[0]+" bracket"):TIERS;const prev=sel("inc");mkChecks($("ck_inc"),ranges,"inc",prev.filter(i=>i<ranges.length));
   $("incNote").textContent=ST.incMode==="tax"?"2026 federal brackets for married couples filing jointly, converted to household income (10%: under $57,000; 12%: to $133,000; 22%: to $243,600; 24%: to $435,750). Single filers' ranges are about half.":"Based on the area's own Census income distribution."+(ST.bench==="col"?" For cost of living, income groups change head counts only.":"");
   refreshPrompt();schedule();}
@@ -891,27 +911,28 @@ $("demo").addEventListener("change",schedule);
 let MP,Mb,Mxs,Mpts,wCache=null;
 function mLabels(){$("o_m_delta").textContent=pp(+$("m_delta").value)+" pts";$("o_m_sig").textContent=Math.round(100*$("m_sig").value)+"%";$("o_m_lam").textContent=(+$("m_lam").value).toFixed(1)+"×";$("o_m_alpha").textContent=(+$("m_alpha").value).toFixed(1);$("o_m_rho").textContent=pct(+$("m_rho").value,1);$("o_xt").textContent=pct(+$("xt").value,1);}
 function mRecompute(){mLabels();const p={delta:+$("m_delta").value,sig:+$("m_sig").value,lam:+$("m_lam").value,alpha:+$("m_alpha").value,rho:+$("m_rho").value};MP=setup(p);
-  const bad=!(MP.rho>MP.D+1e-4);$("m_warn").hidden=!bad;["chF","chQ","chW"].forEach(i=>$(i).style.opacity=bad?0.25:1);if(bad){blobs($("mBlobs"),[["good","none","","No quitting point"]]);return;}
+  const bad=!(MP.rho>MP.D+1e-4);hide("m_warn",!bad);["chF","chQ","chW"].forEach(i=>$(i).style.opacity=bad?0.25:1);if(bad){blobs($("mBlobs"),[["good","none","","No quitting point"]]);return;}
   Mb=solveB(MP,H,50);Mxs=Math.exp(Mb);Mpts=curve(MP,Mb,Math.log(1.7),H);
   const at1=Mpts.reduce((a,q)=>Math.abs(Math.exp(q[0])-1)<Math.abs(Math.exp(a[0])-1)?q:a,Mpts[0]);
   blobs($("mBlobs"),[["quit",pct(Mxs,1),"quit point","Stops at this share of the goal"],["mid",pct(xbar(MP)),"floor","Always stopped by here"],["stay",pct(MP.rho*at1[2]/(1+MP.rho*at1[2]),1),"at par","Spends this much less to keep up"]]);
   drawF();drawQ();computeWelfare();drawW();}
 function drawF(){const svg=$("chF"),xd=[0.5,1.6];const P2=Mpts.filter(p=>Math.exp(p[0])<=xd[1]).map(p=>[Math.exp(p[0]),p[1]]);const ymax=niceMax(Math.max(...P2.map(p=>p[1]),1e-6)*1.08);
-  const f=frame(svg,640,260,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>v.toPrecision(2));
+  const f=frame(svg,640,260,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>v.toPrecision(2),"standing: savings against the goal (100% = on track)","value of staying in");
   el("rect",{x:f.X(xd[0]),y:f.m.t,width:Math.max(0,f.X(Math.max(xd[0],Mxs))-f.X(xd[0])),height:f.H-f.m.t-f.m.b,fill:css("--quit-soft")},svg);
-  el("line",{x1:f.X(1),x2:f.X(1),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--rule"),"stroke-width":1.5},svg);
+  if(Mxs>xd[0]+0.08)tagLine(svg,f.X(xd[0])+6,f.m.t+14,"stopped");
+  el("line",{x1:f.X(1),x2:f.X(1),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--rule"),"stroke-width":1.5},svg);tagLine(svg,f.X(1)+5,f.m.t+14,"on track");
   el("path",{d:pathD([[xd[0],0],[Mxs,0]].concat(P2),f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3},svg);
-  el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);}
+  el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);tagLine(svg,f.X(Mxs)-5,f.m.t+28,"quitting point "+pct(Mxs,1),"end");}
 function drawQ(){const svg=$("chQ"),xd=[0.5,1.6];const q=Mpts.filter(p=>Math.exp(p[0])<=xd[1]).map(p=>[Math.exp(p[0]),MP.rho*p[2]/(1+MP.rho*p[2])]);const ymax=niceMax(Math.max(...q.map(p=>p[1]),0.01)*1.1);
-  const f=frame(svg,640,210,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%");
+  const f=frame(svg,640,210,xd,[0,ymax],[0.5,0.75,1,1.25,1.5],[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%","standing (100% = on track)","spending cut to keep up");
   el("rect",{x:f.X(xd[0]),y:f.m.t,width:Math.max(0,f.X(Math.max(xd[0],Mxs))-f.X(xd[0])),height:f.H-f.m.t-f.m.b,fill:css("--quit-soft")},svg);
   el("path",{d:pathD([[xd[0],0],[Mxs,0]].concat(q),f.X,f.Y),fill:"none",stroke:css("--stay"),"stroke-width":3},svg);
-  el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);}
+  el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);tagLine(svg,f.X(Mxs)-5,f.m.t+14,"quitting point","end");}
 function computeWelfare(){const F0=valueAt(MP,Mb,0);const grid=[];const lo=Math.max(0.5,Mxs-0.15),hi=Math.min(0.995,Mxs+0.05);for(let i=0;i<=14;i++)grid.push(lo+(hi-lo)*i/14);grid.push(Mxs);grid.sort((a,c)=>a-c);wCache={F0,L:grid.map(x=>[x,Math.max(0,F0-valueAt(MP,Math.log(x),0))])};}
 function drawW(){const svg=$("chW");const {F0,L}=wCache;const xd=[L[0][0],L[L.length-1][0]];const rel=L.map(p=>[p[0],p[1]/F0]);const ymax=niceMax(Math.max(...rel.map(p=>p[1]),0.1)*1.05);
   const tk=[];for(let v=Math.ceil(xd[0]*20)/20;v<=xd[1]+1e-9;v+=0.05)tk.push(+v.toFixed(2));
-  const f=frame(svg,640,260,xd,[0,ymax],tk.filter((v,i)=>i%2===0),[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%");
-  el("path",{d:pathD(rel,f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":3},svg);el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);
+  const f=frame(svg,640,260,xd,[0,ymax],tk.filter((v,i)=>i%2===0),[0,ymax/2,ymax],v=>Math.round(v*100)+"%",v=>Math.round(v*100)+"%","standing at which people are made to stop","cost, as % of what the race was worth at par");
+  el("path",{d:pathD(rel,f.X,f.Y),fill:"none",stroke:css("--quit"),"stroke-width":3},svg);el("line",{x1:f.X(Mxs),x2:f.X(Mxs),y1:f.m.t,y2:f.H-f.m.b,stroke:css("--tape"),"stroke-width":3},svg);tagLine(svg,f.X(Mxs)-5,f.m.t+14,"their own quitting point","end");
   const xt=+$("xt").value;const cl=Math.min(Math.max(xt,xd[0]),xd[1]);const lv=Math.max(0,F0-valueAt(MP,Math.log(xt),0))/F0;
   el("circle",{cx:f.X(cl),cy:f.Y(Math.min(lv,ymax)),r:7,fill:"none",stroke:css("--ink"),"stroke-width":2},svg);
   const v=$("verdict");if(Math.abs(xt-Mxs)<0.004){v.className="verdict good";$("vHead").textContent="No harm";$("vText").textContent="This matches their own quitting point.";}
@@ -925,14 +946,15 @@ $("m_reset").addEventListener("click",()=>{[["m_delta",.02],["m_sig",.1],["m_lam
 const redraw=()=>{if(LAST&&!LAST.missing.length){drawShare();drawTyp();renderScn();renderPlans();drawTip();}if(MP&&Mpts){drawF();drawQ();if(wCache)drawW();}};
 if(window.matchMedia){const mq=matchMedia("(prefers-color-scheme: dark)");(mq.addEventListener?mq.addEventListener("change",redraw):mq.addListener(redraw));}
 new MutationObserver(redraw).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
-mkChecks($("ck_age"),AGES,"age",[1,2]);mkChecks($("ck_race"),RACES,"race",[]);mkChecks($("ck_sex"),["Women","Men"],"sex",[]);mkChecks($("ck_edu"),["No four-year degree","Four-year degree or more"],"edu",[]);mkChecks($("ck_ten"),["Renters","Homeowners"],"ten",[]);
+mkChecks($("ck_age"),AGES,"age",[1,2]);mkChecks($("ck_race"),RACES,"race",[]);mkChecks($("ck_sex"),["Women","Men"],"sex",[]);{const l=document.createElement("label");l.title="The Census does not yet publish gender identity for local areas";l.style.opacity=".6";l.innerHTML='<input type="checkbox" disabled aria-disabled="true">Nonbinary (no local data yet)';$("ck_sex").appendChild(l);}mkChecks($("ck_edu"),["No four-year degree","Four-year degree or more"],"edu",[]);mkChecks($("ck_ten"),["Renters","Homeowners"],"ten",[]);
 mRecompute();
 loadData().then(d=>{D=d;SBY={};D.core.states.forEach(s=>SBY[s.f]=s);CBY={};CBS={};(D.cty||[]).forEach(c=>{CBY[c.f]=c;(CBS[c.s]=CBS[c.s]||[]).push(c);});PBY={};PBS={};(D.plc||[]).forEach(p=>{if(!p.n)return;PBY[p.f]=p;(PBS[p.s]=PBS[p.s]||[]).push(p);});
   Object.values(CBS).forEach(a=>a.sort((x,y)=>(x.n||"").localeCompare(y.n||"")));Object.values(PBS).forEach(a=>a.sort((x,y)=>(x.n||"").localeCompare(y.n||"")));
   const b=D.core.built?new Date(D.core.built.replace("Z",":00Z")):null;
-  $("dataLine").textContent=(D.live?"Data updated ":"Saved data from ")+(b&&!isNaN(b)?fmtDate(b):D.core.built)+" from BLS, BEA, FHFA, Zillow and the Census Bureau"+(D.live?". Refreshed automatically twice a week.":". The public page refreshes itself twice a week.");
-  renderNow();renderTables();fillStates();syncLevel();syncAll();
-}).catch(e=>{$("dataLine").textContent="The data could not be loaded ("+e.message+"). Try reloading the page.";});
+  $("dataLine").textContent=(D.live?"Data updated ":"Saved data from ")+(b&&!isNaN(b)?fmtDate(b):D.core.built)+", from BLS, BEA, FHFA, Zillow and the Census Bureau"+(D.live?". Refreshes automatically twice a week.":". The public page refreshes itself twice a week.");
+  try{renderNow();renderTables();fillStates();syncLevel();syncAll();}
+  catch(e){console.error(e);$("dataLine").textContent="The data loaded, but the page could not draw the planner ("+e.message+"). Reload the page; if this keeps happening, please report this message.";}
+}).catch(e=>{console.error(e);$("dataLine").textContent="The data could not be loaded ("+e.message+"). Try reloading the page.";});
 })();
 </script>
 
