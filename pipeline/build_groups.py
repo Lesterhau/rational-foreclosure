@@ -24,6 +24,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 import tempfile
 import time
@@ -73,10 +74,11 @@ def find_files(st):
     out = {}
     for demo in ("sa", "se", "rh"):
         for geo in ("gc", "gs"):
-            pat = re.compile(r"qwi_%s_%s_f_%s_n_o[a-z]*_u\.csv\.gz" % (st, demo, geo))
+            # all-industries files ("n") when published, else sector files ("ns"), which also carry the all-industries rows
+            pat = re.compile(r"qwi_%s_%s_f_%s_(n|ns)_o[a-z]*_u\.csv\.gz" % (st, demo, geo))
             c = [n for n in names if pat.fullmatch(n)]
-            # prefer all ownership (state, local and private) over private only
-            c.sort(key=lambda n: (0 if "_oslp_" in n else 1, n))
+            # prefer all-industries files, then all ownership (state, local and private) over private only
+            c.sort(key=lambda n: (0 if "_n_" in n else 1, 0 if "_oslp_" in n else 1, n))
             if c:
                 out[(demo, geo)] = c[0]
     if not out and st in ("al", "tx"):
@@ -100,9 +102,14 @@ def read_file(st, name):
         tmp.write(chunk)
         size += len(chunk)
     tmp.close()
+    # keep only the all-industries rows (ind_level A, industry 00) before parsing: sector files are about 20 times larger
+    flt = tmp.name[:-3]
+    subprocess.run(f'(zcat "{tmp.name}" | head -1; zcat "{tmp.name}" | grep -E \'^([^,]*,){{4}}"?A"?,"?0+"?,\') > "{flt}"',
+                   shell=True, check=False, executable="/bin/bash")
+    os.unlink(tmp.name)
     parts = []
     try:
-        for df in pd.read_csv(tmp.name, compression="gzip", usecols=lambda c: c in COLS, dtype=str, chunksize=400_000):
+        for df in pd.read_csv(flt, usecols=lambda c: c in COLS, dtype=str, chunksize=400_000):
             df = df[(df["industry"].isin(["00", "0"])) & (df["firmage"].isin(["0", "00"])) & (df["firmsize"].isin(["0", "00"]))]
             if "ownercode" in df:
                 df = df[df["ownercode"].isin(["A00", "A05"])]
@@ -118,7 +125,7 @@ def read_file(st, name):
             df["t"] = df["year"].astype(int) * 4 + df["quarter"].astype(int) - 1
             parts.append(df[["geography", "ownercode", "sex", "agegrp", "race", "ethnicity", "education", "t", "emp", "pay"]])
     finally:
-        os.unlink(tmp.name)
+        os.unlink(flt)
     out = pd.concat(parts) if parts else None
     if out is not None and "A00" in set(out["ownercode"]):
         out = out[out["ownercode"] == "A00"]
