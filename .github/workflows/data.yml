@@ -3,7 +3,7 @@ name: Update Hope Gap data
 # Refreshes the planning tool's data twice a week from FRED, FHFA, BLS QCEW, Zillow and the
 # Census Bureau, and publishes it to the gh-pages branch under /data.
 # Group pay trends (Census QWI, large files, released quarterly) are rebuilt when they are more
-# than 28 days old, on every push that changes the pipeline, and on request.
+# than 28 days old, on every push that changes build_groups.py, and on request.
 on:
   schedule:
     - cron: "17 13 * * 1,4"
@@ -66,7 +66,14 @@ jobs:
                   old = (dt.datetime.utcnow() - b).days > 28
               except Exception:
                   old = True
-          print("run=" + ("true" if (old or ask or ev == "push") else "false"))
+          touched = False
+          if ev == "push":
+              try:
+                  pay = json.load(open(os.environ["GITHUB_EVENT_PATH"]))
+                  touched = any("pipeline/build_groups.py" in (c.get("added", []) + c.get("modified", [])) for c in pay.get("commits", []))
+              except Exception:
+                  touched = True
+          print("run=" + ("true" if (old or ask or touched) else "false"))
           EOF
         env:
           ASK: ${{ github.event.inputs.groups }}

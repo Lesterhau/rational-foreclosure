@@ -297,14 +297,63 @@ def pay_stats(W, area):
 
 # ---------------------------------------------------------------- Zillow
 ZBASE = "https://files.zillowstatic.com/research/public_csvs/zhvi/"
-def zillow(kind):
-    r = get(ZBASE + f"{kind}_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv")
+def zillow(kind, tier="0.33_0.67"):
+    r = get(ZBASE + f"{kind}_zhvi_uc_sfrcondo_tier_{tier}_sm_sa_month.csv")
     if r is None:
         raise RuntimeError("download " + kind)
     df = pd.read_csv(io.StringIO(r.text))
     dcols = [c for c in df.columns if c[:2] in ("19", "20")]
     last = dcols[-1]
     return df, last
+
+def zrow_growth(r, dcols):
+    """Latest value and yearly log growth over 1, 5 and 10 years from one Zillow row (monthly, smoothed)."""
+    v = num(r[dcols[-1]])
+    if not v:
+        return None
+    out = [v]
+    for k in (1, 5, 10):
+        b = num(r[dcols[-1 - 12 * k]]) if len(dcols) > 12 * k else None
+        out.append(math.log(v / b) / k if b else None)
+    return out
+
+def starter(kind, keyfn):
+    """Bottom-third (starter-home) values and their growth relative to the middle third, by geography."""
+    lo, last = zillow(kind, "0.0_0.33")
+    mid, _ = zillow(kind)
+    dl = [c for c in lo.columns if c[:2] in ("19", "20")]
+    dm = [c for c in mid.columns if c[:2] in ("19", "20")]
+    M = {}
+    for _, r in mid.iterrows():
+        k = keyfn(r)
+        if k is not None:
+            M[k] = zrow_growth(r, dm)
+    out = {}
+    for _, r in lo.iterrows():
+        k = keyfn(r)
+        g = zrow_growth(r, dl)
+        m = M.get(k)
+        if k is None or not g or not m:
+            continue
+        out[k] = {"val": rnd(g[0], 0), "d1": rnd(g[1] - m[1]) if g[1] is not None and m[1] is not None else None,
+                  "d5": rnd(g[2] - m[2]) if g[2] is not None and m[2] is not None else None,
+                  "d10": rnd(g[3] - m[3]) if g[3] is not None and m[3] is not None else None, "date": last}
+    return out
+
+@stage("Zillow starter homes")
+def zstarter():
+    """Zillow Home Value Index, bottom tier (homes between the 5th and 35th percentiles of value)."""
+    out = {}
+    out["us"] = starter("Metro", lambda r: "us" if str(r["RegionType"]).lower() == "country" else None).get("us")
+    out["state"] = starter("State", lambda r: str(r["RegionName"]))
+    out["county"] = starter("County", lambda r: f"{int(r['StateCodeFIPS']):02d}{int(r['MunicipalCodeFIPS']):03d}")
+    stc = None
+    def ck(r):
+        s = r.get("State", r.get("StateName"))
+        return (str(r["RegionName"]).lower(), str(s).upper())
+    out["city"] = starter("City", ck)
+    log("   starter homes: states", len(out["state"]), "counties", len(out["county"]), "cities", len(out["city"]))
+    return out
 
 @stage("Zillow home values")
 def zhvi():
@@ -490,6 +539,7 @@ def main():
     FC = fhfa_county() or {}
     W = qcew()
     Z = zhvi() or {"state": {}, "county": {}, "city": {}, "us": None}
+    ZL = zstarter() or {"state": {}, "county": {}, "city": {}, "us": None}
     C = census() or {"us": None, "state": {}, "county": {}, "place": {}, "src": {}}
 
     prev_states = {s["f"]: s for s in PREV_CORE.get("states", [])}
@@ -506,6 +556,8 @@ def main():
         us["pay"] = p
     if Z.get("us"):
         us["val"], us["valDate"] = rnd(Z["us"][0], 0), Z["us"][1]
+    if ZL.get("us"):
+        us["lo"] = ZL["us"]
     if "CPIAUCSL" in S and W:
         cq = qavg(S["CPIAUCSL"]); e = W["end"]
         us["cpiT"] = {"g1": rnd(trend_q(cq, e, 1)), "g5": rnd(trend_q(cq, e, 5)), "g10": rnd(trend_q(cq, e, 10)),
@@ -527,6 +579,8 @@ def main():
             rec["pay"] = p
         if name in Z.get("state", {}):
             rec["val"], rec["valDate"] = rnd(Z["state"][name][0], 0), Z["state"][name][1]
+        if name in ZL.get("state", {}):
+            rec["lo"] = ZL["state"][name]
         states.append(rec)
 
     counties = []
@@ -548,6 +602,8 @@ def main():
             rec["pay"] = p
         if f in Z.get("county", {}):
             rec["val"], rec["valDate"] = rnd(Z["county"][f][0], 0), Z["county"][f][1]
+        if f in ZL.get("county", {}):
+            rec["lo"] = ZL["county"][f]
         counties.append(rec)
 
     places = []
@@ -579,6 +635,9 @@ def main():
                 break
         if z:
             rec["val"], rec["valDate"] = rnd(z[0], 0), z[1]
+            zl = ZL.get("city", {}).get((cn.lower(), FIPS[f[:2]]))
+            if zl:
+                rec["lo"] = zl
             cf = Z.get("cname", {}).get((z[2].lower(), f[:2]))
             if cf:
                 rec["c"] = cf
