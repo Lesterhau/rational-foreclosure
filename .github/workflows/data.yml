@@ -2,10 +2,17 @@ name: Update Hope Gap data
 
 # Refreshes the planning tool's data twice a week from FRED, FHFA, BLS QCEW, Zillow and the
 # Census Bureau, and publishes it to the gh-pages branch under /data.
+# Group pay trends (Census QWI, large files, released quarterly) are rebuilt when they are more
+# than 28 days old, on every push that changes the pipeline, and on request.
 on:
   schedule:
     - cron: "17 13 * * 1,4"
   workflow_dispatch:
+    inputs:
+      groups:
+        description: "Rebuild group pay trends (QWI) now"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ["pipeline/**", ".github/workflows/data.yml"]
@@ -15,12 +22,12 @@ permissions:
 
 concurrency:
   group: hope-gap-data
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 170
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -44,3 +51,34 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
           if git diff --cached --quiet; then echo "no changes"; else git commit -m "Update Hope Gap data $(date -u +%F)" && git push origin HEAD:gh-pages; fi
+      - name: Decide whether to rebuild group pay trends
+        id: grp
+        run: |
+          python - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, os, datetime as dt
+          ev = os.environ.get("GITHUB_EVENT_NAME", "")
+          ask = os.environ.get("ASK", "false") == "true"
+          p = "pages/data/groups.json"
+          old = True
+          if os.path.exists(p):
+              try:
+                  b = dt.datetime.strptime(json.load(open(p))["built"], "%Y-%m-%dT%H:%MZ")
+                  old = (dt.datetime.utcnow() - b).days > 28
+              except Exception:
+                  old = True
+          print("run=" + ("true" if (old or ask or ev == "push") else "false"))
+          EOF
+        env:
+          ASK: ${{ github.event.inputs.groups }}
+      - name: Build group pay trends
+        if: steps.grp.outputs.run == 'true'
+        run: python pipeline/build_groups.py gout
+      - name: Publish group pay trends
+        if: steps.grp.outputs.run == 'true'
+        run: |
+          cd pages
+          git pull --rebase origin gh-pages || true
+          if [ -s ../gout/groups.json ] && python -c "import json,sys;d=json.load(open('../gout/groups.json'));sys.exit(0 if len(d.get('st',{}))>=40 else 1)"; then cp ../gout/groups.json data/; fi
+          cp ../gout/groups_log.txt data/ || true
+          git add data
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "Update Hope Gap group pay trends $(date -u +%F)" && git push origin HEAD:gh-pages; fi
