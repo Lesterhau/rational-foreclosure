@@ -287,7 +287,7 @@ footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-fa
   <!-- STEP 4 -->
   <section class="step" id="s4" aria-labelledby="s4h">
     <header><div class="num">4</div><div><h2 id="s4h">See where things stand</h2><p>Computed from the data and the choices above. Changes and comparisons are more reliable than levels.</p></div></header>
-    <div class="gap" id="gapCard"><div class="big" id="gapBig"></div><div style="display:grid;gap:8px"><p id="gapText"></p><div class="scale"><span><b>Above zero:</b> hope holds</span><span><b>Zero:</b> the tipping point</span><span><b>Below zero:</b> people have a reason to stop</span></div><p class="note">This number comes only from the data, not from any assumption about people.</p></div></div>
+    <div class="gap" id="gapCard"><div class="big" id="gapBig"></div><div style="display:grid;gap:8px"><p id="gapText"></p><div class="scale"><span><b>Above zero:</b> hope holds</span><span><b>Zero:</b> the tipping point</span><span><b>Below zero:</b> people have a reason to stop</span></div><p class="note">This number comes only from the area's data, not from any assumption about people, so it is the same for every group you pick in Step 3. The groups change who is counted and how far behind they start.</p></div></div>
     <div class="blobs" id="resBlobs"></div>
     <p class="ui" id="resText"></p>
     <div class="row" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
@@ -741,18 +741,25 @@ function render(){
   $("gapBig").innerHTML=HG(gap)+"<small>Hope Gap, points a year</small>";
   const what=ST.bench==="home"?"Home prices":"Consumer prices";
   const lead=L.cur.d>=0?what+" in "+L.g.name+" have outrun pay by <b>"+(100*L.cur.d).toFixed(1)+" points a year</b> "+winPhrase(ST.win)+".":"Pay in "+L.g.name+" has outrun "+what.toLowerCase()+" by <b>"+(100*-L.cur.d).toFixed(1)+" points a year</b> "+winPhrase(ST.win)+".";
-  $("gapText").innerHTML=lead+" People keep trying as long as "+(what.toLowerCase())+" outrun pay by less than <b>"+(100*L.tip).toFixed(2)+" points a year</b>, the size of the goal's normal ups and downs (the tipping point). "+(closed?"They are inside that line by <b>"+(100*-gap).toFixed(1)+" points</b>, so in the model no one has a reason to stop.":"They are <b>"+(100*gap).toFixed(1)+" points</b> past the line.");
+  $("gapText").innerHTML=lead+" People keep trying as long as "+(what.toLowerCase())+" outrun pay by less than <b>"+(100*L.tip).toFixed(2)+" points a year</b>, the size of the goal's normal ups and downs (the tipping point). "+(closed?"They are inside that line by <b>"+(100*-gap).toFixed(1)+" points</b>, so in the model no one has a reason to stop.":"They are <b>"+(100*gap).toFixed(1)+" points</b> past the line.")+flipNote(L.g,gap);
   // results
   const A=L.SC[0].res,P=A.path;const h=n=>P[n][1];
   const today=A.today;const ppl=v=>people(v*L.headcount);
   blobs($("resBlobs"),[["quit",pct(today),"today","Model estimate of the share who have stopped keeping score (about "+ppl(today)+")"],["mid",pct(h(12)),"12 mo","If nothing changes"],["mid",pct(h(24)),"24 mo","If nothing changes (about "+ppl(h(24))+")"],["gold",pct(P[0][2]),"near edge","Still trying, but within 10% of the quitting point"],["stay",isFinite(L.b0)?pct(Math.exp(L.b0)):"none","quit point","Standing (100% = on track) at which the model says people stop"]]);
   let t;
   const ontrack=ST.bench==="home"?" (100% means a typical home costs three years of the household's income)":" (100% means pay buys what it bought in 2019)";
-  if(!isFinite(L.b0))t="With a Hope Gap at or above zero, the model gives no one in this group a reason to stop. The risk is a change in the trend; Step 5 shows what would tip it.";
+  if(!isFinite(L.b0)){
+    /* Distance to on track at the current trend. Display only: the model's share and threshold are unchanged. */
+    const ym=L.dist.y[NS_AG>>1];let onT=0;for(let i=0;i<NS_AG;i++)if(L.dist.y[i]>=0)onT++;onT/=NS_AG;
+    const yrs=(ym<0&&L.cur.d<0)?ym/L.cur.d:null;
+    t="With a Hope Gap at or above zero, the model gives no one in this group a reason to stop. That says which way things are moving, not how far there is to go. The typical member stands at "+pct(Math.exp(ym))+" of on track"+ontrack+(ym>=0?", so is already there.":"; "+(yrs!=null?"at this pace, they get there in about "+fmtYears(yrs)+".":"at this pace, they never close the distance, and their hope rests only on the goal's ups and downs."))+" "+pct(onT)+" of the group are on track today."+(ym<0&&(yrs==null||yrs>30)?" The model counts even a road this long as hope, because its people wait as long as it takes. Real people may not, so read this result as fragile, not safe.":"")+" The risk is a change in the trend; Step 5 shows what would tip it.";}
   else{t="The typical member stands at "+pct(Math.exp(L.dist.y[NS_AG>>1]))+" of on track"+ontrack+", and the model puts the quitting point at "+pct(Math.exp(L.b0))+". "+(L.typCur.stopAt!=null?(L.typCur.stopAt===0?"The typical member has already stopped. ":"If nothing changes, the typical member reaches it in about "+fmtYears(L.typCur.stopAt)+". "):"The typical member does not reach it within ten years if nothing changes. ")+"Today's share is a model estimate and moves with two things. If the trend were a quarter point a year lower or higher, it would be "+pct(L.sens[0])+" to "+pct(L.sens[1])+"."+(L.share4!=null?" If on track meant four years of income instead of three, it would be "+pct(L.share4)+".":"")+(ST.bench==="col"?" For the cost of living, standing is measured from 2019, so few people are far enough behind to have stopped; the Hope Gap itself is the signal to watch.":"")+" Compare scenarios and plans against each other more than you trust the level.";}
   $("resText").textContent=t;
   drawShare();drawTyp();renderScn();renderPlans();renderReport();drawTip();
 }
+/* Names the trend periods whose Hope Gap has the opposite sign to the one shown (the noisy one-year period is left out). */
+function flipNote(g,gap){const o=trends(g).filter(r=>r.w!==ST.win&&r.w!=="1"&&r.hg!=null&&((r.hg>0)!==(gap>0)));
+  return o.length?" The Hope Gap is "+o.map(r=>HG(r.hg)+" "+winPhrase(r.w)).join(" and ")+", so this result depends on the period chosen in Step 2.":"";}
 function fmtYears(t){return t<1?Math.max(1,Math.round(t*12))+" months":t<1.5?"a year":Math.round(t)+" years";}
 function drawShare(){const P=LAST.SC[0].res.path.slice(0,25);const mx=Math.max(...P.map(p=>p[1]),0.05);const ym=Math.min(1,niceMax(mx*1.15));
   const f=frame($("chShare"),560,260,[0,24],[0,ym],[0,6,12,18,24],[0,ym/2,ym],v=>v+" mo",v=>Math.round(v*100)+"%","months from now","share who have stopped");
