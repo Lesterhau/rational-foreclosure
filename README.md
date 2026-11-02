@@ -1,6 +1,6 @@
 # Rational Foreclosure
 
-**Paper:** Lester, R. (2026). *Rational Foreclosure: Why the Workers Who Stopped Grinding May Be the Sane Ones.* Working paper, University of Houston. [SSRN 6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858).
+**Paper:** Lester, R. (2026). *Rational Foreclosure: Hope as an Economic Variable.* Working paper, University of Houston. [SSRN 6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858).
 
 **Planning tool:** [The Hope Gap](https://lesterhau.github.io/rational-foreclosure/), for federal, state, county and city officials. Data refresh twice a week.
 
@@ -49,7 +49,7 @@ FRED (BLS and BEA national series), FHFA House Price Index (state and county), B
 ```bibtex
 @unpublished{lester2026foreclosure,
   author = {Lester, Ryan},
-  title  = {Rational Foreclosure: Why the Workers Who Stopped Grinding May Be the Sane Ones},
+  title  = {Rational Foreclosure: Hope as an Economic Variable},
   year   = {2026},
   note   = {Working paper, University of Houston. SSRN 6614858. Replication package: doi:10.7910/DVN/V5NSZX},
   url    = {https://github.com/Lesterhau/rational-foreclosure}
