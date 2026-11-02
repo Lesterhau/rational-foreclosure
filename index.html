@@ -69,6 +69,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 button{font-family:var(--ui);font-weight:600;font-size:15px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;padding:9px 12px;cursor:pointer;line-height:1.15}
 button.primary{background:var(--ink);color:var(--paper)}
 .seg button{min-width:0;overflow-wrap:anywhere;padding-inline:6px}
+.seg button .recTag{display:block;font-size:.7em;font-weight:600;letter-spacing:.02em;opacity:.85;text-transform:uppercase}
 .seg button[aria-pressed="true"],button.toggle[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
@@ -732,7 +733,7 @@ function renderTrend(g){const T=trends(g);const tb=$("trendTable");tb.innerHTML=
   $("winNote").textContent={"1":"The latest year. Current, but one year is noisy.","5":"Recent conditions.","10":"The default: roughly what today's young adults have lived through as workers, which is what shapes their expectations (Malmendier and Nagel 2016).","lr":"The long view, 1990 to today."}[ST.win]+" Growth rates are yearly averages over that period, projected forward. Goal minus pay and the Hope Gap are in percentage points a year; a Hope Gap above zero means hope holds.";}
 function render(){
   const L=LAST;["s4","s5","s6","s7"].forEach(id=>$(id).style.opacity=1);
-  renderData(L.g);renderDataCall(L.g);renderTrend(L.g);refreshPrompt();
+  renderData(L.g);renderDataCall(L.g);renderTrend(L.g);markRec(L.g);refreshPrompt();
   // who
   const {G,pr,headcount}=L;
   $("whoCall").innerHTML="<b>About "+people(headcount)+" people</b> ("+L.G.label+(L.G.incs.length&&L.G.incs.length<(ST.incMode==="tax"?5:3)?"; selected "+(ST.incMode==="tax"?"tax brackets":"income levels"):"")+"). Assumptions for this group: falling behind stings <b>"+pr.lam.toFixed(1)+" times</b> as much as getting ahead pleases; they weigh today over the future at <b>"+pct(pr.rho,1)+" a year</b>; they compare themselves with others a <b>"+{"0.25":"bit less than most","0.5":"typical amount","1":"bit more than most","2":"great deal"}[String(pr.alpha)]+"</b>. "+($("pf_lam").value==="auto"?"Set from the ages chosen, weighted by population.":"Changed by you.");
@@ -758,8 +759,16 @@ function render(){
   drawShare();drawTyp();renderScn();renderPlans();renderReport();drawTip();
 }
 /* Names the trend periods whose Hope Gap has the opposite sign to the one shown (the noisy one-year period is left out). */
+/* Recommended trend period for the ages chosen: the period closest to how long they have been working adults.
+   People form expectations from what they have lived through (Malmendier and Nagel 2016). Rule of thumb, display only. */
+const AGE_MID=[21,29.5,39.5,49.5,59.5,72];
+function recWin(g){let ages=sel("age");if(!ages.length)ages=[0,1,2,3,4,5];
+  const c=(g.ages&&g.ages.some(v=>v))?g.ages:NAT_AGE;let s=0,w=0;ages.forEach(i=>{const x=c[i]||1;s+=x*(AGE_MID[i]-18);w+=x;});
+  const yrs=s/w;return {w:yrs<7?"5":yrs<22?"10":"lr",yrs};}
+function markRec(g){const r=recWin(g);document.querySelectorAll("#winSeg button").forEach(b=>{const o=b.querySelector(".recTag");if(o)o.remove();if(b.dataset.v===r.w){const s=document.createElement("span");s.className="recTag";s.textContent="Recommended";b.appendChild(s);}});return r;}
 function flipNote(g,gap){const o=trends(g).filter(r=>r.w!==ST.win&&r.w!=="1"&&r.hg!=null&&((r.hg>0)!==(gap>0)));
-  return o.length?" The Hope Gap is "+o.map(r=>HG(r.hg)+" "+winPhrase(r.w)).join(" and ")+", so this result depends on the period chosen in Step 2.":"";}
+  if(!o.length)return "";const r=recWin(g);
+  return " The Hope Gap is "+o.map(r=>HG(r.hg)+" "+winPhrase(r.w)).join(" and ")+", so this result depends on the period chosen in Step 2. "+(r.w===ST.win?"For the ages chosen, this period is the recommended one: it is closest to how long they have been working adults (about "+Math.round(r.yrs)+" years), and people judge their chances by what they have lived through.":"For the ages chosen, plan on the result "+winPhrase(r.w)+((rh=>rh&&rh.hg!=null?" (Hope Gap "+HG(rh.hg)+")":"")(trends(g).find(x=>x.w===r.w)))+": that period is closest to how long they have been working adults (about "+Math.round(r.yrs)+" years), and people judge their chances by what they have lived through.");}
 function fmtYears(t){return t<1?Math.max(1,Math.round(t*12))+" months":t<1.5?"a year":Math.round(t)+" years";}
 function drawShare(){const P=LAST.SC[0].res.path.slice(0,25);const mx=Math.max(...P.map(p=>p[1]),0.05);const ym=Math.min(1,niceMax(mx*1.15));
   const f=frame($("chShare"),560,260,[0,24],[0,ym],[0,6,12,18,24],[0,ym/2,ym],v=>v+" mo",v=>Math.round(v*100)+"%","months from now","share who have stopped");
