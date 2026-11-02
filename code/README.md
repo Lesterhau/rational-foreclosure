@@ -12,9 +12,10 @@ Every file in this folder is code or its output. Python 3.10+ with numpy, scipy 
 | `convex.py` | Checks convexity of the value in W/R on the 243 solutions. Writes `convex.json`. | Theorem 2(b); Appendix C, "Convexity" |
 | `nonconvex_example.py` | One of the 19 nonconvex cases: the threshold falls with volatility, but the value of staying falls at par. About two minutes. | Section 4.1; Appendix C, "Convexity" |
 | `extreme_search.py` | Searches for a reversal of the volatility comparison (D fixed) at strong loss aversion and positional weight, lambda up to 100 and alpha up to 20. | Appendix C, "Result 1" |
-| `risky_wealth_reversal.py` | The risky-wealth case in which raising wealth volatility with the raw drift gap fixed raises the threshold. | Proposition 5; Appendix C, "Risky wealth and the raw drift gap" |
-| `cohort.py` | The illustrative cohort: share out of the race and average grind under five scenarios. | Table 4, Section 5.3 |
-| `welfare.py` | Welfare loss from an imposed exit threshold. | Proposition 4 magnitudes; Result 3; Figure 2 |
+| `risky_wealth_reversal.py` | The risky-wealth case in which raising wealth volatility with the raw drift gap fixed raises the threshold. | Proposition 6; Appendix C, "Risky wealth and the raw drift gap" |
+| `cohort.py` | The illustrative cohort: share out of the race and average grind under five scenarios. | Table 5, Section 5.3 |
+| `deadline.py` | The race with a deadline: the quitting point by years left, by backward induction with the Brennan-Schwartz sweep; checks that it falls as time left grows and approaches the stationary threshold. Writes `deadline.json`. Under a minute. | Proposition 4; Table 4; Appendix C, "The deadline" |
+| `welfare.py` | Welfare loss from an imposed exit threshold. | Proposition 5 magnitudes; Result 3; Figure 2 |
 | `figs.py` | Produces Figures 1 and 2. | Figures 1 and 2 |
 | `shoot.py` | Independent shooting solver (the method used in the interactive page), used to cross-check the collocation solver. | Appendix C, "The solver" |
 

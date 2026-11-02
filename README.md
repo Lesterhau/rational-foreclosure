@@ -33,8 +33,9 @@ The `gh-pages` branch holds the live page (`index.html`) and the published data 
 pip install numpy scipy matplotlib
 cd code
 python3 sweeps.py        # Tables 2 and 3 and the table in Result 1
-python3 welfare.py       # Proposition 4 magnitudes, Result 3, Figure 2
-python3 cohort.py        # Table 4
+python3 deadline.py      # Proposition 4: quitting point by years left (Table 4)
+python3 welfare.py       # Proposition 5 magnitudes, Result 3, Figure 2
+python3 cohort.py        # Table 5
 python3 figs.py          # Figures 1 and 2
 ```
 
