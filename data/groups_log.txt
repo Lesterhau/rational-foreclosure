@@ -1,27 +1,28 @@
-== AL: 132 files listed; using none
-== AZ: 132 files listed; using none
-== AR: 132 files listed; using none
+   listed for al : qwi_al_rh_f_gc_n3_op_u.csv.gz qwi_al_rh_f_gc_n3_oslp_u.csv.gz qwi_al_rh_f_gc_n4_op_u.csv.gz qwi_al_rh_f_gc_n4_oslp_u.csv.gz qwi_al_rh_f_gc_ns_op_u.csv.gz qwi_al_rh_f_gc_ns_oslp_u.csv.gz qwi_al_rh_f_gm_n3_op_u.csv.gz qwi_al_rh_f_gm_n3_oslp_u.csv.gz qwi_al_rh_f_gm_n4_op_u.csv.gz qwi_al_rh_f_gm_n4_oslp_u.csv.gz qwi_al_rh_f_gm_ns_op_u.csv.gz qwi_al_rh_f_gm_ns_oslp_u.csv.gz qwi_al_rh_f_gs_n3_op_u.csv.gz qwi_al_rh_f_gs_n3_oslp_u.csv.gz qwi_al_rh_f_gs_n4_op_u.csv.gz qwi_al_rh_f_gs_n4_oslp_u.csv.gz qwi_al_rh_f_gs_n5_op_u.csv.gz qwi_al_rh_f_gs_n5_oslp_u.csv.gz qwi_al_rh_f_gs_n6_op_u.csv.gz qwi_al_rh_f_gs_n6_oslp_u.csv.gz qwi_al_rh_f_gs_ns_op_u.csv.gz qwi_al_rh_f_gs_ns_oslp_u.csv.gz qwi_al_rh_f_gw_n3_op_u.csv.gz qwi_al_rh_f_gw_n3_oslp_u.csv.gz qwi_al_rh_f_gw_n4_op_u.csv.gz qwi_al_rh_f_gw_n4_oslp_u.csv.gz qwi_al_rh_f_gw_ns_op_u.csv.gz qwi_al_rh_f_gw_ns_oslp_u.csv.gz qwi_al_rh_fa_gc_ns_op_u.csv.gz qwi_al_rh_fa_gm_ns_op_u.csv.gz qwi_al_rh_fa_gs_n3_op_u.csv.gz qwi_al_rh_fa_gs_n4_op_u.csv.gz qwi_al_rh_fa_gs_n5_op_u.csv.gz qwi_al_rh_fa_gs_n6_op_u.csv.gz qwi_al_rh_fa_gs_ns_op_u.csv.gz qwi_al_rh_fa_gw_ns_op_u.csv.gz qwi_al_rh_fs_gc_ns_op_u.csv.gz qwi_al_rh_fs_gm_ns_op_u.csv.gz qwi_al_rh_fs_gs_n3_op_u.csv.gz qwi_al_rh_fs_gs_n4_op_u.csv.gz qwi_al_rh_fs_gs_n5_op_u.csv.gz qwi_al_rh_fs_gs_n6_op_u.csv.gz qwi_al_rh_fs_gs_ns_op_u.csv.gz qwi_al_rh_fs_gw_ns_op_u.csv.gz qwi_al_sa_f_gc_n3_op_u.csv.gz qwi_al_sa_f_gc_n3_oslp_u.csv.gz qwi_al_sa_f_gc_n4_op_u.csv.gz qwi_al_sa_f_gc_n4_oslp_u.csv.gz qwi_al_sa_f_gc_ns_op_u.csv.gz qwi_al_sa_f_gc_ns_oslp_u.csv.gz qwi_al_sa_f_gm_n3_op_u.csv.gz qwi_al_sa_f_gm_n3_oslp_u.csv.gz qwi_al_sa_f_gm_n4_op_u.csv.gz qwi_al_sa_f_gm_n4_oslp_u.csv.gz qwi_al_sa_f_gm_ns_op_u.csv.gz qwi_al_sa_f_gm_ns_oslp_u.csv.gz qwi_al_sa_f_gs_n3_op_u.csv.gz qwi_al_sa_f_gs_n3_oslp_u.csv.gz qwi_al_sa_f_gs_n4_op_u.csv.gz qwi_al_sa_f_gs_n4_oslp_u.csv.gz qwi_al_sa_f_gs_n5_op_u.csv.gz qwi_al_sa_f_gs_n5_oslp_u.csv.gz qwi_al_sa_f_gs_n6_op_u.csv.gz qwi_al_sa_f_gs_n6_oslp_u.csv.gz qwi_al_sa_f_gs_ns_op_u.csv.gz qwi_al_sa_f_gs_ns_oslp_u.csv.gz qwi_al_sa_f_gw_n3_op_u.csv.gz qwi_al_sa_f_gw_n3_oslp_u.csv.gz qwi_al_sa_f_gw_n4_op_u.csv.gz qwi_al_sa_f_gw_n4_oslp_u.csv.gz qwi_al_sa_f_gw_ns_op_u.csv.gz qwi_al_sa_f_gw_ns_oslp_u.csv.gz qwi_al_sa_fa_gc_ns_op_u.csv.gz qwi_al_sa_fa_gm_ns_op_u.csv.gz qwi_al_sa_fa_gs_n3_op_u.csv.gz qwi_al_sa_fa_gs_n4_op_u.csv.gz qwi_al_sa_fa_gs_n5_op_u.csv.gz qwi_al_sa_fa_gs_n6_op_u.csv.gz qwi_al_sa_fa_gs_ns_op_u.csv.gz qwi_al_sa_fa_gw_ns_op_u.csv.gz qwi_al_sa_fs_gc_ns_op_u.csv.gz qwi_al_sa_fs_gm_ns_op_u.csv.gz qwi_al_sa_fs_gs_n3_op_u.csv.gz qwi_al_sa_fs_gs_n4_op_u.csv.gz qwi_al_sa_fs_gs_n5_op_u.csv.gz qwi_al_sa_fs_gs_n6_op_u.csv.gz qwi_al_sa_fs_gs_ns_op_u.csv.gz qwi_al_sa_fs_gw_ns_op_u.csv.gz qwi_al_se_f_gc_n3_op_u.csv.gz qwi_al_se_f_gc_n3_oslp_u.csv.gz qwi_al_se_f_gc_n4_op_u.csv.gz qwi_al_se_f_gc_n4_oslp_u.csv.gz qwi_al_se_f_gc_ns_op_u.csv.gz qwi_al_se_f_gc_ns_oslp_u.csv.gz qwi_al_se_f_gm_n3_op_u.csv.gz qwi_al_se_f_gm_n3_oslp_u.csv.gz qwi_al_se_f_gm_n4_op_u.csv.gz qwi_al_se_f_gm_n4_oslp_u.csv.gz qwi_al_se_f_gm_ns_op_u.csv.gz qwi_al_se_f_gm_ns_oslp_u.csv.gz qwi_al_se_f_gs_n3_op_u.csv.gz qwi_al_se_f_gs_n3_oslp_u.csv.gz qwi_al_se_f_gs_n4_op_u.csv.gz qwi_al_se_f_gs_n4_oslp_u.csv.gz qwi_al_se_f_gs_n5_op_u.csv.gz qwi_al_se_f_gs_n5_oslp_u.csv.gz qwi_al_se_f_gs_n6_op_u.csv.gz qwi_al_se_f_gs_n6_oslp_u.csv.gz qwi_al_se_f_gs_ns_op_u.csv.gz qwi_al_se_f_gs_ns_oslp_u.csv.gz qwi_al_se_f_gw_n3_op_u.csv.gz qwi_al_se_f_gw_n3_oslp_u.csv.gz qwi_al_se_f_gw_n4_op_u.csv.gz qwi_al_se_f_gw_n4_oslp_u.csv.gz qwi_al_se_f_gw_ns_op_u.csv.gz qwi_al_se_f_gw_ns_oslp_u.csv.gz qwi_al_se_fa_gc_ns_op_u.csv.gz qwi_al_se_fa_gm_ns_op_u.csv.gz qwi_al_se_fa_gs_n3_op_u.csv.gz qwi_al_se_fa_gs_n4_op_u.csv.gz qwi_al_se_fa_gs_n5_op_u.csv.gz qwi_al_se_fa_gs_n6_op_u.csv.gz qwi_al_se_fa_gs_ns_op_u.csv.gz qwi_al_se_fa_gw_ns_op_u.csv.gz qwi_al_se_fs_gc_ns_op_u.csv.gz qwi_al_se_fs_gm_ns_op_u.csv.gz qwi_al_se_fs_gs_n3_op_u.csv.gz qwi_al_se_fs_gs_n4_op_u.csv.gz qwi_al_se_fs_gs_n5_op_u.csv.gz qwi_al_se_fs_gs_n6_op_u.csv.gz qwi_al_se_fs_gs_ns_op_u.csv.gz qwi_al_se_fs_gw_ns_op_u.csv.gz
 == AK: 132 files listed; using none
+== AL: 132 files listed; using none
+== AR: 132 files listed; using none
+== AZ: 132 files listed; using none
 == CT: 132 files listed; using none
+== CA: 132 files listed; using none
 == CO: 132 files listed; using none
 == DE: 132 files listed; using none
-== CA: 132 files listed; using none
-== FL: 132 files listed; using none
 == DC: 132 files listed; using none
+== FL: 132 files listed; using none
 == GA: 132 files listed; using none
 == HI: 132 files listed; using none
-== ID: 132 files listed; using none
-== IA: 132 files listed; using none
-== IL: 132 files listed; using none
 == IN: 132 files listed; using none
+== ID: 132 files listed; using none
+== IL: 132 files listed; using none
+== IA: 132 files listed; using none
 == KS: 132 files listed; using none
-== LA: 132 files listed; using none
 == KY: 132 files listed; using none
 == ME: 132 files listed; using none
+== LA: 132 files listed; using none
 == MD: 132 files listed; using none
 == MA: 132 files listed; using none
-== MI: 132 files listed; using none
 == MN: 132 files listed; using none
+== MI: 132 files listed; using none
 == MS: 132 files listed; using none
 == MO: 132 files listed; using none
 == MT: 132 files listed; using none
@@ -32,8 +33,8 @@
 == NM: 132 files listed; using none
 == NY: 132 files listed; using none
 == NC: 132 files listed; using none
-== ND: 132 files listed; using none
 == OH: 132 files listed; using none
+== ND: 132 files listed; using none
 == OK: 132 files listed; using none
 == OR: 132 files listed; using none
 == PA: 132 files listed; using none
@@ -41,6 +42,7 @@
 == SC: 132 files listed; using none
 == SD: 132 files listed; using none
 == TN: 132 files listed; using none
+   listed for tx : qwi_tx_rh_f_gc_n3_op_u.csv.gz qwi_tx_rh_f_gc_n3_oslp_u.csv.gz qwi_tx_rh_f_gc_n4_op_u.csv.gz qwi_tx_rh_f_gc_n4_oslp_u.csv.gz qwi_tx_rh_f_gc_ns_op_u.csv.gz qwi_tx_rh_f_gc_ns_oslp_u.csv.gz qwi_tx_rh_f_gm_n3_op_u.csv.gz qwi_tx_rh_f_gm_n3_oslp_u.csv.gz qwi_tx_rh_f_gm_n4_op_u.csv.gz qwi_tx_rh_f_gm_n4_oslp_u.csv.gz qwi_tx_rh_f_gm_ns_op_u.csv.gz qwi_tx_rh_f_gm_ns_oslp_u.csv.gz qwi_tx_rh_f_gs_n3_op_u.csv.gz qwi_tx_rh_f_gs_n3_oslp_u.csv.gz qwi_tx_rh_f_gs_n4_op_u.csv.gz qwi_tx_rh_f_gs_n4_oslp_u.csv.gz qwi_tx_rh_f_gs_n5_op_u.csv.gz qwi_tx_rh_f_gs_n5_oslp_u.csv.gz qwi_tx_rh_f_gs_n6_op_u.csv.gz qwi_tx_rh_f_gs_n6_oslp_u.csv.gz qwi_tx_rh_f_gs_ns_op_u.csv.gz qwi_tx_rh_f_gs_ns_oslp_u.csv.gz qwi_tx_rh_f_gw_n3_op_u.csv.gz qwi_tx_rh_f_gw_n3_oslp_u.csv.gz qwi_tx_rh_f_gw_n4_op_u.csv.gz qwi_tx_rh_f_gw_n4_oslp_u.csv.gz qwi_tx_rh_f_gw_ns_op_u.csv.gz qwi_tx_rh_f_gw_ns_oslp_u.csv.gz qwi_tx_rh_fa_gc_ns_op_u.csv.gz qwi_tx_rh_fa_gm_ns_op_u.csv.gz qwi_tx_rh_fa_gs_n3_op_u.csv.gz qwi_tx_rh_fa_gs_n4_op_u.csv.gz qwi_tx_rh_fa_gs_n5_op_u.csv.gz qwi_tx_rh_fa_gs_n6_op_u.csv.gz qwi_tx_rh_fa_gs_ns_op_u.csv.gz qwi_tx_rh_fa_gw_ns_op_u.csv.gz qwi_tx_rh_fs_gc_ns_op_u.csv.gz qwi_tx_rh_fs_gm_ns_op_u.csv.gz qwi_tx_rh_fs_gs_n3_op_u.csv.gz qwi_tx_rh_fs_gs_n4_op_u.csv.gz qwi_tx_rh_fs_gs_n5_op_u.csv.gz qwi_tx_rh_fs_gs_n6_op_u.csv.gz qwi_tx_rh_fs_gs_ns_op_u.csv.gz qwi_tx_rh_fs_gw_ns_op_u.csv.gz qwi_tx_sa_f_gc_n3_op_u.csv.gz qwi_tx_sa_f_gc_n3_oslp_u.csv.gz qwi_tx_sa_f_gc_n4_op_u.csv.gz qwi_tx_sa_f_gc_n4_oslp_u.csv.gz qwi_tx_sa_f_gc_ns_op_u.csv.gz qwi_tx_sa_f_gc_ns_oslp_u.csv.gz qwi_tx_sa_f_gm_n3_op_u.csv.gz qwi_tx_sa_f_gm_n3_oslp_u.csv.gz qwi_tx_sa_f_gm_n4_op_u.csv.gz qwi_tx_sa_f_gm_n4_oslp_u.csv.gz qwi_tx_sa_f_gm_ns_op_u.csv.gz qwi_tx_sa_f_gm_ns_oslp_u.csv.gz qwi_tx_sa_f_gs_n3_op_u.csv.gz qwi_tx_sa_f_gs_n3_oslp_u.csv.gz qwi_tx_sa_f_gs_n4_op_u.csv.gz qwi_tx_sa_f_gs_n4_oslp_u.csv.gz qwi_tx_sa_f_gs_n5_op_u.csv.gz qwi_tx_sa_f_gs_n5_oslp_u.csv.gz qwi_tx_sa_f_gs_n6_op_u.csv.gz qwi_tx_sa_f_gs_n6_oslp_u.csv.gz qwi_tx_sa_f_gs_ns_op_u.csv.gz qwi_tx_sa_f_gs_ns_oslp_u.csv.gz qwi_tx_sa_f_gw_n3_op_u.csv.gz qwi_tx_sa_f_gw_n3_oslp_u.csv.gz qwi_tx_sa_f_gw_n4_op_u.csv.gz qwi_tx_sa_f_gw_n4_oslp_u.csv.gz qwi_tx_sa_f_gw_ns_op_u.csv.gz qwi_tx_sa_f_gw_ns_oslp_u.csv.gz qwi_tx_sa_fa_gc_ns_op_u.csv.gz qwi_tx_sa_fa_gm_ns_op_u.csv.gz qwi_tx_sa_fa_gs_n3_op_u.csv.gz qwi_tx_sa_fa_gs_n4_op_u.csv.gz qwi_tx_sa_fa_gs_n5_op_u.csv.gz qwi_tx_sa_fa_gs_n6_op_u.csv.gz qwi_tx_sa_fa_gs_ns_op_u.csv.gz qwi_tx_sa_fa_gw_ns_op_u.csv.gz qwi_tx_sa_fs_gc_ns_op_u.csv.gz qwi_tx_sa_fs_gm_ns_op_u.csv.gz qwi_tx_sa_fs_gs_n3_op_u.csv.gz qwi_tx_sa_fs_gs_n4_op_u.csv.gz qwi_tx_sa_fs_gs_n5_op_u.csv.gz qwi_tx_sa_fs_gs_n6_op_u.csv.gz qwi_tx_sa_fs_gs_ns_op_u.csv.gz qwi_tx_sa_fs_gw_ns_op_u.csv.gz qwi_tx_se_f_gc_n3_op_u.csv.gz qwi_tx_se_f_gc_n3_oslp_u.csv.gz qwi_tx_se_f_gc_n4_op_u.csv.gz qwi_tx_se_f_gc_n4_oslp_u.csv.gz qwi_tx_se_f_gc_ns_op_u.csv.gz qwi_tx_se_f_gc_ns_oslp_u.csv.gz qwi_tx_se_f_gm_n3_op_u.csv.gz qwi_tx_se_f_gm_n3_oslp_u.csv.gz qwi_tx_se_f_gm_n4_op_u.csv.gz qwi_tx_se_f_gm_n4_oslp_u.csv.gz qwi_tx_se_f_gm_ns_op_u.csv.gz qwi_tx_se_f_gm_ns_oslp_u.csv.gz qwi_tx_se_f_gs_n3_op_u.csv.gz qwi_tx_se_f_gs_n3_oslp_u.csv.gz qwi_tx_se_f_gs_n4_op_u.csv.gz qwi_tx_se_f_gs_n4_oslp_u.csv.gz qwi_tx_se_f_gs_n5_op_u.csv.gz qwi_tx_se_f_gs_n5_oslp_u.csv.gz qwi_tx_se_f_gs_n6_op_u.csv.gz qwi_tx_se_f_gs_n6_oslp_u.csv.gz qwi_tx_se_f_gs_ns_op_u.csv.gz qwi_tx_se_f_gs_ns_oslp_u.csv.gz qwi_tx_se_f_gw_n3_op_u.csv.gz qwi_tx_se_f_gw_n3_oslp_u.csv.gz qwi_tx_se_f_gw_n4_op_u.csv.gz qwi_tx_se_f_gw_n4_oslp_u.csv.gz qwi_tx_se_f_gw_ns_op_u.csv.gz qwi_tx_se_f_gw_ns_oslp_u.csv.gz qwi_tx_se_fa_gc_ns_op_u.csv.gz qwi_tx_se_fa_gm_ns_op_u.csv.gz qwi_tx_se_fa_gs_n3_op_u.csv.gz qwi_tx_se_fa_gs_n4_op_u.csv.gz qwi_tx_se_fa_gs_n5_op_u.csv.gz qwi_tx_se_fa_gs_n6_op_u.csv.gz qwi_tx_se_fa_gs_ns_op_u.csv.gz qwi_tx_se_fa_gw_ns_op_u.csv.gz qwi_tx_se_fs_gc_ns_op_u.csv.gz qwi_tx_se_fs_gm_ns_op_u.csv.gz qwi_tx_se_fs_gs_n3_op_u.csv.gz qwi_tx_se_fs_gs_n4_op_u.csv.gz qwi_tx_se_fs_gs_n5_op_u.csv.gz qwi_tx_se_fs_gs_n6_op_u.csv.gz qwi_tx_se_fs_gs_ns_op_u.csv.gz qwi_tx_se_fs_gw_ns_op_u.csv.gz
 == TX: 132 files listed; using none
 == UT: 132 files listed; using none
 == VT: 132 files listed; using none
@@ -49,4 +51,4 @@
 == WV: 132 files listed; using none
 == WI: 132 files listed; using none
 == WY: 132 files listed; using none
-wrote groups.json: 0 states, 0 counties in 4s
+wrote groups.json: 0 states, 0 counties in 1s
