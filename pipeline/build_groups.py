@@ -79,6 +79,8 @@ def find_files(st):
             c.sort(key=lambda n: (0 if "_oslp_" in n else 1, n))
             if c:
                 out[(demo, geo)] = c[0]
+    if not out and st in ("al", "tx"):
+        log("   listed for", st, ":", " ".join(names[:140]))
     return out, len(names)
 
 
