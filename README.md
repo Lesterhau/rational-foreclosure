@@ -1,4 +1,4 @@
-# Rational Foreclosure
+# Rational Foreclosure: Hope as an Economic Variable
 
 **Paper:** Lester, R. (2026). *Rational Foreclosure: Hope as an Economic Variable.* Working paper, University of Houston. [Read the current version (PDF)](paper/Lester_2026_Rational_Foreclosure.pdf) · [SSRN 6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858).
 
@@ -10,7 +10,17 @@
 
 ## What the paper shows
 
-A loss-averse agent measures her wealth against a benchmark that moves at random (local house prices, the cost of living) and may stop keeping score for good. The paper proves that she quits at a threshold strictly below the benchmark, with an explicit lower bound; that a more volatile benchmark delays quitting, which gives hope an exact value; that a benchmark that runs away hastens it; and that holding her in the race past her threshold has an exact, strictly positive welfare cost. If the race must end by a date, as a working life does, every race has a quitting point, and of two people equally far behind, the one with less time left quits first (Proposition 4). Because the benchmark is shared, one shock moves a whole cohort toward its threshold at once.
+A generation of young workers stands accused of quiet quitting: showing up, doing the job, and no longer chasing the long hours their parents treated as the price of getting ahead. The usual diagnosis is a lack of grit, and the usual cure is a push to keep going. The paper shows that the diagnosis can be backwards.
+
+Picture someone saving for a home whose price keeps moving. She measures her progress against that price, and falling behind hurts more than getting ahead pleases. The paper proves that she keeps chasing while she is close, sacrifices less as the price pulls away, and stops keeping score at a precise point below it. That point can be calculated, and three things move it:
+
+- **Swings keep people in.** If the price swings up and down, it may swing back toward her, so she rationally holds on longer. The value of that chance is hope, and the paper gives it an exact value.
+- **A runaway target pushes people out.** If the price climbs steadily away from her pay, she quits sooner.
+- **Time left matters.** Within a working life, everyone has a quitting point, and of two people equally far behind, the one with fewer years left stops first.
+
+Pushing her to keep going past her quitting point makes her worse off, and the paper says by exactly how much.
+
+Because everyone in a market faces the same prices, one shock moves a whole generation toward its quitting point at once. A runaway target becomes a disengaged workforce, and the costs follow: lost effort, homes and families put off, and the strain on health that the evidence links to staying in a losing race. The remedy lies in the target, not the worker: slow the prices that have run away, or raise the pay that chases them.
 
 ## What the tool does
 
