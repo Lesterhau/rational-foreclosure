@@ -1,54 +1,409 @@
-   listed for al : qwi_al_rh_f_gc_n3_op_u.csv.gz qwi_al_rh_f_gc_n3_oslp_u.csv.gz qwi_al_rh_f_gc_n4_op_u.csv.gz qwi_al_rh_f_gc_n4_oslp_u.csv.gz qwi_al_rh_f_gc_ns_op_u.csv.gz qwi_al_rh_f_gc_ns_oslp_u.csv.gz qwi_al_rh_f_gm_n3_op_u.csv.gz qwi_al_rh_f_gm_n3_oslp_u.csv.gz qwi_al_rh_f_gm_n4_op_u.csv.gz qwi_al_rh_f_gm_n4_oslp_u.csv.gz qwi_al_rh_f_gm_ns_op_u.csv.gz qwi_al_rh_f_gm_ns_oslp_u.csv.gz qwi_al_rh_f_gs_n3_op_u.csv.gz qwi_al_rh_f_gs_n3_oslp_u.csv.gz qwi_al_rh_f_gs_n4_op_u.csv.gz qwi_al_rh_f_gs_n4_oslp_u.csv.gz qwi_al_rh_f_gs_n5_op_u.csv.gz qwi_al_rh_f_gs_n5_oslp_u.csv.gz qwi_al_rh_f_gs_n6_op_u.csv.gz qwi_al_rh_f_gs_n6_oslp_u.csv.gz qwi_al_rh_f_gs_ns_op_u.csv.gz qwi_al_rh_f_gs_ns_oslp_u.csv.gz qwi_al_rh_f_gw_n3_op_u.csv.gz qwi_al_rh_f_gw_n3_oslp_u.csv.gz qwi_al_rh_f_gw_n4_op_u.csv.gz qwi_al_rh_f_gw_n4_oslp_u.csv.gz qwi_al_rh_f_gw_ns_op_u.csv.gz qwi_al_rh_f_gw_ns_oslp_u.csv.gz qwi_al_rh_fa_gc_ns_op_u.csv.gz qwi_al_rh_fa_gm_ns_op_u.csv.gz qwi_al_rh_fa_gs_n3_op_u.csv.gz qwi_al_rh_fa_gs_n4_op_u.csv.gz qwi_al_rh_fa_gs_n5_op_u.csv.gz qwi_al_rh_fa_gs_n6_op_u.csv.gz qwi_al_rh_fa_gs_ns_op_u.csv.gz qwi_al_rh_fa_gw_ns_op_u.csv.gz qwi_al_rh_fs_gc_ns_op_u.csv.gz qwi_al_rh_fs_gm_ns_op_u.csv.gz qwi_al_rh_fs_gs_n3_op_u.csv.gz qwi_al_rh_fs_gs_n4_op_u.csv.gz qwi_al_rh_fs_gs_n5_op_u.csv.gz qwi_al_rh_fs_gs_n6_op_u.csv.gz qwi_al_rh_fs_gs_ns_op_u.csv.gz qwi_al_rh_fs_gw_ns_op_u.csv.gz qwi_al_sa_f_gc_n3_op_u.csv.gz qwi_al_sa_f_gc_n3_oslp_u.csv.gz qwi_al_sa_f_gc_n4_op_u.csv.gz qwi_al_sa_f_gc_n4_oslp_u.csv.gz qwi_al_sa_f_gc_ns_op_u.csv.gz qwi_al_sa_f_gc_ns_oslp_u.csv.gz qwi_al_sa_f_gm_n3_op_u.csv.gz qwi_al_sa_f_gm_n3_oslp_u.csv.gz qwi_al_sa_f_gm_n4_op_u.csv.gz qwi_al_sa_f_gm_n4_oslp_u.csv.gz qwi_al_sa_f_gm_ns_op_u.csv.gz qwi_al_sa_f_gm_ns_oslp_u.csv.gz qwi_al_sa_f_gs_n3_op_u.csv.gz qwi_al_sa_f_gs_n3_oslp_u.csv.gz qwi_al_sa_f_gs_n4_op_u.csv.gz qwi_al_sa_f_gs_n4_oslp_u.csv.gz qwi_al_sa_f_gs_n5_op_u.csv.gz qwi_al_sa_f_gs_n5_oslp_u.csv.gz qwi_al_sa_f_gs_n6_op_u.csv.gz qwi_al_sa_f_gs_n6_oslp_u.csv.gz qwi_al_sa_f_gs_ns_op_u.csv.gz qwi_al_sa_f_gs_ns_oslp_u.csv.gz qwi_al_sa_f_gw_n3_op_u.csv.gz qwi_al_sa_f_gw_n3_oslp_u.csv.gz qwi_al_sa_f_gw_n4_op_u.csv.gz qwi_al_sa_f_gw_n4_oslp_u.csv.gz qwi_al_sa_f_gw_ns_op_u.csv.gz qwi_al_sa_f_gw_ns_oslp_u.csv.gz qwi_al_sa_fa_gc_ns_op_u.csv.gz qwi_al_sa_fa_gm_ns_op_u.csv.gz qwi_al_sa_fa_gs_n3_op_u.csv.gz qwi_al_sa_fa_gs_n4_op_u.csv.gz qwi_al_sa_fa_gs_n5_op_u.csv.gz qwi_al_sa_fa_gs_n6_op_u.csv.gz qwi_al_sa_fa_gs_ns_op_u.csv.gz qwi_al_sa_fa_gw_ns_op_u.csv.gz qwi_al_sa_fs_gc_ns_op_u.csv.gz qwi_al_sa_fs_gm_ns_op_u.csv.gz qwi_al_sa_fs_gs_n3_op_u.csv.gz qwi_al_sa_fs_gs_n4_op_u.csv.gz qwi_al_sa_fs_gs_n5_op_u.csv.gz qwi_al_sa_fs_gs_n6_op_u.csv.gz qwi_al_sa_fs_gs_ns_op_u.csv.gz qwi_al_sa_fs_gw_ns_op_u.csv.gz qwi_al_se_f_gc_n3_op_u.csv.gz qwi_al_se_f_gc_n3_oslp_u.csv.gz qwi_al_se_f_gc_n4_op_u.csv.gz qwi_al_se_f_gc_n4_oslp_u.csv.gz qwi_al_se_f_gc_ns_op_u.csv.gz qwi_al_se_f_gc_ns_oslp_u.csv.gz qwi_al_se_f_gm_n3_op_u.csv.gz qwi_al_se_f_gm_n3_oslp_u.csv.gz qwi_al_se_f_gm_n4_op_u.csv.gz qwi_al_se_f_gm_n4_oslp_u.csv.gz qwi_al_se_f_gm_ns_op_u.csv.gz qwi_al_se_f_gm_ns_oslp_u.csv.gz qwi_al_se_f_gs_n3_op_u.csv.gz qwi_al_se_f_gs_n3_oslp_u.csv.gz qwi_al_se_f_gs_n4_op_u.csv.gz qwi_al_se_f_gs_n4_oslp_u.csv.gz qwi_al_se_f_gs_n5_op_u.csv.gz qwi_al_se_f_gs_n5_oslp_u.csv.gz qwi_al_se_f_gs_n6_op_u.csv.gz qwi_al_se_f_gs_n6_oslp_u.csv.gz qwi_al_se_f_gs_ns_op_u.csv.gz qwi_al_se_f_gs_ns_oslp_u.csv.gz qwi_al_se_f_gw_n3_op_u.csv.gz qwi_al_se_f_gw_n3_oslp_u.csv.gz qwi_al_se_f_gw_n4_op_u.csv.gz qwi_al_se_f_gw_n4_oslp_u.csv.gz qwi_al_se_f_gw_ns_op_u.csv.gz qwi_al_se_f_gw_ns_oslp_u.csv.gz qwi_al_se_fa_gc_ns_op_u.csv.gz qwi_al_se_fa_gm_ns_op_u.csv.gz qwi_al_se_fa_gs_n3_op_u.csv.gz qwi_al_se_fa_gs_n4_op_u.csv.gz qwi_al_se_fa_gs_n5_op_u.csv.gz qwi_al_se_fa_gs_n6_op_u.csv.gz qwi_al_se_fa_gs_ns_op_u.csv.gz qwi_al_se_fa_gw_ns_op_u.csv.gz qwi_al_se_fs_gc_ns_op_u.csv.gz qwi_al_se_fs_gm_ns_op_u.csv.gz qwi_al_se_fs_gs_n3_op_u.csv.gz qwi_al_se_fs_gs_n4_op_u.csv.gz qwi_al_se_fs_gs_n5_op_u.csv.gz qwi_al_se_fs_gs_n6_op_u.csv.gz qwi_al_se_fs_gs_ns_op_u.csv.gz qwi_al_se_fs_gw_ns_op_u.csv.gz
-== AK: 132 files listed; using none
-== AL: 132 files listed; using none
-== AR: 132 files listed; using none
-== AZ: 132 files listed; using none
-== CT: 132 files listed; using none
-== CA: 132 files listed; using none
-== CO: 132 files listed; using none
-== DE: 132 files listed; using none
-== DC: 132 files listed; using none
-== FL: 132 files listed; using none
-== GA: 132 files listed; using none
-== HI: 132 files listed; using none
-== IN: 132 files listed; using none
-== ID: 132 files listed; using none
-== IL: 132 files listed; using none
-== IA: 132 files listed; using none
-== KS: 132 files listed; using none
-== KY: 132 files listed; using none
-== ME: 132 files listed; using none
-== LA: 132 files listed; using none
-== MD: 132 files listed; using none
-== MA: 132 files listed; using none
-== MN: 132 files listed; using none
-== MI: 132 files listed; using none
-== MS: 132 files listed; using none
-== MO: 132 files listed; using none
-== MT: 132 files listed; using none
-== NE: 132 files listed; using none
-== NV: 132 files listed; using none
-== NH: 132 files listed; using none
-== NJ: 132 files listed; using none
-== NM: 132 files listed; using none
-== NY: 132 files listed; using none
-== NC: 132 files listed; using none
-== OH: 132 files listed; using none
-== ND: 132 files listed; using none
-== OK: 132 files listed; using none
-== OR: 132 files listed; using none
-== PA: 132 files listed; using none
-== RI: 132 files listed; using none
-== SC: 132 files listed; using none
-== SD: 132 files listed; using none
-== TN: 132 files listed; using none
-   listed for tx : qwi_tx_rh_f_gc_n3_op_u.csv.gz qwi_tx_rh_f_gc_n3_oslp_u.csv.gz qwi_tx_rh_f_gc_n4_op_u.csv.gz qwi_tx_rh_f_gc_n4_oslp_u.csv.gz qwi_tx_rh_f_gc_ns_op_u.csv.gz qwi_tx_rh_f_gc_ns_oslp_u.csv.gz qwi_tx_rh_f_gm_n3_op_u.csv.gz qwi_tx_rh_f_gm_n3_oslp_u.csv.gz qwi_tx_rh_f_gm_n4_op_u.csv.gz qwi_tx_rh_f_gm_n4_oslp_u.csv.gz qwi_tx_rh_f_gm_ns_op_u.csv.gz qwi_tx_rh_f_gm_ns_oslp_u.csv.gz qwi_tx_rh_f_gs_n3_op_u.csv.gz qwi_tx_rh_f_gs_n3_oslp_u.csv.gz qwi_tx_rh_f_gs_n4_op_u.csv.gz qwi_tx_rh_f_gs_n4_oslp_u.csv.gz qwi_tx_rh_f_gs_n5_op_u.csv.gz qwi_tx_rh_f_gs_n5_oslp_u.csv.gz qwi_tx_rh_f_gs_n6_op_u.csv.gz qwi_tx_rh_f_gs_n6_oslp_u.csv.gz qwi_tx_rh_f_gs_ns_op_u.csv.gz qwi_tx_rh_f_gs_ns_oslp_u.csv.gz qwi_tx_rh_f_gw_n3_op_u.csv.gz qwi_tx_rh_f_gw_n3_oslp_u.csv.gz qwi_tx_rh_f_gw_n4_op_u.csv.gz qwi_tx_rh_f_gw_n4_oslp_u.csv.gz qwi_tx_rh_f_gw_ns_op_u.csv.gz qwi_tx_rh_f_gw_ns_oslp_u.csv.gz qwi_tx_rh_fa_gc_ns_op_u.csv.gz qwi_tx_rh_fa_gm_ns_op_u.csv.gz qwi_tx_rh_fa_gs_n3_op_u.csv.gz qwi_tx_rh_fa_gs_n4_op_u.csv.gz qwi_tx_rh_fa_gs_n5_op_u.csv.gz qwi_tx_rh_fa_gs_n6_op_u.csv.gz qwi_tx_rh_fa_gs_ns_op_u.csv.gz qwi_tx_rh_fa_gw_ns_op_u.csv.gz qwi_tx_rh_fs_gc_ns_op_u.csv.gz qwi_tx_rh_fs_gm_ns_op_u.csv.gz qwi_tx_rh_fs_gs_n3_op_u.csv.gz qwi_tx_rh_fs_gs_n4_op_u.csv.gz qwi_tx_rh_fs_gs_n5_op_u.csv.gz qwi_tx_rh_fs_gs_n6_op_u.csv.gz qwi_tx_rh_fs_gs_ns_op_u.csv.gz qwi_tx_rh_fs_gw_ns_op_u.csv.gz qwi_tx_sa_f_gc_n3_op_u.csv.gz qwi_tx_sa_f_gc_n3_oslp_u.csv.gz qwi_tx_sa_f_gc_n4_op_u.csv.gz qwi_tx_sa_f_gc_n4_oslp_u.csv.gz qwi_tx_sa_f_gc_ns_op_u.csv.gz qwi_tx_sa_f_gc_ns_oslp_u.csv.gz qwi_tx_sa_f_gm_n3_op_u.csv.gz qwi_tx_sa_f_gm_n3_oslp_u.csv.gz qwi_tx_sa_f_gm_n4_op_u.csv.gz qwi_tx_sa_f_gm_n4_oslp_u.csv.gz qwi_tx_sa_f_gm_ns_op_u.csv.gz qwi_tx_sa_f_gm_ns_oslp_u.csv.gz qwi_tx_sa_f_gs_n3_op_u.csv.gz qwi_tx_sa_f_gs_n3_oslp_u.csv.gz qwi_tx_sa_f_gs_n4_op_u.csv.gz qwi_tx_sa_f_gs_n4_oslp_u.csv.gz qwi_tx_sa_f_gs_n5_op_u.csv.gz qwi_tx_sa_f_gs_n5_oslp_u.csv.gz qwi_tx_sa_f_gs_n6_op_u.csv.gz qwi_tx_sa_f_gs_n6_oslp_u.csv.gz qwi_tx_sa_f_gs_ns_op_u.csv.gz qwi_tx_sa_f_gs_ns_oslp_u.csv.gz qwi_tx_sa_f_gw_n3_op_u.csv.gz qwi_tx_sa_f_gw_n3_oslp_u.csv.gz qwi_tx_sa_f_gw_n4_op_u.csv.gz qwi_tx_sa_f_gw_n4_oslp_u.csv.gz qwi_tx_sa_f_gw_ns_op_u.csv.gz qwi_tx_sa_f_gw_ns_oslp_u.csv.gz qwi_tx_sa_fa_gc_ns_op_u.csv.gz qwi_tx_sa_fa_gm_ns_op_u.csv.gz qwi_tx_sa_fa_gs_n3_op_u.csv.gz qwi_tx_sa_fa_gs_n4_op_u.csv.gz qwi_tx_sa_fa_gs_n5_op_u.csv.gz qwi_tx_sa_fa_gs_n6_op_u.csv.gz qwi_tx_sa_fa_gs_ns_op_u.csv.gz qwi_tx_sa_fa_gw_ns_op_u.csv.gz qwi_tx_sa_fs_gc_ns_op_u.csv.gz qwi_tx_sa_fs_gm_ns_op_u.csv.gz qwi_tx_sa_fs_gs_n3_op_u.csv.gz qwi_tx_sa_fs_gs_n4_op_u.csv.gz qwi_tx_sa_fs_gs_n5_op_u.csv.gz qwi_tx_sa_fs_gs_n6_op_u.csv.gz qwi_tx_sa_fs_gs_ns_op_u.csv.gz qwi_tx_sa_fs_gw_ns_op_u.csv.gz qwi_tx_se_f_gc_n3_op_u.csv.gz qwi_tx_se_f_gc_n3_oslp_u.csv.gz qwi_tx_se_f_gc_n4_op_u.csv.gz qwi_tx_se_f_gc_n4_oslp_u.csv.gz qwi_tx_se_f_gc_ns_op_u.csv.gz qwi_tx_se_f_gc_ns_oslp_u.csv.gz qwi_tx_se_f_gm_n3_op_u.csv.gz qwi_tx_se_f_gm_n3_oslp_u.csv.gz qwi_tx_se_f_gm_n4_op_u.csv.gz qwi_tx_se_f_gm_n4_oslp_u.csv.gz qwi_tx_se_f_gm_ns_op_u.csv.gz qwi_tx_se_f_gm_ns_oslp_u.csv.gz qwi_tx_se_f_gs_n3_op_u.csv.gz qwi_tx_se_f_gs_n3_oslp_u.csv.gz qwi_tx_se_f_gs_n4_op_u.csv.gz qwi_tx_se_f_gs_n4_oslp_u.csv.gz qwi_tx_se_f_gs_n5_op_u.csv.gz qwi_tx_se_f_gs_n5_oslp_u.csv.gz qwi_tx_se_f_gs_n6_op_u.csv.gz qwi_tx_se_f_gs_n6_oslp_u.csv.gz qwi_tx_se_f_gs_ns_op_u.csv.gz qwi_tx_se_f_gs_ns_oslp_u.csv.gz qwi_tx_se_f_gw_n3_op_u.csv.gz qwi_tx_se_f_gw_n3_oslp_u.csv.gz qwi_tx_se_f_gw_n4_op_u.csv.gz qwi_tx_se_f_gw_n4_oslp_u.csv.gz qwi_tx_se_f_gw_ns_op_u.csv.gz qwi_tx_se_f_gw_ns_oslp_u.csv.gz qwi_tx_se_fa_gc_ns_op_u.csv.gz qwi_tx_se_fa_gm_ns_op_u.csv.gz qwi_tx_se_fa_gs_n3_op_u.csv.gz qwi_tx_se_fa_gs_n4_op_u.csv.gz qwi_tx_se_fa_gs_n5_op_u.csv.gz qwi_tx_se_fa_gs_n6_op_u.csv.gz qwi_tx_se_fa_gs_ns_op_u.csv.gz qwi_tx_se_fa_gw_ns_op_u.csv.gz qwi_tx_se_fs_gc_ns_op_u.csv.gz qwi_tx_se_fs_gm_ns_op_u.csv.gz qwi_tx_se_fs_gs_n3_op_u.csv.gz qwi_tx_se_fs_gs_n4_op_u.csv.gz qwi_tx_se_fs_gs_n5_op_u.csv.gz qwi_tx_se_fs_gs_n6_op_u.csv.gz qwi_tx_se_fs_gs_ns_op_u.csv.gz qwi_tx_se_fs_gw_ns_op_u.csv.gz
-== TX: 132 files listed; using none
-== UT: 132 files listed; using none
-== VT: 132 files listed; using none
-== VA: 132 files listed; using none
-== WA: 132 files listed; using none
-== WV: 132 files listed; using none
-== WI: 132 files listed; using none
-== WY: 132 files listed; using none
-wrote groups.json: 0 states, 0 counties in 1s
+== AL: 132 files listed; using qwi_al_rh_f_gc_ns_oslp_u.csv.gz, qwi_al_rh_f_gs_ns_oslp_u.csv.gz, qwi_al_sa_f_gc_ns_oslp_u.csv.gz, qwi_al_sa_f_gs_ns_oslp_u.csv.gz, qwi_al_se_f_gc_ns_oslp_u.csv.gz, qwi_al_se_f_gs_ns_oslp_u.csv.gz
+== AR: 132 files listed; using qwi_ar_rh_f_gc_ns_oslp_u.csv.gz, qwi_ar_rh_f_gs_ns_oslp_u.csv.gz, qwi_ar_sa_f_gc_ns_oslp_u.csv.gz, qwi_ar_sa_f_gs_ns_oslp_u.csv.gz, qwi_ar_se_f_gc_ns_oslp_u.csv.gz, qwi_ar_se_f_gs_ns_oslp_u.csv.gz
+== AK: 132 files listed; using qwi_ak_rh_f_gc_ns_oslp_u.csv.gz, qwi_ak_rh_f_gs_ns_oslp_u.csv.gz, qwi_ak_sa_f_gc_ns_oslp_u.csv.gz, qwi_ak_sa_f_gs_ns_oslp_u.csv.gz, qwi_ak_se_f_gc_ns_oslp_u.csv.gz, qwi_ak_se_f_gs_ns_oslp_u.csv.gz
+== AZ: 132 files listed; using qwi_az_rh_f_gc_ns_oslp_u.csv.gz, qwi_az_rh_f_gs_ns_oslp_u.csv.gz, qwi_az_sa_f_gc_ns_oslp_u.csv.gz, qwi_az_sa_f_gs_ns_oslp_u.csv.gz, qwi_az_se_f_gc_ns_oslp_u.csv.gz, qwi_az_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ar_sa_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2484 rows, 2s
+   qwi_al_sa_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2646 rows, 2s
+   qwi_ak_sa_f_gs_ns_oslp_u.csv.gz: 2.3 MB, 1728 rows, 2s
+   qwi_az_sa_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2322 rows, 2s
+   qwi_ak_sa_f_gc_ns_oslp_u.csv.gz: 32.7 MB, 52706 rows, 24s
+   qwi_ak_se_f_gs_ns_oslp_u.csv.gz: 1.6 MB, 1152 rows, 1s
+   qwi_az_sa_f_gc_ns_oslp_u.csv.gz: 38.2 MB, 37135 rows, 27s
+   qwi_az_se_f_gs_ns_oslp_u.csv.gz: 2.5 MB, 1548 rows, 1s
+   qwi_ak_se_f_gc_ns_oslp_u.csv.gz: 25.2 MB, 35707 rows, 16s
+   qwi_az_se_f_gc_ns_oslp_u.csv.gz: 27.6 MB, 24768 rows, 13s
+   qwi_ak_rh_f_gs_ns_oslp_u.csv.gz: 1.7 MB, 1344 rows, 1s
+   qwi_az_rh_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 1806 rows, 2s
+   qwi_ak_rh_f_gc_ns_oslp_u.csv.gz: 20.3 MB, 35336 rows, 13s
+   AK: end 2016 Q1, since 2001, 31 counties, race x ethnicity cross: True
+== CA: 132 files listed; using qwi_ca_rh_f_gc_ns_oslp_u.csv.gz, qwi_ca_rh_f_gs_ns_oslp_u.csv.gz, qwi_ca_sa_f_gc_ns_oslp_u.csv.gz, qwi_ca_sa_f_gs_ns_oslp_u.csv.gz, qwi_ca_se_f_gc_ns_oslp_u.csv.gz, qwi_ca_se_f_gs_ns_oslp_u.csv.gz
+   qwi_az_rh_f_gc_ns_oslp_u.csv.gz: 25.8 MB, 28760 rows, 15s
+   AZ: end 2025 Q3, since 2005, 16 counties, race x ethnicity cross: True
+== CO: 132 files listed; using qwi_co_rh_f_gc_ns_oslp_u.csv.gz, qwi_co_rh_f_gs_ns_oslp_u.csv.gz, qwi_co_sa_f_gc_ns_oslp_u.csv.gz, qwi_co_sa_f_gs_ns_oslp_u.csv.gz, qwi_co_se_f_gc_ns_oslp_u.csv.gz, qwi_co_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ca_sa_f_gs_ns_oslp_u.csv.gz: 6.4 MB, 3672 rows, 4s
+   qwi_co_sa_f_gs_ns_oslp_u.csv.gz: 5.4 MB, 3483 rows, 3s
+   qwi_al_sa_f_gc_ns_oslp_u.csv.gz: 144.7 MB, 179887 rows, 77s
+   qwi_al_se_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 1764 rows, 2s
+   qwi_ar_sa_f_gc_ns_oslp_u.csv.gz: 136.7 MB, 188695 rows, 86s
+   qwi_ar_se_f_gs_ns_oslp_u.csv.gz: 2.5 MB, 1656 rows, 2s
+   qwi_ar_se_f_gc_ns_oslp_u.csv.gz: 103.5 MB, 125856 rows, 53s
+   qwi_al_se_f_gc_ns_oslp_u.csv.gz: 108.2 MB, 119952 rows, 63s
+   qwi_ar_rh_f_gs_ns_oslp_u.csv.gz: 2.5 MB, 1932 rows, 1s
+   qwi_al_rh_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 2058 rows, 2s
+   qwi_co_sa_f_gc_ns_oslp_u.csv.gz: 168.3 MB, 223964 rows, 113s
+   qwi_co_se_f_gs_ns_oslp_u.csv.gz: 3.7 MB, 2322 rows, 2s
+   qwi_ar_rh_f_gc_ns_oslp_u.csv.gz: 72.9 MB, 126940 rows, 40s
+   AR: end 2025 Q3, since 2003, 76 counties, race x ethnicity cross: True
+== CT: 132 files listed; using qwi_ct_rh_f_gc_ns_oslp_u.csv.gz, qwi_ct_rh_f_gs_ns_oslp_u.csv.gz, qwi_ct_sa_f_gc_ns_oslp_u.csv.gz, qwi_ct_sa_f_gs_ns_oslp_u.csv.gz, qwi_ct_se_f_gc_ns_oslp_u.csv.gz, qwi_ct_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ct_sa_f_gs_ns_oslp_u.csv.gz: 4.7 MB, 3186 rows, 3s
+   qwi_al_rh_f_gc_ns_oslp_u.csv.gz: 78.0 MB, 126256 rows, 46s
+   AL: end 2025 Q3, since 2002, 68 counties, race x ethnicity cross: True
+== DE: 132 files listed; using qwi_de_rh_f_gc_ns_oslp_u.csv.gz, qwi_de_rh_f_gs_ns_oslp_u.csv.gz, qwi_de_sa_f_gc_ns_oslp_u.csv.gz, qwi_de_sa_f_gs_ns_oslp_u.csv.gz, qwi_de_se_f_gc_ns_oslp_u.csv.gz, qwi_de_se_f_gs_ns_oslp_u.csv.gz
+   qwi_de_sa_f_gs_ns_oslp_u.csv.gz: 3.8 MB, 2916 rows, 4s
+   qwi_de_sa_f_gc_ns_oslp_u.csv.gz: 13.9 MB, 11664 rows, 8s
+   qwi_de_se_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 1944 rows, 2s
+   qwi_ct_sa_f_gc_ns_oslp_u.csv.gz: 38.5 MB, 31860 rows, 21s
+   qwi_de_se_f_gc_ns_oslp_u.csv.gz: 9.8 MB, 7776 rows, 5s
+   qwi_ct_se_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2124 rows, 2s
+   qwi_de_rh_f_gs_ns_oslp_u.csv.gz: 2.6 MB, 2268 rows, 2s
+   qwi_de_rh_f_gc_ns_oslp_u.csv.gz: 9.1 MB, 9072 rows, 5s
+   DE: end 2025 Q3, since 1999, 4 counties, race x ethnicity cross: True
+== DC: 132 files listed; using qwi_dc_rh_f_gc_ns_oslp_u.csv.gz, qwi_dc_rh_f_gs_ns_oslp_u.csv.gz, qwi_dc_sa_f_gc_ns_oslp_u.csv.gz, qwi_dc_sa_f_gs_ns_oslp_u.csv.gz, qwi_dc_se_f_gc_ns_oslp_u.csv.gz, qwi_dc_se_f_gs_ns_oslp_u.csv.gz
+   qwi_dc_sa_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 2187 rows, 1s
+   qwi_dc_sa_f_gc_ns_oslp_u.csv.gz: 5.4 MB, 4374 rows, 4s
+   qwi_dc_se_f_gs_ns_oslp_u.csv.gz: 1.9 MB, 1458 rows, 1s
+   qwi_ca_sa_f_gc_ns_oslp_u.csv.gz: 232.9 MB, 216230 rows, 165s
+   qwi_dc_se_f_gc_ns_oslp_u.csv.gz: 3.8 MB, 2916 rows, 2s
+   qwi_dc_rh_f_gs_ns_oslp_u.csv.gz: 1.9 MB, 1701 rows, 1s
+   qwi_ct_se_f_gc_ns_oslp_u.csv.gz: 27.1 MB, 21240 rows, 17s
+   qwi_ca_se_f_gs_ns_oslp_u.csv.gz: 4.4 MB, 2448 rows, 3s
+   qwi_ct_rh_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2478 rows, 2s
+   qwi_dc_rh_f_gc_ns_oslp_u.csv.gz: 3.9 MB, 3402 rows, 3s
+   DC: end 2025 Q3, since 2006, 2 counties, race x ethnicity cross: True
+== FL: 132 files listed; using qwi_fl_rh_f_gc_ns_oslp_u.csv.gz, qwi_fl_rh_f_gs_ns_oslp_u.csv.gz, qwi_fl_sa_f_gc_ns_oslp_u.csv.gz, qwi_fl_sa_f_gs_ns_oslp_u.csv.gz, qwi_fl_se_f_gc_ns_oslp_u.csv.gz, qwi_fl_se_f_gs_ns_oslp_u.csv.gz
+   qwi_fl_sa_f_gs_ns_oslp_u.csv.gz: 5.0 MB, 2997 rows, 4s
+   qwi_co_se_f_gc_ns_oslp_u.csv.gz: 126.7 MB, 150876 rows, 65s
+   qwi_co_rh_f_gs_ns_oslp_u.csv.gz: 3.9 MB, 2709 rows, 3s
+   qwi_ct_rh_f_gc_ns_oslp_u.csv.gz: 25.2 MB, 24764 rows, 17s
+   CT: end 2025 Q3, since 1997, 10 counties, race x ethnicity cross: True
+== GA: 132 files listed; using qwi_ga_rh_f_gc_ns_oslp_u.csv.gz, qwi_ga_rh_f_gs_ns_oslp_u.csv.gz, qwi_ga_sa_f_gc_ns_oslp_u.csv.gz, qwi_ga_sa_f_gs_ns_oslp_u.csv.gz, qwi_ga_se_f_gc_ns_oslp_u.csv.gz, qwi_ga_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ga_sa_f_gs_ns_oslp_u.csv.gz: 4.7 MB, 2970 rows, 4s
+   qwi_co_rh_f_gc_ns_oslp_u.csv.gz: 100.1 MB, 149895 rows, 75s
+   CO: end 2025 Q3, since 1994, 65 counties, race x ethnicity cross: True
+== HI: 132 files listed; using qwi_hi_rh_f_gc_ns_oslp_u.csv.gz, qwi_hi_rh_f_gs_ns_oslp_u.csv.gz, qwi_hi_sa_f_gc_ns_oslp_u.csv.gz, qwi_hi_sa_f_gs_ns_oslp_u.csv.gz, qwi_hi_se_f_gc_ns_oslp_u.csv.gz, qwi_hi_se_f_gs_ns_oslp_u.csv.gz
+   qwi_hi_sa_f_gs_ns_oslp_u.csv.gz: 4.3 MB, 3213 rows, 3s
+   qwi_hi_sa_f_gc_ns_oslp_u.csv.gz: 18.8 MB, 16072 rows, 9s
+   qwi_hi_se_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2142 rows, 2s
+   qwi_hi_se_f_gc_ns_oslp_u.csv.gz: 13.3 MB, 10717 rows, 6s
+   qwi_hi_rh_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2499 rows, 2s
+   qwi_ca_se_f_gc_ns_oslp_u.csv.gz: 167.2 MB, 144432 rows, 121s
+   qwi_hi_rh_f_gc_ns_oslp_u.csv.gz: 13.8 MB, 12507 rows, 9s
+   HI: end 2025 Q3, since 1996, 6 counties, race x ethnicity cross: True
+== ID: 132 files listed; using qwi_id_rh_f_gc_ns_oslp_u.csv.gz, qwi_id_rh_f_gs_ns_oslp_u.csv.gz, qwi_id_sa_f_gc_ns_oslp_u.csv.gz, qwi_id_sa_f_gs_ns_oslp_u.csv.gz, qwi_id_se_f_gc_ns_oslp_u.csv.gz, qwi_id_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ca_rh_f_gs_ns_oslp_u.csv.gz: 4.8 MB, 2856 rows, 4s
+   qwi_fl_sa_f_gc_ns_oslp_u.csv.gz: 197.7 MB, 203789 rows, 121s
+   qwi_id_sa_f_gs_ns_oslp_u.csv.gz: 5.2 MB, 3726 rows, 4s
+   qwi_fl_se_f_gs_ns_oslp_u.csv.gz: 3.4 MB, 1998 rows, 2s
+   qwi_ga_sa_f_gc_ns_oslp_u.csv.gz: 336.4 MB, 472480 rows, 171s
+   qwi_ga_se_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 1980 rows, 2s
+   qwi_fl_se_f_gc_ns_oslp_u.csv.gz: 143.3 MB, 135864 rows, 70s
+   qwi_fl_rh_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2331 rows, 3s
+   qwi_id_sa_f_gc_ns_oslp_u.csv.gz: 119.9 MB, 166828 rows, 89s
+   qwi_id_se_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2484 rows, 3s
+   qwi_ca_rh_f_gc_ns_oslp_u.csv.gz: 161.4 MB, 165250 rows, 117s
+   CA: end 2025 Q3, since 1992, 59 counties, race x ethnicity cross: True
+== IL: 132 files listed; using qwi_il_rh_f_gc_ns_oslp_u.csv.gz, qwi_il_rh_f_gs_ns_oslp_u.csv.gz, qwi_il_sa_f_gc_ns_oslp_u.csv.gz, qwi_il_sa_f_gs_ns_oslp_u.csv.gz, qwi_il_se_f_gc_ns_oslp_u.csv.gz, qwi_il_se_f_gs_ns_oslp_u.csv.gz
+   qwi_il_sa_f_gs_ns_oslp_u.csv.gz: 5.6 MB, 3483 rows, 3s
+   qwi_fl_rh_f_gc_ns_oslp_u.csv.gz: 124.2 MB, 151380 rows, 66s
+   FL: end 2025 Q3, since 1998, 68 counties, race x ethnicity cross: True
+== IN: 132 files listed; using qwi_in_rh_f_gc_ns_oslp_u.csv.gz, qwi_in_rh_f_gs_ns_oslp_u.csv.gz, qwi_in_sa_f_gc_ns_oslp_u.csv.gz, qwi_in_sa_f_gs_ns_oslp_u.csv.gz, qwi_in_se_f_gc_ns_oslp_u.csv.gz, qwi_in_se_f_gs_ns_oslp_u.csv.gz
+   qwi_in_sa_f_gs_ns_oslp_u.csv.gz: 4.6 MB, 2970 rows, 3s
+   qwi_id_se_f_gc_ns_oslp_u.csv.gz: 90.7 MB, 111752 rows, 61s
+   qwi_id_rh_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2898 rows, 2s
+   qwi_id_rh_f_gc_ns_oslp_u.csv.gz: 64.1 MB, 110616 rows, 36s
+   ID: end 2025 Q3, since 1992, 45 counties, race x ethnicity cross: True
+== IA: 132 files listed; using qwi_ia_rh_f_gc_ns_oslp_u.csv.gz, qwi_ia_rh_f_gs_ns_oslp_u.csv.gz, qwi_ia_sa_f_gc_ns_oslp_u.csv.gz, qwi_ia_sa_f_gs_ns_oslp_u.csv.gz, qwi_ia_se_f_gc_ns_oslp_u.csv.gz, qwi_ia_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ia_sa_f_gs_ns_oslp_u.csv.gz: 4.2 MB, 2889 rows, 2s
+   qwi_ga_se_f_gc_ns_oslp_u.csv.gz: 253.7 MB, 316692 rows, 181s
+   qwi_in_sa_f_gc_ns_oslp_u.csv.gz: 231.8 MB, 276206 rows, 108s
+   qwi_ga_rh_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2310 rows, 2s
+   qwi_in_se_f_gs_ns_oslp_u.csv.gz: 3.2 MB, 1980 rows, 2s
+   qwi_il_sa_f_gc_ns_oslp_u.csv.gz: 283.7 MB, 358555 rows, 196s
+   qwi_il_se_f_gs_ns_oslp_u.csv.gz: 3.9 MB, 2322 rows, 2s
+   qwi_ia_sa_f_gc_ns_oslp_u.csv.gz: 214.2 MB, 288900 rows, 154s
+   qwi_ia_se_f_gs_ns_oslp_u.csv.gz: 2.9 MB, 1926 rows, 2s
+   qwi_in_se_f_gc_ns_oslp_u.csv.gz: 171.1 MB, 184140 rows, 99s
+   qwi_in_rh_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 2310 rows, 2s
+   qwi_ga_rh_f_gc_ns_oslp_u.csv.gz: 188.1 MB, 316950 rows, 128s
+   GA: end 2025 Q3, since 1999, 160 counties, race x ethnicity cross: True
+== KS: 132 files listed; using qwi_ks_rh_f_gc_ns_oslp_u.csv.gz, qwi_ks_rh_f_gs_ns_oslp_u.csv.gz, qwi_ks_sa_f_gc_ns_oslp_u.csv.gz, qwi_ks_sa_f_gs_ns_oslp_u.csv.gz, qwi_ks_se_f_gc_ns_oslp_u.csv.gz, qwi_ks_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ks_sa_f_gs_ns_oslp_u.csv.gz: 5.2 MB, 3510 rows, 3s
+   qwi_in_rh_f_gc_ns_oslp_u.csv.gz: 115.9 MB, 190598 rows, 75s
+   IN: end 2025 Q3, since 1999, 93 counties, race x ethnicity cross: True
+== KY: 132 files listed; using qwi_ky_rh_f_gc_ns_oslp_u.csv.gz, qwi_ky_rh_f_gs_ns_oslp_u.csv.gz, qwi_ky_sa_f_gc_ns_oslp_u.csv.gz, qwi_ky_sa_f_gs_ns_oslp_u.csv.gz, qwi_ky_se_f_gc_ns_oslp_u.csv.gz, qwi_ky_se_f_gs_ns_oslp_u.csv.gz
+   qwi_il_se_f_gc_ns_oslp_u.csv.gz: 210.9 MB, 239166 rows, 116s
+   qwi_ky_sa_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2646 rows, 2s
+   qwi_il_rh_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2709 rows, 3s
+   qwi_ia_se_f_gc_ns_oslp_u.csv.gz: 160.2 MB, 192600 rows, 101s
+   qwi_ia_rh_f_gs_ns_oslp_u.csv.gz: 2.9 MB, 2247 rows, 2s
+   qwi_ks_sa_f_gc_ns_oslp_u.csv.gz: 232.4 MB, 371921 rows, 119s
+   qwi_ks_se_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2340 rows, 3s
+   qwi_il_rh_f_gc_ns_oslp_u.csv.gz: 142.9 MB, 231906 rows, 73s
+   IL: end 2025 Q3, since 1994, 103 counties, race x ethnicity cross: True
+== LA: 132 files listed; using qwi_la_rh_f_gc_ns_oslp_u.csv.gz, qwi_la_rh_f_gs_ns_oslp_u.csv.gz, qwi_la_sa_f_gc_ns_oslp_u.csv.gz, qwi_la_sa_f_gs_ns_oslp_u.csv.gz, qwi_la_se_f_gc_ns_oslp_u.csv.gz, qwi_la_se_f_gs_ns_oslp_u.csv.gz
+   qwi_la_sa_f_gs_ns_oslp_u.csv.gz: 5.0 MB, 3294 rows, 2s
+   qwi_ia_rh_f_gc_ns_oslp_u.csv.gz: 99.8 MB, 186131 rows, 72s
+   IA: end 2025 Q3, since 1999, 100 counties, race x ethnicity cross: True
+== ME: 132 files listed; using qwi_me_rh_f_gc_ns_oslp_u.csv.gz, qwi_me_rh_f_gs_ns_oslp_u.csv.gz, qwi_me_sa_f_gc_ns_oslp_u.csv.gz, qwi_me_sa_f_gs_ns_oslp_u.csv.gz, qwi_me_se_f_gc_ns_oslp_u.csv.gz, qwi_me_se_f_gs_ns_oslp_u.csv.gz
+   qwi_me_sa_f_gs_ns_oslp_u.csv.gz: 4.3 MB, 3159 rows, 2s
+   qwi_me_sa_f_gc_ns_oslp_u.csv.gz: 52.2 MB, 53703 rows, 24s
+   qwi_me_se_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2106 rows, 2s
+   qwi_ky_sa_f_gc_ns_oslp_u.csv.gz: 214.6 MB, 319691 rows, 124s
+   qwi_ky_se_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 1764 rows, 2s
+   qwi_me_se_f_gc_ns_oslp_u.csv.gz: 37.8 MB, 35802 rows, 19s
+   qwi_me_rh_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 2457 rows, 1s
+   qwi_ks_se_f_gc_ns_oslp_u.csv.gz: 177.2 MB, 248040 rows, 82s
+   qwi_ks_rh_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2730 rows, 3s
+   qwi_me_rh_f_gc_ns_oslp_u.csv.gz: 25.4 MB, 38282 rows, 18s
+   ME: end 2025 Q3, since 1997, 17 counties, race x ethnicity cross: True
+== MD: 132 files listed; using qwi_md_rh_f_gc_ns_oslp_u.csv.gz, qwi_md_rh_f_gs_ns_oslp_u.csv.gz, qwi_md_sa_f_gc_ns_oslp_u.csv.gz, qwi_md_sa_f_gs_ns_oslp_u.csv.gz, qwi_md_se_f_gc_ns_oslp_u.csv.gz, qwi_md_se_f_gs_ns_oslp_u.csv.gz
+   qwi_md_sa_f_gs_ns_oslp_u.csv.gz: 5.8 MB, 3834 rows, 4s
+   qwi_la_sa_f_gc_ns_oslp_u.csv.gz: 177.5 MB, 213963 rows, 96s
+   qwi_la_se_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2196 rows, 3s
+   qwi_ky_se_f_gc_ns_oslp_u.csv.gz: 163.6 MB, 213432 rows, 84s
+   qwi_ky_rh_f_gs_ns_oslp_u.csv.gz: 2.7 MB, 2058 rows, 2s
+   qwi_ks_rh_f_gc_ns_oslp_u.csv.gz: 119.9 MB, 221887 rows, 58s
+   KS: end 2025 Q3, since 1994, 106 counties, race x ethnicity cross: True
+== MA: 132 files listed; using qwi_ma_rh_f_gc_ns_oslp_u.csv.gz, qwi_ma_rh_f_gs_ns_oslp_u.csv.gz, qwi_ma_sa_f_gc_ns_oslp_u.csv.gz, qwi_ma_sa_f_gs_ns_oslp_u.csv.gz, qwi_ma_se_f_gc_ns_oslp_u.csv.gz, qwi_ma_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ma_sa_f_gs_ns_oslp_u.csv.gz: 2.6 MB, 1674 rows, 2s
+   qwi_md_sa_f_gc_ns_oslp_u.csv.gz: 99.6 MB, 95850 rows, 69s
+   qwi_md_se_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2556 rows, 2s
+   qwi_ma_sa_f_gc_ns_oslp_u.csv.gz: 29.8 MB, 25110 rows, 20s
+   qwi_ma_se_f_gs_ns_oslp_u.csv.gz: 1.8 MB, 1116 rows, 1s
+   qwi_ma_se_f_gc_ns_oslp_u.csv.gz: 21.1 MB, 16740 rows, 15s
+   qwi_ma_rh_f_gs_ns_oslp_u.csv.gz: 1.9 MB, 1302 rows, 1s
+   qwi_la_se_f_gc_ns_oslp_u.csv.gz: 133.2 MB, 142740 rows, 84s
+   qwi_la_rh_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2562 rows, 2s
+   qwi_ma_rh_f_gc_ns_oslp_u.csv.gz: 19.7 MB, 19432 rows, 13s
+   MA: end 2025 Q3, since 2011, 15 counties, race x ethnicity cross: True
+== MI: 132 files listed; using qwi_mi_rh_f_gc_ns_oslp_u.csv.gz, qwi_mi_rh_f_gs_ns_oslp_u.csv.gz, qwi_mi_sa_f_gc_ns_oslp_u.csv.gz, qwi_mi_sa_f_gs_ns_oslp_u.csv.gz, qwi_mi_se_f_gc_ns_oslp_u.csv.gz, qwi_mi_se_f_gs_ns_oslp_u.csv.gz
+   qwi_md_se_f_gc_ns_oslp_u.csv.gz: 71.7 MB, 63900 rows, 36s
+   qwi_mi_sa_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2268 rows, 2s
+   qwi_md_rh_f_gs_ns_oslp_u.csv.gz: 4.1 MB, 2982 rows, 3s
+   qwi_ky_rh_f_gc_ns_oslp_u.csv.gz: 100.9 MB, 192896 rows, 70s
+   KY: end 2025 Q3, since 2002, 121 counties, race x ethnicity cross: True
+== MN: 132 files listed; using qwi_mn_rh_f_gc_ns_oslp_u.csv.gz, qwi_mn_rh_f_gs_ns_oslp_u.csv.gz, qwi_mn_sa_f_gc_ns_oslp_u.csv.gz, qwi_mn_sa_f_gs_ns_oslp_u.csv.gz, qwi_mn_se_f_gc_ns_oslp_u.csv.gz, qwi_mn_se_f_gs_ns_oslp_u.csv.gz
+   qwi_mn_sa_f_gs_ns_oslp_u.csv.gz: 5.2 MB, 3348 rows, 3s
+   qwi_md_rh_f_gc_ns_oslp_u.csv.gz: 59.4 MB, 71891 rows, 37s
+   MD: end 2025 Q3, since 1991, 25 counties, race x ethnicity cross: True
+== MS: 132 files listed; using qwi_ms_rh_f_gc_ns_oslp_u.csv.gz, qwi_ms_rh_f_gs_ns_oslp_u.csv.gz, qwi_ms_sa_f_gc_ns_oslp_u.csv.gz, qwi_ms_sa_f_gs_ns_oslp_u.csv.gz, qwi_ms_se_f_gc_ns_oslp_u.csv.gz, qwi_ms_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ms_sa_f_gs_ns_oslp_u.csv.gz: 3.4 MB, 2376 rows, 2s
+   qwi_la_rh_f_gc_ns_oslp_u.csv.gz: 97.3 MB, 145840 rows, 56s
+   LA: end 2025 Q3, since 1996, 65 counties, race x ethnicity cross: True
+== MO: 132 files listed; using qwi_mo_rh_f_gc_ns_oslp_u.csv.gz, qwi_mo_rh_f_gs_ns_oslp_u.csv.gz, qwi_mo_sa_f_gc_ns_oslp_u.csv.gz, qwi_mo_sa_f_gs_ns_oslp_u.csv.gz, qwi_mo_se_f_gc_ns_oslp_u.csv.gz, qwi_mo_se_f_gs_ns_oslp_u.csv.gz
+   qwi_mo_sa_f_gs_ns_oslp_u.csv.gz: 5.1 MB, 3294 rows, 3s
+   qwi_ms_sa_f_gc_ns_oslp_u.csv.gz: 138.0 MB, 196240 rows, 64s
+   qwi_mi_sa_f_gc_ns_oslp_u.csv.gz: 160.7 MB, 190473 rows, 108s
+   qwi_ms_se_f_gs_ns_oslp_u.csv.gz: 2.4 MB, 1584 rows, 2s
+   qwi_mi_se_f_gs_ns_oslp_u.csv.gz: 2.5 MB, 1512 rows, 2s
+   qwi_mi_se_f_gc_ns_oslp_u.csv.gz: 118.7 MB, 127008 rows, 60s
+   qwi_mi_rh_f_gs_ns_oslp_u.csv.gz: 2.5 MB, 1764 rows, 1s
+   qwi_mn_sa_f_gc_ns_oslp_u.csv.gz: 230.5 MB, 294624 rows, 162s
+   qwi_mn_se_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2232 rows, 2s
+   qwi_ms_se_f_gc_ns_oslp_u.csv.gz: 105.6 MB, 131420 rows, 75s
+   qwi_ms_rh_f_gs_ns_oslp_u.csv.gz: 2.3 MB, 1848 rows, 2s
+   qwi_ms_rh_f_gc_ns_oslp_u.csv.gz: 71.3 MB, 125928 rows, 39s
+   MS: end 2025 Q3, since 2004, 83 counties, race x ethnicity cross: True
+   qwi_mi_rh_f_gc_ns_oslp_u.csv.gz: 82.9 MB, 128114 rows, 54s
+== MT: 132 files listed; using qwi_mt_rh_f_gc_ns_oslp_u.csv.gz, qwi_mt_rh_f_gs_ns_oslp_u.csv.gz, qwi_mt_sa_f_gc_ns_oslp_u.csv.gz, qwi_mt_sa_f_gs_ns_oslp_u.csv.gz, qwi_mt_se_f_gc_ns_oslp_u.csv.gz, qwi_mt_se_f_gs_ns_oslp_u.csv.gz
+   MI: end 2021 Q3, since 2001, 84 counties, race x ethnicity cross: True
+== NE: 132 files listed; using qwi_ne_rh_f_gc_ns_oslp_u.csv.gz, qwi_ne_rh_f_gs_ns_oslp_u.csv.gz, qwi_ne_sa_f_gc_ns_oslp_u.csv.gz, qwi_ne_sa_f_gs_ns_oslp_u.csv.gz, qwi_ne_se_f_gc_ns_oslp_u.csv.gz, qwi_ne_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ne_sa_f_gs_ns_oslp_u.csv.gz: 4.1 MB, 2862 rows, 2s
+   qwi_mt_sa_f_gs_ns_oslp_u.csv.gz: 4.8 MB, 3510 rows, 4s
+   qwi_mo_sa_f_gc_ns_oslp_u.csv.gz: 277.3 MB, 381990 rows, 196s
+   qwi_mo_se_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2196 rows, 3s
+   qwi_mn_se_f_gc_ns_oslp_u.csv.gz: 171.3 MB, 196416 rows, 92s
+   qwi_mn_rh_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2604 rows, 3s
+   qwi_mt_sa_f_gc_ns_oslp_u.csv.gz: 116.3 MB, 194800 rows, 72s
+   qwi_mt_se_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2340 rows, 2s
+   qwi_ne_sa_f_gc_ns_oslp_u.csv.gz: 145.7 MB, 260659 rows, 108s
+   qwi_ne_se_f_gs_ns_oslp_u.csv.gz: 2.8 MB, 1908 rows, 2s
+   qwi_mn_rh_f_gc_ns_oslp_u.csv.gz: 111.6 MB, 193081 rows, 76s
+   MN: end 2025 Q3, since 1995, 88 counties, race x ethnicity cross: True
+== NV: 132 files listed; using qwi_nv_rh_f_gc_ns_oslp_u.csv.gz, qwi_nv_rh_f_gs_ns_oslp_u.csv.gz, qwi_nv_sa_f_gc_ns_oslp_u.csv.gz, qwi_nv_sa_f_gs_ns_oslp_u.csv.gz, qwi_nv_se_f_gc_ns_oslp_u.csv.gz, qwi_nv_se_f_gs_ns_oslp_u.csv.gz
+   qwi_nv_sa_f_gs_ns_oslp_u.csv.gz: 4.3 MB, 2970 rows, 3s
+   qwi_mt_se_f_gc_ns_oslp_u.csv.gz: 89.8 MB, 132795 rows, 61s
+   qwi_mt_rh_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 2730 rows, 2s
+   qwi_nv_sa_f_gc_ns_oslp_u.csv.gz: 41.8 MB, 52927 rows, 22s
+   qwi_nv_se_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 1980 rows, 2s
+   qwi_ne_se_f_gc_ns_oslp_u.csv.gz: 111.3 MB, 177359 rows, 56s
+   qwi_ne_rh_f_gs_ns_oslp_u.csv.gz: 2.8 MB, 2226 rows, 2s
+   qwi_nv_se_f_gc_ns_oslp_u.csv.gz: 31.1 MB, 35630 rows, 20s
+   qwi_mt_rh_f_gc_ns_oslp_u.csv.gz: 57.7 MB, 103853 rows, 34s
+   MT: end 2025 Q3, since 1994, 57 counties, race x ethnicity cross: True
+== NH: 132 files listed; using qwi_nh_rh_f_gc_ns_oslp_u.csv.gz, qwi_nh_rh_f_gs_ns_oslp_u.csv.gz, qwi_nh_sa_f_gc_ns_oslp_u.csv.gz, qwi_nh_sa_f_gs_ns_oslp_u.csv.gz, qwi_nh_se_f_gc_ns_oslp_u.csv.gz, qwi_nh_se_f_gs_ns_oslp_u.csv.gz
+   qwi_nv_rh_f_gs_ns_oslp_u.csv.gz: 3.2 MB, 2310 rows, 2s
+   qwi_mo_se_f_gc_ns_oslp_u.csv.gz: 208.6 MB, 254736 rows, 152s
+   qwi_nh_sa_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2430 rows, 3s
+   qwi_mo_rh_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2562 rows, 2s
+   qwi_nv_rh_f_gc_ns_oslp_u.csv.gz: 27.0 MB, 38356 rows, 19s
+   NV: end 2025 Q3, since 1999, 18 counties, race x ethnicity cross: True
+== NJ: 132 files listed; using qwi_nj_rh_f_gc_ns_oslp_u.csv.gz, qwi_nj_rh_f_gs_ns_oslp_u.csv.gz, qwi_nj_sa_f_gc_ns_oslp_u.csv.gz, qwi_nj_sa_f_gs_ns_oslp_u.csv.gz, qwi_nj_se_f_gc_ns_oslp_u.csv.gz, qwi_nj_se_f_gs_ns_oslp_u.csv.gz
+   qwi_nh_sa_f_gc_ns_oslp_u.csv.gz: 28.7 MB, 26730 rows, 20s
+   qwi_nj_sa_f_gs_ns_oslp_u.csv.gz: 5.0 MB, 3186 rows, 3s
+   qwi_nh_se_f_gs_ns_oslp_u.csv.gz: 2.3 MB, 1620 rows, 1s
+   qwi_nh_se_f_gc_ns_oslp_u.csv.gz: 20.5 MB, 17820 rows, 10s
+   qwi_nh_rh_f_gs_ns_oslp_u.csv.gz: 2.2 MB, 1890 rows, 1s
+   qwi_ne_rh_f_gc_ns_oslp_u.csv.gz: 71.3 MB, 138212 rows, 50s
+   qwi_nh_rh_f_gc_ns_oslp_u.csv.gz: 15.6 MB, 20123 rows, 11s
+   NE: end 2025 Q3, since 2000, 94 counties, race x ethnicity cross: True
+   NH: end 2025 Q3, since 2004, 11 counties, race x ethnicity cross: True
+== NM: 132 files listed; using qwi_nm_rh_f_gc_ns_oslp_u.csv.gz, qwi_nm_rh_f_gs_ns_oslp_u.csv.gz, qwi_nm_sa_f_gc_ns_oslp_u.csv.gz, qwi_nm_sa_f_gs_ns_oslp_u.csv.gz, qwi_nm_se_f_gc_ns_oslp_u.csv.gz, qwi_nm_se_f_gs_ns_oslp_u.csv.gz
+== NY: 132 files listed; using qwi_ny_rh_f_gc_ns_oslp_u.csv.gz, qwi_ny_rh_f_gs_ns_oslp_u.csv.gz, qwi_ny_sa_f_gc_ns_oslp_u.csv.gz, qwi_ny_sa_f_gs_ns_oslp_u.csv.gz, qwi_ny_se_f_gc_ns_oslp_u.csv.gz, qwi_ny_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ny_sa_f_gs_ns_oslp_u.csv.gz: 4.6 MB, 2754 rows, 2s
+   qwi_nm_sa_f_gs_ns_oslp_u.csv.gz: 4.6 MB, 3240 rows, 4s
+   qwi_nj_sa_f_gc_ns_oslp_u.csv.gz: 84.1 MB, 70092 rows, 56s
+   qwi_nj_se_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2124 rows, 2s
+   qwi_mo_rh_f_gc_ns_oslp_u.csv.gz: 134.0 MB, 237301 rows, 88s
+   MO: end 2025 Q3, since 1996, 116 counties, race x ethnicity cross: True
+== NC: 132 files listed; using qwi_nc_rh_f_gc_ns_oslp_u.csv.gz, qwi_nc_rh_f_gs_ns_oslp_u.csv.gz, qwi_nc_sa_f_gc_ns_oslp_u.csv.gz, qwi_nc_sa_f_gs_ns_oslp_u.csv.gz, qwi_nc_se_f_gc_ns_oslp_u.csv.gz, qwi_nc_se_f_gs_ns_oslp_u.csv.gz
+   qwi_nm_sa_f_gc_ns_oslp_u.csv.gz: 85.8 MB, 108719 rows, 44s
+   qwi_nm_se_f_gs_ns_oslp_u.csv.gz: 3.2 MB, 2160 rows, 2s
+   qwi_nc_sa_f_gs_ns_oslp_u.csv.gz: 5.6 MB, 3537 rows, 4s
+   qwi_nj_se_f_gc_ns_oslp_u.csv.gz: 59.3 MB, 46728 rows, 31s
+   qwi_nj_rh_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2478 rows, 2s
+   qwi_nm_se_f_gc_ns_oslp_u.csv.gz: 64.1 MB, 73308 rows, 40s
+   qwi_ny_sa_f_gc_ns_oslp_u.csv.gz: 179.7 MB, 173502 rows, 89s
+   qwi_nm_rh_f_gs_ns_oslp_u.csv.gz: 3.4 MB, 2520 rows, 3s
+   qwi_ny_se_f_gs_ns_oslp_u.csv.gz: 3.2 MB, 1836 rows, 2s
+   qwi_nj_rh_f_gc_ns_oslp_u.csv.gz: 56.2 MB, 54475 rows, 38s
+   NJ: end 2025 Q3, since 1997, 22 counties, race x ethnicity cross: True
+== ND: 132 files listed; using qwi_nd_rh_f_gc_ns_oslp_u.csv.gz, qwi_nd_rh_f_gs_ns_oslp_u.csv.gz, qwi_nd_sa_f_gc_ns_oslp_u.csv.gz, qwi_nd_sa_f_gs_ns_oslp_u.csv.gz, qwi_nd_se_f_gc_ns_oslp_u.csv.gz, qwi_nd_se_f_gs_ns_oslp_u.csv.gz
+   qwi_nd_sa_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2970 rows, 2s
+   qwi_nm_rh_f_gc_ns_oslp_u.csv.gz: 55.4 MB, 78559 rows, 32s
+   NM: end 2025 Q3, since 1996, 34 counties, race x ethnicity cross: True
+== OH: 132 files listed; using qwi_oh_rh_f_gc_ns_oslp_u.csv.gz, qwi_oh_rh_f_gs_ns_oslp_u.csv.gz, qwi_oh_sa_f_gc_ns_oslp_u.csv.gz, qwi_oh_sa_f_gs_ns_oslp_u.csv.gz, qwi_oh_se_f_gc_ns_oslp_u.csv.gz, qwi_oh_se_f_gs_ns_oslp_u.csv.gz
+   qwi_oh_sa_f_gs_ns_oslp_u.csv.gz: 4.4 MB, 2754 rows, 3s
+   qwi_ny_se_f_gc_ns_oslp_u.csv.gz: 129.2 MB, 115668 rows, 65s
+   qwi_ny_rh_f_gs_ns_oslp_u.csv.gz: 3.4 MB, 2142 rows, 2s
+   qwi_nd_sa_f_gc_ns_oslp_u.csv.gz: 89.4 MB, 157981 rows, 64s
+   qwi_nd_se_f_gs_ns_oslp_u.csv.gz: 2.8 MB, 1980 rows, 2s
+   qwi_nd_se_f_gc_ns_oslp_u.csv.gz: 68.9 MB, 106637 rows, 35s
+   qwi_nd_rh_f_gs_ns_oslp_u.csv.gz: 2.6 MB, 2310 rows, 2s
+   qwi_ny_rh_f_gc_ns_oslp_u.csv.gz: 105.9 MB, 129810 rows, 66s
+   NY: end 2025 Q3, since 2001, 63 counties, race x ethnicity cross: True
+== OK: 132 files listed; using qwi_ok_rh_f_gc_ns_oslp_u.csv.gz, qwi_ok_rh_f_gs_ns_oslp_u.csv.gz, qwi_ok_sa_f_gc_ns_oslp_u.csv.gz, qwi_ok_sa_f_gs_ns_oslp_u.csv.gz, qwi_ok_se_f_gc_ns_oslp_u.csv.gz, qwi_ok_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ok_sa_f_gs_ns_oslp_u.csv.gz: 4.1 MB, 2754 rows, 3s
+   qwi_nd_rh_f_gc_ns_oslp_u.csv.gz: 43.5 MB, 81846 rows, 32s
+   ND: end 2025 Q3, since 1999, 54 counties, race x ethnicity cross: True
+== OR: 132 files listed; using qwi_or_rh_f_gc_ns_oslp_u.csv.gz, qwi_or_rh_f_gs_ns_oslp_u.csv.gz, qwi_or_sa_f_gc_ns_oslp_u.csv.gz, qwi_or_sa_f_gs_ns_oslp_u.csv.gz, qwi_or_se_f_gc_ns_oslp_u.csv.gz, qwi_or_se_f_gs_ns_oslp_u.csv.gz
+   qwi_or_sa_f_gs_ns_oslp_u.csv.gz: 5.6 MB, 3726 rows, 3s
+   qwi_oh_sa_f_gc_ns_oslp_u.csv.gz: 229.0 MB, 245106 rows, 128s
+   qwi_oh_se_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 1836 rows, 2s
+   qwi_nc_sa_f_gc_ns_oslp_u.csv.gz: 309.3 MB, 357212 rows, 217s
+   qwi_nc_se_f_gs_ns_oslp_u.csv.gz: 3.9 MB, 2358 rows, 2s
+   qwi_or_sa_f_gc_ns_oslp_u.csv.gz: 122.9 MB, 137337 rows, 63s
+   qwi_or_se_f_gs_ns_oslp_u.csv.gz: 3.9 MB, 2484 rows, 3s
+   qwi_ok_sa_f_gc_ns_oslp_u.csv.gz: 158.9 MB, 214772 rows, 114s
+   qwi_ok_se_f_gs_ns_oslp_u.csv.gz: 2.9 MB, 1836 rows, 2s
+   qwi_or_se_f_gc_ns_oslp_u.csv.gz: 90.1 MB, 91907 rows, 47s
+   qwi_or_rh_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2898 rows, 2s
+   qwi_oh_se_f_gc_ns_oslp_u.csv.gz: 166.8 MB, 163404 rows, 120s
+   qwi_oh_rh_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2142 rows, 2s
+   qwi_ok_se_f_gc_ns_oslp_u.csv.gz: 119.7 MB, 143208 rows, 66s
+   qwi_nc_se_f_gc_ns_oslp_u.csv.gz: 228.0 MB, 238158 rows, 143s
+   qwi_ok_rh_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2142 rows, 2s
+   qwi_nc_rh_f_gs_ns_oslp_u.csv.gz: 3.9 MB, 2751 rows, 2s
+   qwi_or_rh_f_gc_ns_oslp_u.csv.gz: 72.8 MB, 99286 rows, 54s
+   OR: end 2025 Q3, since 1992, 37 counties, race x ethnicity cross: True
+== PA: 132 files listed; using qwi_pa_rh_f_gc_ns_oslp_u.csv.gz, qwi_pa_rh_f_gs_ns_oslp_u.csv.gz, qwi_pa_sa_f_gc_ns_oslp_u.csv.gz, qwi_pa_sa_f_gs_ns_oslp_u.csv.gz, qwi_pa_se_f_gc_ns_oslp_u.csv.gz, qwi_pa_se_f_gs_ns_oslp_u.csv.gz
+   qwi_pa_sa_f_gs_ns_oslp_u.csv.gz: 5.0 MB, 3078 rows, 3s
+   qwi_oh_rh_f_gc_ns_oslp_u.csv.gz: 116.7 MB, 172969 rows, 68s
+   OH: end 2025 Q3, since 2001, 89 counties, race x ethnicity cross: True
+== RI: 132 files listed; using qwi_ri_rh_f_gc_ns_oslp_u.csv.gz, qwi_ri_rh_f_gs_ns_oslp_u.csv.gz, qwi_ri_sa_f_gc_ns_oslp_u.csv.gz, qwi_ri_sa_f_gs_ns_oslp_u.csv.gz, qwi_ri_se_f_gc_ns_oslp_u.csv.gz, qwi_ri_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ri_sa_f_gs_ns_oslp_u.csv.gz: 4.4 MB, 3294 rows, 3s
+   qwi_ri_sa_f_gc_ns_oslp_u.csv.gz: 22.0 MB, 19764 rows, 11s
+   qwi_ri_se_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 2196 rows, 2s
+   qwi_ok_rh_f_gc_ns_oslp_u.csv.gz: 95.7 MB, 147257 rows, 54s
+   OK: end 2025 Q3, since 2001, 78 counties, race x ethnicity cross: True
+== SC: 132 files listed; using qwi_sc_rh_f_gc_ns_oslp_u.csv.gz, qwi_sc_rh_f_gs_ns_oslp_u.csv.gz, qwi_sc_sa_f_gc_ns_oslp_u.csv.gz, qwi_sc_sa_f_gs_ns_oslp_u.csv.gz, qwi_sc_se_f_gc_ns_oslp_u.csv.gz, qwi_sc_se_f_gs_ns_oslp_u.csv.gz
+   qwi_sc_sa_f_gs_ns_oslp_u.csv.gz: 4.4 MB, 2970 rows, 3s
+   qwi_ri_se_f_gc_ns_oslp_u.csv.gz: 15.6 MB, 13176 rows, 8s
+   qwi_ri_rh_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2562 rows, 2s
+   qwi_ri_rh_f_gc_ns_oslp_u.csv.gz: 13.7 MB, 15276 rows, 7s
+   RI: end 2025 Q3, since 1996, 6 counties, race x ethnicity cross: True
+== SD: 132 files listed; using qwi_sd_rh_f_gc_ns_oslp_u.csv.gz, qwi_sd_rh_f_gs_ns_oslp_u.csv.gz, qwi_sd_sa_f_gc_ns_oslp_u.csv.gz, qwi_sd_sa_f_gs_ns_oslp_u.csv.gz, qwi_sd_se_f_gc_ns_oslp_u.csv.gz, qwi_sd_se_f_gs_ns_oslp_u.csv.gz
+   qwi_sd_sa_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2970 rows, 2s
+   qwi_pa_sa_f_gc_ns_oslp_u.csv.gz: 207.4 MB, 209304 rows, 102s
+   qwi_pa_se_f_gs_ns_oslp_u.csv.gz: 3.4 MB, 2052 rows, 2s
+   qwi_nc_rh_f_gc_ns_oslp_u.csv.gz: 178.5 MB, 257729 rows, 122s
+   NC: end 2025 Q3, since 1993, 101 counties, race x ethnicity cross: True
+== TN: 132 files listed; using qwi_tn_rh_f_gc_ns_oslp_u.csv.gz, qwi_tn_rh_f_gs_ns_oslp_u.csv.gz, qwi_tn_sa_f_gc_ns_oslp_u.csv.gz, qwi_tn_sa_f_gs_ns_oslp_u.csv.gz, qwi_tn_se_f_gc_ns_oslp_u.csv.gz, qwi_tn_se_f_gs_ns_oslp_u.csv.gz
+   qwi_tn_sa_f_gs_ns_oslp_u.csv.gz: 4.6 MB, 2970 rows, 3s
+   qwi_sc_sa_f_gc_ns_oslp_u.csv.gz: 123.2 MB, 139570 rows, 77s
+   qwi_sc_se_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 1980 rows, 2s
+   qwi_sd_sa_f_gc_ns_oslp_u.csv.gz: 107.1 MB, 197377 rows, 70s
+   qwi_sd_se_f_gs_ns_oslp_u.csv.gz: 2.8 MB, 1980 rows, 2s
+   qwi_sc_se_f_gc_ns_oslp_u.csv.gz: 90.9 MB, 93060 rows, 41s
+   qwi_sc_rh_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 2310 rows, 2s
+   qwi_pa_se_f_gc_ns_oslp_u.csv.gz: 149.9 MB, 139536 rows, 80s
+   qwi_pa_rh_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2394 rows, 2s
+   qwi_sd_se_f_gc_ns_oslp_u.csv.gz: 82.4 MB, 132639 rows, 61s
+   qwi_sd_rh_f_gs_ns_oslp_u.csv.gz: 2.6 MB, 2310 rows, 1s
+   qwi_sc_rh_f_gc_ns_oslp_u.csv.gz: 70.1 MB, 101232 rows, 38s
+   SC: end 2025 Q3, since 1999, 47 counties, race x ethnicity cross: True
+== TX: 132 files listed; using qwi_tx_rh_f_gc_ns_oslp_u.csv.gz, qwi_tx_rh_f_gs_ns_oslp_u.csv.gz, qwi_tx_sa_f_gc_ns_oslp_u.csv.gz, qwi_tx_sa_f_gs_ns_oslp_u.csv.gz, qwi_tx_se_f_gc_ns_oslp_u.csv.gz, qwi_tx_se_f_gs_ns_oslp_u.csv.gz
+   qwi_tx_sa_f_gs_ns_oslp_u.csv.gz: 5.6 MB, 3294 rows, 3s
+   qwi_sd_rh_f_gc_ns_oslp_u.csv.gz: 52.0 MB, 104814 rows, 31s
+   SD: end 2025 Q3, since 1999, 67 counties, race x ethnicity cross: True
+== UT: 132 files listed; using qwi_ut_rh_f_gc_ns_oslp_u.csv.gz, qwi_ut_rh_f_gs_ns_oslp_u.csv.gz, qwi_ut_sa_f_gc_ns_oslp_u.csv.gz, qwi_ut_sa_f_gs_ns_oslp_u.csv.gz, qwi_ut_se_f_gc_ns_oslp_u.csv.gz, qwi_ut_se_f_gs_ns_oslp_u.csv.gz
+   qwi_ut_sa_f_gs_ns_oslp_u.csv.gz: 4.2 MB, 2808 rows, 2s
+   qwi_pa_rh_f_gc_ns_oslp_u.csv.gz: 109.8 MB, 149911 rows, 77s
+   PA: end 2025 Q3, since 1998, 68 counties, race x ethnicity cross: True
+== VT: 132 files listed; using qwi_vt_rh_f_gc_ns_oslp_u.csv.gz, qwi_vt_rh_f_gs_ns_oslp_u.csv.gz, qwi_vt_sa_f_gc_ns_oslp_u.csv.gz, qwi_vt_sa_f_gs_ns_oslp_u.csv.gz, qwi_vt_se_f_gc_ns_oslp_u.csv.gz, qwi_vt_se_f_gs_ns_oslp_u.csv.gz
+   qwi_vt_sa_f_gs_ns_oslp_u.csv.gz: 3.6 MB, 2754 rows, 2s
+   qwi_tn_sa_f_gc_ns_oslp_u.csv.gz: 215.1 MB, 285066 rows, 156s
+   qwi_tn_se_f_gs_ns_oslp_u.csv.gz: 3.2 MB, 1980 rows, 2s
+   qwi_ut_sa_f_gc_ns_oslp_u.csv.gz: 67.6 MB, 83666 rows, 47s
+   qwi_ut_se_f_gs_ns_oslp_u.csv.gz: 2.9 MB, 1872 rows, 2s
+   qwi_vt_sa_f_gc_ns_oslp_u.csv.gz: 36.5 MB, 41307 rows, 21s
+   qwi_vt_se_f_gs_ns_oslp_u.csv.gz: 2.5 MB, 1836 rows, 2s
+   qwi_vt_se_f_gc_ns_oslp_u.csv.gz: 26.7 MB, 27540 rows, 14s
+   qwi_vt_rh_f_gs_ns_oslp_u.csv.gz: 2.2 MB, 2142 rows, 1s
+   qwi_ut_se_f_gc_ns_oslp_u.csv.gz: 49.7 MB, 56145 rows, 25s
+   qwi_ut_rh_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2184 rows, 2s
+   qwi_vt_rh_f_gc_ns_oslp_u.csv.gz: 17.5 MB, 27964 rows, 13s
+   VT: end 2025 Q3, since 2001, 15 counties, race x ethnicity cross: True
+== VA: 132 files listed; using qwi_va_rh_f_gc_ns_oslp_u.csv.gz, qwi_va_rh_f_gs_ns_oslp_u.csv.gz, qwi_va_sa_f_gc_ns_oslp_u.csv.gz, qwi_va_sa_f_gs_ns_oslp_u.csv.gz, qwi_va_se_f_gc_ns_oslp_u.csv.gz, qwi_va_se_f_gs_ns_oslp_u.csv.gz
+   qwi_va_sa_f_gs_ns_oslp_u.csv.gz: 4.6 MB, 2916 rows, 3s
+   qwi_ut_rh_f_gc_ns_oslp_u.csv.gz: 39.2 MB, 57758 rows, 21s
+   UT: end 2025 Q3, since 2000, 30 counties, race x ethnicity cross: True
+== WA: 132 files listed; using qwi_wa_rh_f_gc_ns_oslp_u.csv.gz, qwi_wa_rh_f_gs_ns_oslp_u.csv.gz, qwi_wa_sa_f_gc_ns_oslp_u.csv.gz, qwi_wa_sa_f_gs_ns_oslp_u.csv.gz, qwi_wa_se_f_gc_ns_oslp_u.csv.gz, qwi_wa_se_f_gs_ns_oslp_u.csv.gz
+   qwi_wa_sa_f_gs_ns_oslp_u.csv.gz: 6.0 MB, 3834 rows, 3s
+   qwi_tn_se_f_gc_ns_oslp_u.csv.gz: 161.6 MB, 190080 rows, 82s
+   qwi_tn_rh_f_gs_ns_oslp_u.csv.gz: 3.1 MB, 2310 rows, 2s
+   qwi_wa_sa_f_gc_ns_oslp_u.csv.gz: 140.5 MB, 153144 rows, 79s
+   qwi_wa_se_f_gs_ns_oslp_u.csv.gz: 4.1 MB, 2556 rows, 3s
+   qwi_tn_rh_f_gc_ns_oslp_u.csv.gz: 109.7 MB, 187218 rows, 56s
+   TN: end 2025 Q3, since 1999, 96 counties, race x ethnicity cross: True
+== WV: 132 files listed; using qwi_wv_rh_f_gc_ns_oslp_u.csv.gz, qwi_wv_rh_f_gs_ns_oslp_u.csv.gz, qwi_wv_sa_f_gc_ns_oslp_u.csv.gz, qwi_wv_sa_f_gs_ns_oslp_u.csv.gz, qwi_wv_se_f_gc_ns_oslp_u.csv.gz, qwi_wv_se_f_gs_ns_oslp_u.csv.gz
+   qwi_wv_sa_f_gs_ns_oslp_u.csv.gz: 4.3 MB, 3078 rows, 3s
+   qwi_wa_se_f_gc_ns_oslp_u.csv.gz: 102.8 MB, 102240 rows, 47s
+   qwi_wa_rh_f_gs_ns_oslp_u.csv.gz: 4.3 MB, 2982 rows, 2s
+   qwi_va_sa_f_gc_ns_oslp_u.csv.gz: 306.2 MB, 390546 rows, 170s
+   qwi_va_se_f_gs_ns_oslp_u.csv.gz: 3.2 MB, 1944 rows, 2s
+   qwi_wv_sa_f_gc_ns_oslp_u.csv.gz: 123.6 MB, 172125 rows, 77s
+   qwi_wv_se_f_gs_ns_oslp_u.csv.gz: 3.0 MB, 2052 rows, 1s
+   qwi_wa_rh_f_gc_ns_oslp_u.csv.gz: 86.3 MB, 111443 rows, 51s
+   WA: end 2025 Q3, since 1991, 40 counties, race x ethnicity cross: True
+== WI: 132 files listed; using qwi_wi_rh_f_gc_ns_oslp_u.csv.gz, qwi_wi_rh_f_gs_ns_oslp_u.csv.gz, qwi_wi_sa_f_gc_ns_oslp_u.csv.gz, qwi_wi_sa_f_gs_ns_oslp_u.csv.gz, qwi_wi_se_f_gc_ns_oslp_u.csv.gz, qwi_wi_se_f_gs_ns_oslp_u.csv.gz
+   qwi_wi_sa_f_gs_ns_oslp_u.csv.gz: 5.9 MB, 3834 rows, 4s
+   qwi_wv_se_f_gc_ns_oslp_u.csv.gz: 94.6 MB, 114912 rows, 44s
+   qwi_wv_rh_f_gs_ns_oslp_u.csv.gz: 2.6 MB, 2394 rows, 2s
+   qwi_wv_rh_f_gc_ns_oslp_u.csv.gz: 53.6 MB, 100429 rows, 38s
+   WV: end 2025 Q3, since 1998, 56 counties, race x ethnicity cross: True
+== WY: 132 files listed; using qwi_wy_rh_f_gc_ns_oslp_u.csv.gz, qwi_wy_rh_f_gs_ns_oslp_u.csv.gz, qwi_wy_sa_f_gc_ns_oslp_u.csv.gz, qwi_wy_sa_f_gs_ns_oslp_u.csv.gz, qwi_wy_se_f_gc_ns_oslp_u.csv.gz, qwi_wy_se_f_gs_ns_oslp_u.csv.gz
+   qwi_wy_sa_f_gs_ns_oslp_u.csv.gz: 3.5 MB, 2646 rows, 2s
+   qwi_wy_sa_f_gc_ns_oslp_u.csv.gz: 51.9 MB, 63494 rows, 24s
+   qwi_wy_se_f_gs_ns_oslp_u.csv.gz: 2.4 MB, 1764 rows, 1s
+   qwi_va_se_f_gc_ns_oslp_u.csv.gz: 228.4 MB, 260496 rows, 127s
+   qwi_va_rh_f_gs_ns_oslp_u.csv.gz: 3.3 MB, 2268 rows, 2s
+   qwi_wy_se_f_gc_ns_oslp_u.csv.gz: 38.9 MB, 42336 rows, 27s
+   qwi_wy_rh_f_gs_ns_oslp_u.csv.gz: 2.3 MB, 2058 rows, 1s
+   qwi_tx_sa_f_gc_ns_oslp_u.csv.gz: 597.7 MB, 829880 rows, 434s
+   qwi_tx_se_f_gs_ns_oslp_u.csv.gz: 3.9 MB, 2196 rows, 3s
+   qwi_wy_rh_f_gc_ns_oslp_u.csv.gz: 27.8 MB, 43770 rows, 22s
+   WY: end 2025 Q3, since 2002, 24 counties, race x ethnicity cross: True
+   qwi_wi_sa_f_gc_ns_oslp_u.csv.gz: 243.5 MB, 279811 rows, 145s
+   qwi_wi_se_f_gs_ns_oslp_u.csv.gz: 4.1 MB, 2556 rows, 3s
+   qwi_va_rh_f_gc_ns_oslp_u.csv.gz: 169.2 MB, 269202 rows, 90s
+   VA: end 2025 Q3, since 1999, 134 counties, race x ethnicity cross: True
+   qwi_wi_se_f_gc_ns_oslp_u.csv.gz: 177.7 MB, 186588 rows, 121s
+   qwi_wi_rh_f_gs_ns_oslp_u.csv.gz: 4.0 MB, 2982 rows, 3s
+   qwi_wi_rh_f_gc_ns_oslp_u.csv.gz: 118.8 MB, 189941 rows, 68s
+   WI: end 2025 Q3, since 1991, 73 counties, race x ethnicity cross: True
+   qwi_tx_se_f_gc_ns_oslp_u.csv.gz: 450.1 MB, 558801 rows, 240s
+   qwi_tx_rh_f_gs_ns_oslp_u.csv.gz: 4.1 MB, 2562 rows, 3s
+   qwi_tx_rh_f_gc_ns_oslp_u.csv.gz: 362.6 MB, 574149 rows, 183s
+   TX: end 2025 Q3, since 1996, 255 counties, race x ethnicity cross: True
+wrote groups.json: 51 states, 3195 counties in 3034s
