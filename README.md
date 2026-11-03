@@ -1,6 +1,8 @@
 # Rational Foreclosure
 
-**Paper:** Lester, R. (2026). *Rational Foreclosure: Hope as an Economic Variable.* Working paper, University of Houston. [SSRN 6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858).
+**Paper:** Lester, R. (2026). *Rational Foreclosure: Hope as an Economic Variable.* Working paper, University of Houston. [Read the current version (PDF)](paper/Lester_2026_Rational_Foreclosure.pdf) · [SSRN 6614858](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6614858).
+
+**Try it:** [The Hope Gap](https://lesterhau.github.io/rational-foreclosure/) shows, for any U.S. state, county or large city, how far people are from giving up on a home or a decent standard of living, and what it would take to bring them back.
 
 **Planning tool:** [The Hope Gap](https://lesterhau.github.io/rational-foreclosure/), for federal, state, county and city officials. Data refresh twice a week.
 
@@ -8,18 +10,21 @@
 
 ## What the paper shows
 
-A loss-averse agent measures her wealth against a benchmark that moves at random (local house prices, the cost of living) and may stop keeping score for good. The paper proves that she quits at a threshold strictly below the benchmark, with an explicit lower bound; that a more volatile benchmark delays quitting, which gives hope an exact value; that a benchmark that runs away hastens it; and that holding her in the race past her threshold has an exact, strictly positive welfare cost. Because the benchmark is shared, one shock moves a whole cohort toward its threshold at once.
+A loss-averse agent measures her wealth against a benchmark that moves at random (local house prices, the cost of living) and may stop keeping score for good. The paper proves that she quits at a threshold strictly below the benchmark, with an explicit lower bound; that a more volatile benchmark delays quitting, which gives hope an exact value; that a benchmark that runs away hastens it; and that holding her in the race past her threshold has an exact, strictly positive welfare cost. If the race must end by a date, as a working life does, every race has a quitting point, and of two people equally far behind, the one with less time left quits first (Proposition 4). Because the benchmark is shared, one shock moves a whole cohort toward its threshold at once.
 
 ## What the tool does
 
-Pick a place, a goal (owning a home, or keeping up with the cost of living) and a group. The tool reports the **Hope Gap** for that place (the tipping point minus the gap between the goal's growth and pay growth, in points a year; above zero means hope holds), the model's quitting point, how many people are past it, what happens under several scenarios, and what it would take in homes built or pay growth to close the gap, with a dated plan for the chosen office. The model is solved in the browser; nothing the user enters leaves the page.
+Pick a place, a goal (owning a home, or keeping up with the cost of living) and a group. The tool reports the **Hope Gap** for that place (the tipping point minus the gap between the goal's growth and pay growth, in points a year; above zero means hope holds), the model's quitting point, how many people are past it, what happens under several scenarios, and what it would take in homes built or pay growth to close the gap, with a dated plan for the chosen office. By default the race ends at 67, so each person's quitting point depends on the working years they have left. Each group gets its own pay trend (Census Quarterly Workforce Indicators, by age, sex, education, and race and ethnicity), the lowest income group is measured against starter homes, and a comparison table shows every group side by side. The model is solved in the browser; nothing the user enters leaves the page.
 
 ## Repository layout
 
 ```
 .
-├── pipeline/build_data.py        # builds data/core.json, counties.json, places.json from FRED, FHFA, BLS QCEW, Zillow and the Census API
-├── .github/workflows/data.yml    # runs the pipeline twice a week and publishes to the gh-pages branch under /data
+├── paper/                        # the paper (PDF) and its LaTeX source
+├── tool/                         # The Hope Gap: page template, build script, and an offline copy with data built in
+├── pipeline/build_data.py        # builds data/core.json, counties.json, places.json from FRED, FHFA, BLS QCEW, Zillow and the Census Bureau
+├── pipeline/build_groups.py      # builds data/groups.json, group pay trends, from the Census Quarterly Workforce Indicators
+├── .github/workflows/data.yml    # runs the pipeline twice a week (group data about monthly) and publishes to the gh-pages branch under /data
 ├── code/                         # replication code for the paper (mirror of the Dataverse package, version 2)
 ├── data/README.md                # where the tool's data live and how they are built
 └── README.md

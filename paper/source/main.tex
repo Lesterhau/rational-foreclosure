@@ -1,0 +1,592 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper,margin=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\setstretch{1.33}
+\setlength{\parskip}{3pt}
+\setlist{itemsep=2pt,topsep=4pt}
+\setlist[itemize]{label=$\bullet$}
+\emergencystretch=2em
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{result}{Result}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\theoremstyle{remark}
+\newtheorem*{inwords}{In words}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mut}{\tilde\mu}
+\newcommand{\OAref}[1]{\ref{#1}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\theoremstyle{plain}
+\newtheorem{alemma}{Lemma}[section]
+\newtheorem{atheorem}[alemma]{Theorem}
+\newtheorem{aproposition}[alemma]{Proposition}
+\newtheorem{acorollary}[alemma]{Corollary}
+\theoremstyle{definition}
+\newtheorem{adefinition}[alemma]{Definition}
+\newtheorem{aremark}[alemma]{Remark}
+
+\title{Rational Foreclosure:\\[2pt] \Large Hope as an Economic Variable}
+\author{Ryan Lester\\[2pt] \normalsize University of Houston\\ \normalsize\texttt{rslester@cougarnet.uh.edu}}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent A generation of young workers stands accused of quiet quitting: showing up, doing the job, and declining the long hours their parents treated as the price of getting ahead. The standard diagnosis is weak self-control; the standard cure is a nudge toward persistence. The diagnosis can be backwards. A loss-averse agent measures her wealth against a social benchmark that moves at random, such as local house prices, and may stop keeping score for good. She persists near the benchmark, sacrifices less as she falls behind, and quits at a precise threshold strictly below it. A more volatile benchmark makes her hold on longer; one that steadily outruns her resources makes her quit sooner. Holding her in the race past her threshold has an exact, strictly positive welfare cost. Because the benchmark is shared, one shock moves a whole cohort toward its threshold at once, and a runaway benchmark becomes a disengaged workforce.
+\end{abstract}
+
+\noindent\textbf{Keywords:} optimal stopping, reference dependence, aspirations, loss aversion, real options, behavioral welfare, quiet quitting.\\
+\textbf{JEL:} D15, D81, D91, I31, J22.
+
+\newpage
+\setcounter{page}{1}
+
+\section{Introduction}\label{sec:intro}
+
+When I trained as a Navy drill instructor, I kept falling out of one conditioning run. After the third failure I told my mentor that if I only knew how long the run was, I could finish it. She told me: twelve laps. At the next session I paced myself, planned my effort, and stayed with the group the whole way. My legs had not changed. What changed was that I could see the finish line.
+
+Military training often teaches the reverse lesson on purpose. David Goggins, a former Navy SEAL, describes instructor-led runs on which ``we knew the start and end point,'' and instructors who, hearing the class relax as the end came near, would ``go right on past the end point''; when they did, ``everybody stopped talking'' (Goggins n.d.). His creed inverts the twelve laps: ``When the ending is unknown and the distance is unknown, that's when you know who [\ldots] you are.'' Years later I ran the same exercise with my own recruits. I told them how far we would run, reached it, and kept running for another thirty minutes. About half visibly deflated; some fell, and many simply started walking. Same legs, same lungs. The finish line had moved.
+
+The pattern has a laboratory counterpart. Richter (1957) placed wild rats in water from which there was no escape. All 34 died within one to fifteen minutes, and Richter wrote that they ``seem literally to `give up.'\,'' Wild rats that had first been held and released, and briefly immersed and taken out, learned that the situation was ``not actually hopeless,'' and then swam ``just as long as domestic rats or longer,'' which in his experiments was 40 to 60 hours. What separated the two groups was not strength. It was whether an end could come.
+
+The three stories share one object, a reference point, and two questions about it: can the chaser see it, and does it move? This paper studies the economic version: when it is rational to stop chasing a target that moves at random, and what it costs to be talked out of stopping.
+
+The paper makes three contributions. First, it solves exactly the problem of a loss-averse agent who chases a benchmark that moves at random and may stop keeping score for good. She quits at a threshold strictly below the benchmark, and the threshold has an explicit lower bound. No transversality condition is imposed on her plans. Second, it shows that a more volatile benchmark delays quitting, which gives hope an exact value, and that a benchmark that runs away hastens it. The volatility result is proved whenever the value of staying is convex in her standing, which covers every case in which gains and losses weigh equally, and it holds numerically in every other case computed. Third, it gives an exact expression for the cost of keeping someone in the race past her own quitting point. The volatility prediction is what separates this model from bias-based, aspirations and fixed-reference accounts of giving up, none of which has a target that moves on its own (Section~\ref{sec:why}). Because the benchmark is shared, the same solution turns an observable benchmark into the share of a cohort that has stopped keeping score.
+
+Many of the targets people chase in economic life move. The house a young household hopes to buy, the salary that marks a career as on track, and the median firm in an industry all drift and jump for reasons the chaser does not control (Cai and Shefrin 2018 document the firm version; Section~\ref{sec:model} returns to it).
+
+The question has a live application. Young workers have not stopped working: 80.7 percent of Americans aged 25 to 54 are employed (Bureau of Labor Statistics 2026b). They have stopped grinding. Gallup estimates that at least half of U.S. workers are ``quiet quitting,'' doing their jobs without reaching beyond them (Harter 2022). Engagement has fallen from 36 percent in 2020 to 31 percent in 2025, about 8 million fewer engaged workers (Harter 2026), and the long-hours tail of the workweek has pulled back, most among prime-age men with degrees who already worked long hours (Lee, Park and Shin 2023).
+
+Meanwhile the finish line has moved. Since 1979, real GDP per person in the United States has more than doubled, while the real median weekly pay of full-time workers has risen 13 percent (Bureau of Economic Analysis 2026; Bureau of Labor Statistics 2026a). Pay has kept up with prices in general. It has not kept up with the economy it helps produce, or with the things people measure themselves against. A typical home now costs about five times a typical household income, against a traditional benchmark of three (Joint Center for Housing Studies 2025). The median first-time home buyer is 40 years old, up from 29 in 1981 (National Association of Realtors 2025). A generation ago, a young worker could look one cohort ahead and see the laps. About 90 percent of Americans born in 1940 grew up to earn more than their parents; among those born in the 1980s, half did (Chetty et al.\ 2017). The usual reading of the disengagement is a generational loss of grit. The model offers another: its agent can stay in the race while sacrificing very little for it, waiting to see whether the benchmark comes back.
+
+The stakes are not only private. Gallup puts the cost of disengagement to U.S. employers at about 1.9 trillion dollars in lost productivity in 2023 (Bloomberg Law 2024), and the cost worldwide at about 10 trillion dollars a year (Gallup 2026). Section~\ref{sec:aggregate} takes the model from one person to a cohort and sets the evidence at that scale beside it.
+
+That usual reading has a theory behind it. In the planner-doer model of Thaler and Shefrin (1981), a far-sighted planner and a myopic doer share one mind, and abandonment of a long-run goal is the doer winning. The policy response is to strengthen the planner: commitment devices, defaults, reminders, and other nudges toward persistence (Thaler and Sunstein 2008). That response is right when the doer is the one quitting. It is wrong when the planner is the one quitting, because then the nudge overrides a correct plan. Observed disengagement cannot tell the two apart. A model in which the planner's own optimal policy includes an exit rule can.
+
+\paragraph{What this paper is for.} It does not argue that people should give up on their goals, or that everyone who stops striving is right to. Its claim is narrower and, for policy, more useful. When many people disengage at once, the cause may be the path of a benchmark they share rather than a failure of will, and then the remedy lies in the benchmark. A workforce that has stopped grinding costs the economy as well as the people in it, and pushing harder on individuals will not recover the loss if the finish line keeps moving. It is written for economists and for the policymakers, central banks included, who track the benchmarks people chase and can sometimes change how fast those benchmarks pull away. A companion planning tool, described under Data and code, puts the model to work with current data for the nation, every state and county, and large cities.
+
+\subsection{What the model does}
+
+The agent has wealth that grows at a known rate and a benchmark, the reference level she measures herself against, that grows on average but also moves at random. While she is in the race, she enjoys consumption and also feels the gap between her wealth and the benchmark, with shortfalls weighted more heavily than leads, as in Kahneman and Tversky (1979). At a time of her choosing she can leave the race: she stops scoring herself against the benchmark for good, and from then on cares only about consumption. Leaving is irreversible. She chooses how much to consume and when to leave.
+
+Two features carry the analysis. The benchmark moves at random, so the gap can close or widen on its own. And leaving removes the comparison but not the material goal: after exit she still consumes and still values wealth, and what she gives up is the scorecard. While she is in the race, she consumes less than she otherwise would, because every dollar saved improves her standing. That forgone consumption is the model's measure of the grind.
+
+\paragraph{The argument without symbols.} Picture someone measuring her savings against the price of the home she wants. While she is close to it, the race is worth the sacrifice, and she saves hard. As the price pulls away, the race is worth less, and she sacrifices less for it. Below a certain point the race is worth nothing, and she does best to stop keeping score; the model locates that point exactly. How far behind she should be willing to fall depends on how the price moves. If it swings around, it may swing back toward her, and that chance is worth waiting for. If it climbs steadily away, there is nothing to wait for. And someone who pushes her to keep chasing after she has reached her stopping point is not helping her. The harm from a small push is small, and it grows quickly as the push gets bigger.
+
+\subsection{Results}
+
+The proved results:\footnote{Theorems are the main proved results and Propositions the supporting ones; anything labeled Result is numerical, with the range checked stated.}
+
+\begin{enumerate}[label=(\roman*)]
+\item \emph{The problem collapses to one dimension} (Proposition~\ref{prop:reduction}). Everything that matters about the agent's position is summarized by one number, the ratio $x=W/R$ of her wealth $W$ to the benchmark $R$. Plans face no transversality condition, the technical restriction most such models place on how fast wealth may be run down, and none is needed.
+\item \emph{Exit is a threshold rule, and the threshold is pinned down} (Theorem~\ref{thm:main}). The agent quits exactly when $x$ falls to a threshold $x^*$, which lies strictly below par ($x=1$, wealth equal to the benchmark) and above an explicit bound $\bar x$. Her extra saving for the race vanishes as she reaches $x^*$, so consumption does not jump when she quits.
+\item \emph{Volatility delays exit} (Theorem~\ref{thm:vol}). A more volatile benchmark lowers $x^*$, so the agent tolerates a wider gap. This holds even when volatility is added as a pure mean-preserving spread, that is, without changing the expected path of her standing. The proof covers every parameter value when gains and losses are weighted equally, and every case with loss aversion in which the agent's value is convex in $x$.
+\item \emph{A benchmark that runs away, and loss aversion, speed exit} (Proposition~\ref{prop:drift}).
+\item \emph{A deadline gives every race a quitting point} (Proposition~\ref{prop:deadline}). If the race must end by a date, as a working life does, a threshold exists even when her standing is expected to grow faster than she discounts the future, so that with forever to wait she would never quit. The threshold rises as time runs out, so of two people equally far behind, the one with less time left quits first; it approaches $x^*$ as the horizon lengthens.
+\item \emph{Holding an agent in the race has an exact cost} (Proposition~\ref{prop:welfare}). The loss equals the expected discounted shortfall she accumulates while held inside the region where exit is optimal, plus any option value forfeited if she is pushed out early. Both pieces are strictly positive whenever the imposed rule differs from her own (Corollary~\ref{cor:welfare}).
+\item \emph{Deterministic wealth is a normalization for the exit decision} (Proposition~\ref{prop:wealth}). With risky wealth, the exit decision depends on the two risks only through the volatility and median growth of the ratio.
+\end{enumerate}
+
+\noindent Three results are numerical. Where the proof of (iii) does not reach, a more volatile benchmark still lowers $x^*$ in every comparison computed (Result~\ref{res:vol}). Caring more about standing lowers the threshold, and impatience raises it (Result~\ref{res:cs}). The welfare loss is roughly quadratic in how far the threshold is displaced (Result~\ref{res:quad}). The magnitudes are large. At the baseline calibration, doubling volatility from 10 to 20 percent moves the quitting point from 94 percent of the benchmark to 71 percent, and holding the agent in until 85 percent costs about three times what the whole race was worth to her at par.
+
+\paragraph{The stories, in the model's terms.} An announced finish line that is suddenly extended is a jump in the benchmark: anyone pushed below her threshold stops, and for her stopping is the plan. Richter's rescued rats are an agent whose benchmark can still swing back toward her. What the rescue gave them was hope, and the model gives hope a precise form: the value of staying in the race, which is positive exactly because the gap may still close. Theorem~\ref{thm:vol} says such an agent should hold on far longer than one whose benchmark only recedes, and Proposition~\ref{prop:xbar} says that when the benchmark recedes for sure, there is nothing to wait for.
+
+\subsection{Why this model}\label{sec:why}
+
+Many models can deliver the conclusion that quitting is sometimes rational. What this one adds is a prediction about the volatility of the benchmark, which the alternatives do not make, and a reason the prediction runs the way it does.
+
+Table~\ref{tab:compare} sets the model beside its nearest neighbors; in none of them does the target move on its own. Closest in spirit is K\H{o}szegi and Rabin (2006), whose reference point is the agent's own expectations. Since expectations are shaped partly by peers and prices, one might read the present model as theirs with the reference point moved outside the agent. The difference that matters is whether her choices move it. Expectations fall when she lowers her plans, so a lasting shortfall never builds up; the price of a house does not. That is what gives exit an option value and volatility a signed effect. The two views are complements: expectations explain how a person adopts a social benchmark, and this model explains what happens when the benchmark moves without her.
+
+\begin{table}[t]
+\centering\small
+\caption{Where the model sits}\label{tab:compare}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Account & Reference point & Role of target volatility \\
+\midrule
+Present bias, planner-doer & none (goal is fixed) & none \\
+Genicot and Ray (2017) & aspiration, deterministic & none \\
+Henderson (2012) & purchase price, fixed & only own-asset risk matters \\
+K\H{o}szegi and Rabin (2006) & own expectations & moves with her plans \\
+This paper & shared benchmark, stochastic & volatility of $W/R$ delays exit \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The mechanism is the option value of waiting, familiar from irreversible investment (McDonald and Siegel 1986; Dixit 1989; Dixit and Pindyck 1994). Quitting is irreversible and staying is not: an agent who stays can still quit next month, while one who quits cannot return. Volatility raises the chance that the gap closes by itself, and the option to quit later caps the damage if it widens. Loss aversion works against this mechanism near par, where a jumpier benchmark threatens a painful shortfall, which is why the proof of Theorem~\ref{thm:vol} needs a condition when it is present.
+
+\subsection{Related literature}
+
+\emph{Aspirations and hope.} Ray (1998, Ch.~7; 2006) describes how aspirations set too far above current circumstances can discourage investment; Genicot and Ray (2017) and Dalton, Ghosal and Mani (2016) formalize the link. Lybbert and Wydick (2018) model hope through aspirations, agency and pathways; here hope has a narrower, measurable form, the value of staying in a race whose finish line may still come within reach.
+
+\emph{Reference dependence, stopping and real options.} Kahneman and Tversky (1979) supply the value function. The closest techniques are prospect-theory liquidation problems with a fixed reference (Kyle, Ou-Yang and Xiong 2006; Barberis and Xiong 2009; Henderson 2012; Ingersoll and Jin 2013); Ebert and Strack (2015) show that probability weighting can make a naive agent never stop, and the present model has none. Irreversibility and uncertainty create a value of waiting (McDonald and Siegel 1986; Dixit and Pindyck 1994), and Karatzas and Wang (2000), the closest mathematical relative, choose consumption and a stopping time together. The present problem adds a reference-dependent flow and an external, moving benchmark.
+
+\emph{Self-control and behavioral welfare.} The planner-doer model (Thaler and Shefrin 1981; Shefrin and Thaler 1988) underlies the case for nudges, and Bernheim and Rangel (2009) and Allcott and Taubinsky (2015) develop welfare analysis when some agents are biased. The present model adds a population that a nudge can harm without any bias at all: agents whose exit is the planner's own choice.
+
+\section{The model}\label{sec:model}
+
+\subsection{Environment and preferences}
+
+Time is continuous. The agent's wealth $W_t>0$ earns a known rate of return $r_W$ and is drawn down by her consumption $c_t\ge0$:
+\begin{equation}
+dW_t=(r_WW_t-c_t)\,dt .\label{eq:W}
+\end{equation}
+The benchmark, or reference level, $R_t>0$ grows at the expected rate $r_R$ and is buffeted by random shocks of size $\sigma>0$, its volatility:
+\begin{equation}
+dR_t=r_RR_t\,dt+\sigma R_t\,dZ_t ,\label{eq:R}
+\end{equation}
+where $Z_t$ is a standard Brownian motion, the source of the shocks. Nothing the agent does can affect the benchmark. Her standing is the ratio $x_t:=W_t/R_t$; $x=1$, wealth exactly equal to the benchmark, is called par. The drift gap $\delta:=r_R-r_W$ is the rate at which the benchmark outruns wealth before consumption.
+
+While in the race, the agent's flow utility is
+\[
+\log c_t+\alpha\,v(x_t-1),\qquad v(u)=\begin{cases}u,&u\ge0,\\ \lambda u,&u<0.\end{cases}
+\]
+The positional weight $\alpha>0$ measures how much she cares about her standing. The function $v$ scores the proportional gap $x-1$, and the loss-aversion parameter $\lambda\ge1$ measures how much more a shortfall hurts than an equal lead pleases. At an exit time $\tau$ of her choosing, the positional term drops out for good, and from then on flow utility is $\log c_t$. She discounts the future at the rate $\rho>0$ and maximizes
+\begin{equation}
+\E\int_0^\infty e^{-\rho t}\Big[\log c_t+\mathbf 1_{\{t<\tau\}}\,\alpha\,v(x_t-1)\Big]dt \label{eq:objective}
+\end{equation}
+over consumption and exit plans that use only information available at the time. Definition~\OAref{def:plans} in Appendix~\ref{app:A} states the problem formally. Plans face no transversality or integrability restriction. The value of a plan is the limit superior of its truncated expected payoffs, the most permissive convention available; Remark~\OAref{rem:conv} shows that the choice does not affect the value.
+
+\subsection{Why these ingredients}
+
+\emph{A stochastic, external, shared reference.} The benchmarks people use to judge their standing move. Cai and Shefrin (2018) give firm-level evidence across 104,783 firm-years (1990 to 2015): measured against their industry's median return, a target that moves with the industry every year, firms below it take more risk the further below it they fall, as March and Shapira (1992) predicted. A geometric Brownian motion is the simplest process that keeps the benchmark positive and lets it both trend and fluctuate. It is external: nothing the agent chooses moves it. And it is shared, since everyone in a market faces the same price, which is what lets the model speak to a cohort as well as to a person (Section~\ref{sec:aggregate}).
+
+\emph{A proportional gap.} The positional term depends on $W/R$, not on $W-R$. Subjective well-being responds to income relative to neighbors (Luttmer 2005), and visible consumption functions as a relative signal (Charles, Hurst and Roussanov 2009). The proportional form also keeps the problem invariant to the scale of wealth.
+
+\emph{Irreversible exit.} Exit means abandoning the comparison and reorganizing goals and identity around something other than the benchmark. That is costly to undo, and the model takes the limiting case in which it cannot be undone (Section~\ref{sec:discussion} discusses pauses and re-entry).
+
+\emph{The grind.} The only cost of staying in the race is consumption forgone to keep wealth, and so standing, up. Read broadly, that is the sacrifice the race demands; long hours are its most visible form. A version of the model with a labor choice would put the same logic on time rather than money, but it is not analyzed here.
+
+\emph{Log utility and no probability weighting.} Log consumption utility makes the value separate into a part that depends on wealth alone and a part that depends on the ratio alone; this is what reduces the state to one dimension. The agent weights outcomes by their probabilities, which rules out the never-stopping pathology of Ebert and Strack (2015).
+
+\emph{Deterministic wealth.} As noted, this is a normalization: Section~\ref{sec:wealth} shows that risky wealth leaves the problem unchanged once $\sigma^2$ is replaced by the variance of the ratio.
+
+\section{Reduction and the exit threshold}\label{sec:threshold}
+
+\subsection{One dimension}
+
+This section shows that the agent's problem depends on one number, her standing, and finds the standing at which she quits. Write consumption as a share of wealth, $c_t=q_tW_t$, so that $q_t$ is the fraction of wealth consumed per year, and work with the log ratio $y_t:=\log x_t$, which turns proportional changes in standing into additive ones. By It\^o's formula,
+\begin{equation}
+dy_t=(\mut-q_t)\,dt-\sigma\,dZ_t,\qquad \mut:=\tfrac12\sigma^2-\delta . \label{eq:y}
+\end{equation}
+Two growth rates of the ratio appear throughout: $\mut$, its median growth rate, and
+\[
+D:=\mut+\tfrac12\sigma^2=\sigma^2-\delta ,
+\]
+its expected growth rate before consumption ($\E[x_t]=x_0e^{Dt}$ if the agent consumes nothing). After exit the agent solves a standard log-consumption problem. She consumes the share $\rho$ of wealth each year, and her value is
+\[
+V_{\rm stop}(W)=\frac1\rho\log W+K_0,\qquad K_0=\frac{\log\rho}{\rho}+\frac{r_W-\rho}{\rho^2}.
+\]
+Consuming any other share $q$ has a utility cost relative to that benchmark, which the budget identity in Appendix~\ref{app:A} measures exactly:
+\[
+H_\rho(q):=\frac q\rho-1-\log\frac q\rho\ \ge0 ,
+\]
+with equality only at $q=\rho$. Finally, write the positional flow in terms of the log ratio, $f(y):=\alpha\,v(e^y-1)$.
+
+\begin{proposition}[Reduction]\label{prop:reduction}
+The value function is finite if and only if $\rho>D$. In that case
+\[
+V(W,R)=V_{\rm stop}(W)+F\big(\log(W/R)\big),\qquad F(y)=\sup_{q,\tau}\ \E_y\int_0^\tau e^{-\rho t}\big[f(y_t)-H_\rho(q_t)\big]dt,
+\]
+where the supremum runs over all consumption shares and exit times, and $0\le F(y)\le\alpha e^y/(\rho-D)$.
+\end{proposition}
+
+\begin{inwords}
+The agent's value splits into two pieces. The first is what she would get by quitting now, and it depends only on her wealth. The second, $F$, is the extra value of staying in the race, and it depends only on where she stands relative to the benchmark. Staying pays the positional flow $f$ and costs the consumption she gives up to stay competitive, $H_\rho$. The condition $\rho>D$ says she is more impatient than her ratio is expected to grow; without it, the upside of the race would be worth infinitely much.
+\end{inwords}
+
+\noindent The proof (Lemmas~\OAref{lem:reduction} and \OAref{lem:finite}) uses no transversality condition. In the finite-horizon budget identity, the only way a plan can beat quitting is by a burst of consumption just before the horizon; Lemma~\OAref{lem:burst} shows that the utility cost of such a burst cancels its gain, up to an error that vanishes as the horizon grows.
+
+\subsection{The threshold}
+
+The quitting point is where the value of staying, $F$, first reaches zero. Where staying is strictly better than quitting, $F>0$ and $F$ solves the ordinary differential equation
+\begin{equation}
+\tfrac12\sigma^2F''+\mut F'-\rho F-\log(1+\rho F')+f=0 . \label{eq:ode}
+\end{equation}
+The first two terms are the expected change in the value of staying as the ratio moves, the third is discounting, and the fourth is what remains of the consumption choice: the optimal share is $q^*=\rho/(1+\rho F')$, which is below $\rho$ whenever $F'>0$. Where quitting is optimal, $F=0$. Define the bound
+\[
+\bar x:=\frac{\rho-D}{\rho}\cdot\frac{\beta}{\beta-1},
+\]
+where $\beta<0$ is the negative root of the quadratic $\tfrac12\sigma^2\beta^2+(D-\tfrac12\sigma^2)\beta-\rho=0$.
+
+\begin{assumption}\label{ass:main}
+$\rho>D$, $\sigma>0$, $\alpha>0$ and $\lambda\ge1$.
+\end{assumption}
+
+\begin{theorem}[The exit threshold]\label{thm:main}
+Under Assumption~\ref{ass:main}:
+\begin{enumerate}[label=(\alph*)]
+\item There is a threshold $x^*$ such that exit is optimal exactly when $x\le x^*$, and $0<\bar x\le x^*<1$.
+\item Smooth fit holds: $F$ is continuously differentiable with $F(\log x^*)=F'(\log x^*)=0$. $F$ is twice continuously differentiable away from $\log x^*$ and solves \eqref{eq:ode} for $x>x^*$; its curvature just above the threshold is $2\alpha\lambda(1-x^*)/\sigma^2$. At par, $F$ is twice continuously differentiable and its third derivative jumps by $2\alpha(\lambda-1)/\sigma^2$.
+\item It is optimal to consume the share $q^*(y)=\rho/(1+\rho F'(y))\le\rho$ of wealth while in the race, and to exit at the first time $x_t\le x^*$.
+\item Among functions $u$ that vanish below some $\hat b<0$, are positive above it, are continuously differentiable, solve \eqref{eq:ode} above $\hat b$, and satisfy $0\le u\le Ce^y$ and $0\le u'\le C'e^y$ for some constants $C,C'$, the pair $(\log x^*,F)$ is the only one.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Appendix~\ref{app:A}: part (a) is Theorem~\OAref{thm:threshold} with Lemmas~\OAref{lem:above} and \OAref{lem:below}; part (b) is Lemmas~\OAref{lem:reg}, \OAref{lem:sf} and \OAref{lem:kink}; parts (c) and (d) are Theorem~\OAref{thm:verif}.
+\end{proof}
+
+\begin{inwords}
+While she is at or above the benchmark, she stays in. She also stays in while she is somewhat behind it. She quits the first moment her ratio falls to $x^*$. That point is always below par and never below $\bar x$, which has a formula. The value of staying meets zero flat at $x^*$, with no kink; that is what smooth fit means. While she is in the race she consumes less than she will after quitting, because every dollar saved improves her standing. That extra saving shrinks as she falls behind and has disappeared by the time she reaches $x^*$, so on the day she quits her spending does not jump.
+\end{inwords}
+
+The two bounds have simple sources. The upper bound $x^*<1$ holds because staying at par always has positive value: the agent can stay until the ratio first dips a little below par, collecting whatever lead she builds in the meantime (Lemma~\OAref{lem:above}). The lower bound $\bar x$ is the quitting point of a fictitious agent with every reason to stay longer than the real one: she values leads with the weight $\lambda$ the real agent reserves for shortfalls, consumes nothing, and pays nothing for doing so. Her problem has a closed-form solution (Lemma~\OAref{lem:below}). Below $\bar x$ even she quits, so the real agent quits too.
+
+\paragraph{A worked example.} In the baseline of Table~\ref{tab:calib}, a household's savings grow at 3 percent a year while its benchmark, say the price of a starter home in its market, grows at 5 percent with 10 percent annual volatility. The household discounts the future at 5 percent, cares moderately about standing ($\alpha=0.5$) and has the standard loss aversion ($\lambda=2$). It quits when its savings fall to 94.2 percent of the benchmark. The grind tapers on the way down: the household consumes 17 percent less than it would after quitting when it stands at 1.5 times the benchmark, 3 percent less at par, 1.5 percent less at 97 percent, and nothing at the threshold. Near its threshold it is still in the race but barely grinding, waiting to see whether the benchmark comes back. With more volatility, positional weight and loss aversion (the other two rows), it tolerates gaps of 18 and 34 percent.
+
+\begin{table}[t]
+\centering\small
+\caption{Three calibrations (discount rate $\rho=0.05$, return on wealth $r_W=0.03$)}\label{tab:calib}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & volatility $\sigma$ & drift gap $\delta$ & weight $\alpha$ & loss aversion $\lambda$ & $x^*$ & $\bar x$ \\
+\midrule
+Baseline & 0.10 & 0.02 & 0.5 & 2.0 & 0.942 & 0.800 \\
+Moderate volatility & 0.18 & 0.03 & 1.0 & 2.5 & 0.818 & 0.552 \\
+High volatility & 0.20 & 0.02 & 1.5 & 2.5 & 0.663 & 0.368 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{What moves the threshold}\label{sec:vol}
+
+\subsection{Volatility}
+
+How should the threshold respond to a more volatile benchmark? Raising $\sigma$ in \eqref{eq:R} changes three things at once: the spread of the ratio, its median growth $\mut$, and its expected growth $D$. A clean comparison holds one of the growth rates fixed. I consider three: holding fixed the drift gap $\delta$, so that the benchmark's own expected growth is unchanged, as in Table~\ref{tab:calib}; holding fixed the median growth $\mut$; and holding fixed the expected growth $D$ of the ratio itself, so that a rise in $\sigma$ is a mean-preserving spread of $W/R$. The third is the strictest test of the option mechanism, because it removes every effect of volatility on the average path.
+
+\begin{theorem}[Volatility delays exit]\label{thm:vol}
+Fix $\rho$, $\alpha$ and $\lambda$, let $\sigma<\sigma'$, and hold fixed $D$, $\mut$ or $\delta$, with $\rho>D$ at both volatilities. Write $x^*(\sigma)$ for the threshold.
+\begin{enumerate}[label=(\alph*)]
+\item If $\lambda=1$, then $x^*(\sigma')<x^*(\sigma)$.
+\item If $\lambda>1$, the same holds whenever, at volatility $\sigma$, the value of staying is convex in the ratio, that is, $x\mapsto F(\log x)$ is convex.
+\end{enumerate}
+In both cases the value of staying rises everywhere: $F$ at $\sigma'$ is at least $F$ at $\sigma$.
+\end{theorem}
+
+\begin{proof}
+Appendix~\ref{app:B}.
+\end{proof}
+
+\begin{inwords}
+The jumpier the target, the further behind the agent should be willing to fall before quitting. A jumpy target can come back to her; a steady one that is pulling away will not.
+\end{inwords}
+
+The proof works through convexity: when the value of staying is convex in the ratio, extra spread raises its expected value, as for any option. With $\lambda=1$ convexity always holds, because the value is then the best of many strategies, each linear in the starting ratio. Loss aversion puts a kink in the flow payoff at par, which pushes the other way. In 143 of the 162 grid cases with $\lambda>1$ computed in Appendix~\ref{app:C} the value is still convex, and part (b) applies. In the other 19, which combine strong loss aversion with a high positional weight, the value bends the wrong way in a narrow band around par, and the proof does not reach them. The comparison there is numerical, and the value of staying need not rise everywhere. In one such case (Appendix~\ref{app:C}), more volatility lowers the value at par by about 6 percent while raising it near the threshold, and the threshold still falls, from $0.542$ to $0.507$. For a strongly loss-averse agent, a jumpier benchmark makes the race worse near par, where it threatens a painful shortfall, and better near the threshold, where it offers a way back. A proof for these cases cannot compare values everywhere; it would have to work at the threshold itself.
+
+\begin{result}[Volatility delays exit: all cases computed]\label{res:vol}
+Across a grid of discount rates, positional weights, loss aversion and growth rates, with $\sigma$ from $0.05$ to $0.40$, $x^*$ fell with $\sigma$ in all 2,016 comparisons of consecutive volatilities: 576 with the drift gap fixed, 684 with the median growth fixed, and 756 with the expected growth fixed. At the baseline:
+\begin{center}\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+volatility $\sigma$ & 0.02 & 0.05 & 0.10 & 0.15 & 0.20 & 0.25 \\
+\midrule
+$x^*$, drift gap $\delta$ fixed & 0.998 & 0.986 & 0.942 & 0.861 & 0.708 & 0.286 \\
+$x^*$, median growth $\mut$ fixed & 0.998 & 0.985 & 0.942 & 0.873 & 0.778 & 0.646 \\
+$x^*$, expected growth $D$ fixed & 0.998 & 0.984 & 0.942 & 0.884 & 0.818 & 0.750 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{result}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\textwidth]{fig1_volatility.pdf}
+\caption{The quitting point falls as the benchmark becomes more volatile. Baseline calibration of Table~\ref{tab:calib}. The dotted line is the proved lower bound $\bar x$ of Theorem~\ref{thm:main}; the threshold always lies between it and par.}\label{fig:vol}
+\end{figure}
+
+The magnitude is large. With the drift gap fixed, doubling volatility from 10 to 20 percent widens the gap the agent will tolerate from 6 percent to 29 percent (Figure~\ref{fig:vol}). Under a mean-preserving spread the same doubling widens it from 6 to 18 percent. About half the first effect, then, comes from volatility's effect on the average path, and half from the spread itself.
+
+\begin{proposition}[The bound falls with volatility]\label{prop:xbar}
+Hold $\rho$ and $D<\rho$ fixed. Then $\bar x$ is strictly decreasing in $\sigma$, and $\bar x\to0$ as $\sigma\to\infty$. If $D<0$, then $\bar x\to1$ as $\sigma\to0$.
+\end{proposition}
+
+\begin{proof}
+Appendix~\ref{app:B}.
+\end{proof}
+
+\noindent The limit $\sigma\to0$ with $D<0$ is the case in which the benchmark outruns wealth for sure. There the bound squeezes the threshold to par: with no chance that the gap closes by itself, there is nothing to wait for, and the agent quits as soon as she falls behind. These are Richter's unrescued rats.
+
+\subsection{A benchmark that runs away, and loss aversion}
+
+\begin{proposition}[Faster benchmarks and stronger loss aversion speed exit]\label{prop:drift}
+Under Assumption~\ref{ass:main}, holding the other parameters fixed:
+\begin{enumerate}[label=(\alph*)]
+\item $x^*$ is nondecreasing in the drift gap $\delta$;
+\item $x^*$ is strictly increasing in the loss-aversion parameter $\lambda$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Appendix~\ref{app:B}.
+\end{proof}
+
+\begin{inwords}
+A benchmark that pulls away faster makes the agent quit sooner, and so does a shortfall that stings more.
+\end{inwords}
+
+Two parameters remain whose effects are numerical. A larger positional weight $\alpha$ lowers the threshold, and the effect grows with volatility: at $\sigma=0.05$ the threshold barely moves as $\alpha$ rises from $0.05$ to $3$, while at $\sigma=0.20$ it falls from $0.751$ to $0.592$. Caring more about standing scales up the pain of being behind, but it also scales up the reward for getting ahead and the value of the chance to get there, and in a volatile environment the second channel dominates. Greater impatience $\rho$ raises the threshold.
+
+\begin{result}[Positional weight and impatience]\label{res:cs}
+At the baseline, $x^*$ is decreasing in $\alpha$, with the effect increasing in $\sigma$, and increasing in $\rho$, as in Table~\ref{tab:cs}.
+\end{result}
+
+\begin{table}[t]
+\centering\small
+\caption{How the quitting point moves at the baseline ($\rho=0.05$, $\delta=0.02$, $\sigma=0.10$, $\alpha=0.5$, $\lambda=2$)}\label{tab:cs}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Parameter & Range & $x^*$ moves from & Exit & Status \\
+\midrule
+Loss aversion $\lambda$ & $1\to4$ & $0.926\to0.956$ & sooner & proved \\
+Drift gap $\delta$ & $0.005\to0.05$ & $0.926\to0.960$ & sooner & proved \\
+Impatience $\rho$ & $0.04\to0.10$ & $0.932\to0.967$ & sooner & numerical \\
+Positional weight $\alpha$, $\sigma=0.05$ & $0.05\to3$ & $0.986\to0.986$ & no change & numerical \\
+Positional weight $\alpha$, $\sigma=0.10$ & $0.05\to3$ & $0.943\to0.935$ & later & numerical \\
+Positional weight $\alpha$, $\sigma=0.20$ & $0.05\to3$ & $0.751\to0.592$ & later & numerical \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Time left in the race}\label{sec:deadline}
+
+Theorem~\ref{thm:main} gives the agent forever. That matters most where Proposition~\ref{prop:reduction} draws its line. When $\rho\le D$, her standing is expected to grow faster than she discounts the future, the race is worth infinitely much, and no shortfall is large enough to make her quit. Real races end. A first home has to be bought within a working life, and the comparison with peers fades at retirement. Suppose, then, that the race ends after $s$ more years: exit must come by then, and afterwards only consumption counts. Let $F_s$ be the value of staying, defined as $F$ in Proposition~\ref{prop:reduction} but with exit times no later than $s$.
+
+\begin{proposition}[A deadline]\label{prop:deadline}
+Let $\rho>0$, $\sigma>0$, $\alpha>0$ and $\lambda\ge1$; the condition $\rho>D$ is not needed. With $s>0$ years left in the race:
+\begin{enumerate}[label=(\alph*)]
+\item $V(W,R)=V_{\rm stop}(W)+F_s\big(\log(W/R)\big)$, and $0\le F_s(y)\le\alpha e^y\int_0^s e^{(D-\rho)t}\,dt$.
+\item There is a threshold $x^*_s\in(0,1]$ such that immediate exit is optimal exactly when $x\le x^*_s$. For every $\rho'\ge\rho$ with $\rho'>D$, $x^*_s\ge e^{-(\rho'-\rho)s}\,\bar x(\rho')$, where $\bar x(\rho')$ is the bound $\bar x$ of Theorem~\ref{thm:main} computed with discount rate $\rho'$.
+\item $x^*_s$ is nonincreasing in $s$: with more time left, she tolerates a wider gap.
+\item As $s\to\infty$, $x^*_s$ decreases to the threshold $x^*$ of Theorem~\ref{thm:main} if $\rho>D$, and to $0$ if $\rho\le D$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Appendix~\ref{app:B}.
+\end{proof}
+
+\begin{inwords}
+A deadline gives every race a quitting point. With little time left, a small shortfall is enough to make her stop, because there is little time for the gap to close. With more time left she holds on through a wider gap. Where Theorem~\ref{thm:main} applies, the quitting point settles at $x^*$ as the horizon lengthens. Where it does not, the quitting point keeps falling as the horizon lengthens, but every finite horizon has one. Of two people equally far behind, the one with less time left quits first.
+\end{inwords}
+
+Table~\ref{tab:deadline} puts numbers on it. At the baseline, time barely matters once five years remain: the quitting point is within 0.004 of $x^*$. With a more volatile benchmark the horizon matters more, because waiting for a swing takes time. The third row lies outside Theorem~\ref{thm:main}. Its benchmark is volatile enough ($\sigma=0.25$) that $D>\rho$, and with forever to wait the agent would never quit. With a working life she does: at 69 percent of the benchmark with ten years left, and at 50 percent with forty.
+
+\begin{table}[t]
+\centering\small
+\caption{The quitting point $x^*_s$ by years left in the race ($\rho=0.05$)}\label{tab:deadline}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & \multicolumn{5}{c}{Years left, $s$} & No deadline \\
+\cmidrule(lr){2-6}
+ & 1 & 5 & 10 & 20 & 40 & $x^*$ \\
+\midrule
+Baseline & 0.966 & 0.946 & 0.944 & 0.942 & 0.942 & 0.942 \\
+Moderate volatility & 0.932 & 0.878 & 0.852 & 0.835 & 0.823 & 0.818 \\
+Volatile, $D>\rho$ & 0.882 & 0.763 & 0.689 & 0.604 & 0.503 & none \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.92\textwidth}{\footnotesize Baseline and moderate volatility are the first two rows of Table~\ref{tab:calib}. The third row has $\sigma=0.25$, $\delta=0.01$, $\alpha=0.5$ and $\lambda=2$, so $D=0.0525>\rho$. Computed by backward induction on the variational inequality for $F_s$ (Appendix~\ref{app:C}). In the first two rows $\rho>D$ and $x^*_s$ approaches $x^*$; in the third $\rho<D$, there is no stationary threshold, and $x^*_s$ keeps falling (0.330 at $s=100$).}
+\end{table}
+
+The deadline also separates what the trend decides from what time decides. The sign of $\rho-D$, fixed by the benchmark's drift and volatility and by impatience, sets the floor that the quitting point approaches for those with the most time left: $x^*$ when $\rho>D$, and zero when $\rho\le D$. Standing and time left decide who reaches the quitting point first.
+
+\section{The cost of keeping someone in the race}\label{sec:welfare}
+
+\subsection{The exact cost}\label{sec:exact}
+
+Suppose an intervention keeps the agent in the race past her threshold. It might be a commitment device, a default, a counselor's encouragement, or a program that conditions support on continued pursuit of the benchmark. Model it as an exit time $\tilde\tau$ imposed on the agent, who still chooses consumption. Write $J(y;q,\tilde\tau)$ for the expected payoff inside $F$ in Proposition~\ref{prop:reduction} under consumption shares $q$ and exit time $\tilde\tau$, so her welfare is $V_{\rm stop}(W)+J(y;q,\tilde\tau)$, and write $b:=\log x^*$ for the threshold in log terms.
+
+The cost has an exact expression in terms of a flow shortfall $\Delta$. Above the threshold ($y>b$), let
+\[
+\Delta(y,q):=qF'(y)+H_\rho(q)-\log\big(1+\rho F'(y)\big)\ \ge0,
+\]
+the utility lost by consuming the share $q$ instead of the optimal share $q^*(y)$; it is zero exactly at $q=q^*(y)$. At or below the threshold ($y\le b$), let
+\[
+\Delta(y,q):=H_\rho(q)-f(y)\ \ge\ \alpha\lambda\,(1-e^{y})>0,
+\]
+the flow the agent gives up by being in the race at all when she would rather be out. The bound $\alpha\lambda(1-x)$ is the loss-weighted sting of her shortfall.
+
+\begin{proposition}[The welfare cost of an imposed exit rule]\label{prop:welfare}
+Under Assumption~\ref{ass:main}, let $q$ be a bounded consumption share and $\tilde\tau$ any exit time. Then
+\[
+F(y)-J(y;q,\tilde\tau)\;=\;\E_y\int_0^{\tilde\tau}e^{-\rho t}\,\Delta(y_t,q_t)\,dt\;+\;\E_y\big[e^{-\rho\tilde\tau}F(y_{\tilde\tau});\ \tilde\tau<\infty\big].
+\]
+\end{proposition}
+
+\begin{proof}
+Appendix~\ref{app:B}.
+\end{proof}
+
+\begin{inwords}
+The cost of an imposed exit rule has three parts. Every moment spent in the race below her threshold costs the agent the full sting of her shortfall. Time above the threshold costs nothing if she consumes optimally. And if the rule pushes her out while staying still had value, she loses that value.
+\end{inwords}
+
+The decomposition makes the sign of the loss transparent for threshold rules, the natural form of an intervention that says ``keep going until you fall to $\tilde x$'' or ``stop once you fall to $\tilde x$.''
+
+\begin{corollary}\label{cor:welfare}
+Let $\tilde\tau$ be the first time $x_t\le\tilde x$, with consumption bounded and $x_0>\tilde x$.
+\begin{enumerate}[label=(\alph*)]
+\item If $\tilde x<x^*$ (forced continuation), the loss is at least $\alpha\lambda\,\E\int_0^{\tilde\tau}e^{-\rho t}(1-x_t)\mathbf 1_{\{x_t\le x^*\}}dt>0$.
+\item If $\tilde x>x^*$ (forced early exit), the loss is at least $F(\log\tilde x)\,\E[e^{-\rho\tilde\tau}]>0$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Both bounds drop nonnegative terms from Proposition~\ref{prop:welfare}. In (a) the ratio must pass through $(\tilde x,x^*]$ before $\tilde\tau$, and with $\sigma>0$ and bounded consumption it does so with positive probability, spending positive time there. In (b), $F>0$ above $\log x^*$ by Theorem~\ref{thm:main}, and $\tilde\tau<\infty$ with positive probability.
+\end{proof}
+
+How large is the loss? Let the agent choose consumption optimally given the imposed rule; this can include consuming faster than $\rho W$ to reach the imposed exit sooner. Figure~\ref{fig:welfare} plots the loss at par against the imposed threshold.
+
+\begin{result}[Quadratic loss]\label{res:quad}
+At the baseline, the loss at par is $c\,(\log\tilde x-\log x^*)^2$ with $c$ between 5.37 and 5.56 for every imposed threshold computed, from $\tilde x=0.80$ to $\tilde x=0.97$. In the high-volatility calibration the same ratio lies between 14 and 23 over $\tilde x\in[0.50,0.75]$: the loss is quadratic near the threshold and grows somewhat more slowly than that for large forced continuations.
+\end{result}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\textwidth]{fig2_welfare.pdf}
+\caption{Welfare loss at par from an imposed quitting point $\tilde x$, baseline calibration. The agent chooses consumption optimally given the imposed rule. The loss is zero at $x^*$ and rises quadratically on both sides.}\label{fig:welfare}
+\end{figure}
+
+The quadratic shape has a consequence for how interventions should be judged. A small push past the threshold costs almost nothing, because the first-order effect vanishes at an optimum. Each further push costs more than the one before. At the baseline, keeping the agent in until $x=0.90$ instead of $0.942$ costs 63 percent of what the race was worth to her at par, and keeping her in until $0.85$ costs 315 percent: she would have been better off quitting on the spot. In consumption units these numbers are small at the baseline, where the whole race is worth as much as a permanent 0.09 percent rise in consumption, and forcing her to $0.85$ hurts as much as a permanent 0.29 percent cut. They are not small in the high-volatility calibration, where the race is worth as much as a permanent 31 percent rise and forcing continuation from $0.663$ to $0.50$ hurts as much as a permanent 5.5 percent cut (Appendix~\ref{app:C} gives the conversion).
+
+\paragraph{Who should be nudged?} Proposition~\ref{prop:welfare} turns the policy question into a diagnostic one. A patience intervention helps an agent who would quit above her threshold, which is what a doer's lapse looks like, and harms one who quits at it. Allcott and Taubinsky (2015) and Bernheim and Rangel (2009) show that a nudge's welfare effect depends on the share of biased agents it reaches. The present model adds that the unbiased share may be larger than it looks: it includes agents whose disengagement is the correct response to a benchmark that has moved away from them. Telling the two groups apart requires knowing where an agent stands relative to her threshold, and by Theorem~\ref{thm:vol} that depends on how volatile her benchmark is.
+
+\paragraph{A normative caveat.} The welfare results evaluate interventions by the agent's own preferences, loss aversion included. A planner who regards loss aversion itself as a bias would use a different welfare function and could reach different conclusions. That view would be a reason to change the agent's preferences, not a reason to keep her in a race that her preferences, as they are, tell her to leave.
+
+\subsection{What ``worse off'' means}\label{sec:worse}
+
+In the model, being held below her threshold costs the agent the full, loss-weighted sting of her shortfall every period. The evidence on people who cannot let go of unreachable goals shows what that looks like in a life.
+\begin{itemize}
+\item Adults who disengage less readily from unattainable goals report more depressive symptoms, more stress and more physical health problems, and show less normative daily cortisol rhythms (Wrosch, Miller, Scheier and Brun de Pontet 2007).
+\item Adolescents who had the most trouble letting go showed systemic inflammation rising about twice as fast as average over a year, independent of depression, weight and smoking. The authors conclude that ``in some contexts, persistence may actually undermine wellbeing and good health'' (Miller and Wrosch 2007).
+\item Low mood may exist partly to foster ``disengagement from commitments to unreachable goals'' (Nesse 2000). Pushing someone past the point where her mood is telling her to stop overrides the signal that would end the episode.
+\item The World Health Organization (2019) defines burn-out by exhaustion, ``increased mental distance from one's job'' and reduced efficacy. Joint WHO and ILO estimates attribute 745,194 deaths from heart disease and stroke in 2016 to working 55 or more hours a week (Pega et al.\ 2021).
+\end{itemize}
+These studies are observational. They measure people's own capacity to let go rather than outside pressure to hold on, but outside pressure is exactly what makes letting go harder. ``Mental distance from one's job'' is also what quiet quitting looks like from outside, so observed disengagement can be an agent optimally waiting near her threshold or one already pushed too far. Either way the model's answer is the same: do not push harder. Two limits apply. The model counts only the cost incurred while she is held in the race, and the physiological findings suggest that the damage outlasts it, so the losses of Section~\ref{sec:exact} are lower bounds. And exit here means letting go of a comparison, not leaving a job, school, treatment or relationship; what the model warns against is pressure to keep measuring oneself against a target that has moved out of reach.
+
+\subsection{From one agent to an economy}\label{sec:aggregate}
+
+The model describes one person, but its benchmark is shared: everyone saving for a house in the same market faces the same price. A shock to the benchmark moves a whole cohort's standing at once, so the share of the cohort at or below its threshold, and the grind of those still in the race, are functions of the benchmark's path.
+
+\paragraph{An illustration.} Table~\ref{tab:cohort} spreads the baseline agent's standing across a cohort, with log standing normally distributed around par with standard deviation 0.25. It asks two things of each scenario: the share of the cohort at or below its threshold, and the cohort's sacrifice for the race, measured as the average shortfall of consumption below what each member would consume out of the race, with zero for those already out. The levels depend on the assumed spread and mean little; the changes are the point. A one-time 10 percent jump in the benchmark, the announced finish line suddenly extended, raises the share out of the race from 41 to 56 percent and cuts the cohort's grind by more than a third. A benchmark twice as volatile has the opposite effect from a faster one: it keeps most of the cohort in the race, and those in it grind harder, because the chance that the gap closes is worth more. The companion tool (see Data and code) lets a reader change every input, including the spread of the cohort and its preferences.
+
+\begin{table}[t]
+\centering\small
+\caption{An illustrative cohort (baseline preferences; log standing $\sim N(0,0.25^2)$ across the cohort)}\label{tab:cohort}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Scenario & $x^*$ & Share out of the race & Average grind \\
+\midrule
+Baseline (drift gap 2 pts, volatility 10\%) & 0.942 & 41\% & 5.2\% \\
+Benchmark runs 2 points a year faster & 0.956 & 43\% & 3.8\% \\
+Benchmark jumps 10\% once & 0.942 & 56\% & 3.3\% \\
+Benchmark twice as volatile & 0.708 & 8\% & 19.1\% \\
+Drift gap narrowed to 1 point & 0.932 & 39\% & 6.3\% \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.92\textwidth}{\footnotesize Average grind is the cohort mean of $(\rho-q^*)/\rho$, the proportional shortfall of consumption below its post-exit level, with zero for members at or below the threshold. Computed with the solver of Appendix~\ref{app:C}.}
+\end{table}
+
+\paragraph{The aggregate now.} Several national series move the way the model says a runaway benchmark would move them. None was designed to measure the model's mechanism, each has other causes, and the model does not claim to explain them. They show what is at stake if the mechanism is at work, and how the effects compound.
+\begin{itemize}
+\item \emph{First order: effort and output.} The fall in engagement and its estimated cost, about 1.9 trillion dollars a year in the United States (Section~\ref{sec:intro}), are the first-order effect. In the model, disengagement is the grind falling toward zero, and the grind is the sacrifice, in saving or effort, that the race was drawing out.
+\item \emph{Second order: despair and the diseases that follow it.} The share of U.S. adults who currently have or are being treated for depression rose from about 10 percent in 2015 to 18.3 percent in 2025; among adults under 30 it doubled, from 13.0 percent in 2017 to 26.7 percent (Witters 2025). Alcohol and drug misuse cost the United States more than 442 billion dollars a year in health care, criminal justice and lost productivity (Murthy 2016). The share of U.S. adults in extreme distress rose from 3.6 percent in 1993 to 6.4 percent in 2019 (Blanchflower and Oswald 2020). In 2025 the United States fell to 24th in the World Happiness Report, its lowest position, on declining well-being among people under 30 (Helliwell et al.\ 2025). Depression and anxiety cost an estimated 12 billion working days a year worldwide (World Health Organization 2022). Section~\ref{sec:worse} describes the evidence linking prolonged pursuit of unattainable goals to outcomes of this kind.
+\item \emph{Third order: household formation and expectations.} First-time buyers have fallen to a record-low 21 percent of home purchases (National Association of Realtors 2025). About three-quarters of American adults expect today's children to be worse off financially than their parents (Pew Research Center 2025). Each feeds the next round. A later first home is a later start on home equity, and a generation that expects to fall behind its parents has less reason to sacrifice for a race it does not expect to finish.
+\end{itemize}
+
+\paragraph{Hope as an aggregate.} In the model, hope is exact: it is the value of staying in the race, positive because the gap may still close. Summed over a cohort, it is collective hope, and a runaway benchmark is what destroys it. What brings a disengaged cohort back is what brought Richter's rats back: a real chance of catching up, from a benchmark that slows or resources that grow, not pressure on people for whom the race has stopped paying. The model takes wages and prices as given (it is partial equilibrium), so it cannot say how disengagement feeds back into them. But it links an observable benchmark to the share of a cohort that has stopped keeping score, which is what a policymaker needs to monitor.
+
+A companion planning tool, The Hope Gap, runs this calculation with current public data for the nation, every state and county, and large cities (see Data and code).
+
+\section{Risky wealth}\label{sec:wealth}
+
+The baseline puts all the risk in the benchmark. Suppose instead that wealth is risky too:
+\[
+dW_t=(r_WW_t-c_t)\,dt+\sigma_WW_t\,dZ^W_t,\qquad dR_t=r_RR_t\,dt+\sigma_RR_t\,dZ^R_t,
+\]
+where $\sigma_W$ and $\sigma_R$ are the volatilities of wealth and of the benchmark, and the two Brownian motions have correlation $\varrho$. Let
+\[
+S:=\sigma_W^2+\sigma_R^2-2\varrho\,\sigma_W\sigma_R
+\]
+be the variance of the ratio's log per unit time, and assume $S>0$.
+
+\begin{proposition}[Only the ratio's risk matters]\label{prop:wealth}
+The value function is
+\[
+V(W,R)=\frac1\rho\log W+K_0-\frac{\sigma_W^2}{2\rho^2}+F_S\big(\log(W/R)\big),
+\]
+where $F_S$ is the function $F$ of Proposition~\ref{prop:reduction} computed with $\sigma^2$ replaced by $S$ and the median growth of the ratio $\mut$ replaced by $\mut_S:=r_W-r_R-\tfrac12\sigma_W^2+\tfrac12\sigma_R^2$. The value is finite if and only if $\rho>D_S:=\mut_S+\tfrac12S$. All conclusions of Theorem~\ref{thm:main} hold with these substitutions, and so do those of Theorem~\ref{thm:vol} for changes in $S$ that hold fixed $D_S$, $\mut_S$, or the effective drift gap $\delta_S:=\tfrac12S-\mut_S$. In particular the exit threshold depends on $(\sigma_W,\sigma_R,\varrho)$ only through $S$ and $\mut_S$.
+\end{proposition}
+
+\begin{proof}
+Appendix~\ref{app:B}.
+\end{proof}
+
+\begin{inwords}
+What matters for quitting is how much the agent's standing moves, not which side of the comparison does the moving. Risk in the benchmark and risk in her own wealth enter through one number, the variance of the ratio.
+\end{inwords}
+
+Proposition~\ref{prop:wealth} answers the question of why wealth is deterministic in the baseline: nothing is lost by making it so, because any economy with risky wealth is equivalent, for the exit decision, to one with deterministic wealth, benchmark volatility $\sqrt S$ and the same growth rates of the ratio. The baseline's $\sigma$ should be read as the volatility of the agent's standing.
+
+The extension also sharpens the empirical content, with one caution. The effective drift gap $\delta_S=\delta+\sigma_W^2-\varrho\sigma_W\sigma_R$ differs from the raw gap $\delta$, so a comparison that holds $\delta$ fixed while wealth becomes riskier is not covered, and it can reverse (Appendix~\ref{app:C}). Two comparisons are covered. With independent income risk ($\varrho=0$), raising $\sigma_W$ raises $S$ and leaves $D_S$ unchanged, a mean-preserving spread of the ratio, so it delays exit. Raising the correlation $\varrho$ lowers $S$ and leaves $\mut_S$ unchanged, so it speeds exit. Both hold under the conditions of Theorem~\ref{thm:vol}. A household whose wealth is mostly home equity in the market whose prices it watches is the leading case of high correlation. Its standing barely moves when prices do, so, other things equal, it has less reason to wait than a renter saving toward a down payment in the same market, who faces the full volatility of local prices.
+
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{Young workers, revisited.} The model's agent near her threshold is the closest formal counterpart of ``quiet quitting'': still in the race, barely sacrificing for it, staying for the chance that the benchmark comes back. For young workers, the distinction drawn in Section~\ref{sec:why} between a benchmark that runs away and one that wobbles is the important one. House prices that outrun incomes and entry-level jobs that pay less or disappear are drift gaps and push people to their thresholds; uncertainty about AI or housing, taken alone, keeps them in the race longer. Policies that steady a benchmark therefore cut both ways: slowing its growth keeps people in the race, while damping its swings pushes those near the threshold out sooner. The grind returns when standing improves, which requires the benchmark to stop running away. Proposition~\ref{prop:deadline} adds a caution about reading age differences. At the same standing, a worker with more of her working life ahead should tolerate a larger shortfall, not a smaller one. If young workers disengage first, the model says they are further behind, or face a benchmark pulling away faster, not that they give up more easily. None of this shows that any particular young worker is right, but it does show that the spread of such behavior cannot by itself be read as a loss of grit, and that an employer or policymaker who wants to change it should look at the benchmark before looking at the worker.
+
+\paragraph{Exit, pauses and slowing down.} The model's exit is a permanent decision to stop scoring oneself against the benchmark, and it is not free. After exit the agent consumes the share $\rho$ of her wealth, and when, as at the baseline, $\rho$ exceeds the return on wealth, her wealth shrinks while the benchmark keeps growing. Someone who stops comparing herself with the local price of a house does not quietly save her way back to it; the house moves out of reach, and coming back to the race would mean coming back much further behind. Temporary withdrawal with the option to return would be a switching problem with re-entry, of which the irreversible case is the limit in which re-entry is prohibitively costly. Costly re-entry should raise the threshold, since exit would then destroy less; that case is not analyzed here.
+
+\paragraph{Empirical tests.} The model makes three predictions that do not follow from accounts without a stochastic benchmark. First, holding the drift of a benchmark fixed, people facing more volatile benchmarks should persist longer in losing comparisons. Second, the effect of how much a person cares about standing on persistence should be larger where benchmarks are more volatile. Third, co-movement between a person's resources and her benchmark should shorten persistence. Each can be tested where benchmark volatility varies across markets or cohorts, for example local house-price volatility across metropolitan areas, combined with survey measures of aspirations and hours. A real-effort experiment in which subjects chase a target that is either steady or volatile, with the same expected path, would test the first prediction directly.
+
+\paragraph{What is proved and what is computed.} Everything labeled Theorem, Proposition or Corollary is proved; Results~\ref{res:vol} to \ref{res:quad} rest on the collocation solver of Appendix~\ref{app:C}, which reproduces every proved property of Theorem~\ref{thm:main} in all cases checked. Closing the gap in Theorem~\ref{thm:vol} requires controlling the concavity that loss aversion introduces near par. No condition on the primitives that implies convexity is known; the 19 computed cases in which it fails all have $\alpha\ge1$ and $\lambda\ge2$.
+
+\paragraph{Limits.} Log utility delivers the one-dimensional reduction; with other power utilities the problem is two-dimensional and the results are not established here. The preferences have no probability weighting; adding it reintroduces the never-stopping problem of Ebert and Strack (2015). The positional payoff is piecewise linear in the ratio; curvature in the gain and loss domains would change magnitudes.
+
+\section{Conclusion}\label{sec:conclusion}
+
+When the target moves at random, giving up on it can be the plan rather than a lapse. That is what the paper proves: it locates the quitting point, shows which way volatility moves it, and writes down the cost of overriding it. The finding matters most at scale. The benchmarks that define getting ahead in the United States, a first home and a fair share of the growth one helps produce, have been pulling away from the pay that chases them for four decades. The model says what that does: it moves whole cohorts toward the point where the race stops paying, and then past it. What follows looks like a loss of grit, and it is expensive: disengaged workers, deferred households, and the strain on health and life that the evidence attaches to being held in a losing race. But the model also locates the cause, and the remedy, in the benchmark rather than the worker. Pushing harder on people who have stopped keeping score adds to the cost. Restoring a real chance of catching up, by slowing the benchmarks that have run away or raising the resources that chase them, is what brings them back.
+
+That remedy can now be measured. The quantities the model needs, the drift and volatility of a benchmark and where a group stands against it, are published monthly or quarterly for the nation and the states. Federal, state, county and city officials can compute, for the people they serve, how many have stopped keeping score, how many are near the edge, and how far a benchmark must slow to bring them back. They can track that number the way they track unemployment. The companion tool does this with current data. A society that waits for disengagement to show up in output, health and household formation has waited too long.
+
+\section*{Acknowledgment}
+I thank Richard Thaler for putting me in touch with Hersh Shefrin, and Hersh Shefrin for generous guidance that reshaped this revision, including the evidence on moving focal points. I thank Debraj Ray for a correction on the history of the aspirations literature. None of them has reviewed the full paper, and errors are mine.
+
+This paper was developed with extensive use of AI systems. Anthropic's Claude was used for derivations, numerical code and drafting. The proofs in Appendices~\ref{app:A} and \ref{app:B} were tested through repeated rounds of adversarial review by OpenAI's ChatGPT and DeepSeek, each asked to find errors in the full text; every claimed error was checked, and those confirmed were corrected. The author takes full responsibility for the content.
+
+\section*{Data and code}
+All numerical results, both figures and every table are produced by the Python code in the replication package, Lester (2026), at \url{https://doi.org/10.7910/DVN/V5NSZX}.
+
+The interactive companion, The Hope Gap (\url{https://lesterhau.github.io/rational-foreclosure/}), refreshes itself twice a week with public data on prices, pay, home values and population for the nation, every state and county, and large cities. An official chooses a place, a benchmark (owning a home, or keeping up with the cost of living) and a group. The tool identifies the growth of the agent's resources net of post-exit consumption, $r_W-\rho$, with the growth of pay, so the finiteness line $\rho=D$ of Proposition~\ref{prop:reduction} becomes: benchmark growth minus pay growth equals $\sigma^2$. It reports how far an area sits from that line (its Hope Gap), where the quitting point falls, how many people are past it, how that changes over two years under several scenarios, and what it would take in homes built or pay growth to close the gap, with a dated plan for that office. By default the race ends at age 67, as in Proposition~\ref{prop:deadline}, so each person's quitting point depends on the working years left; the user can remove the deadline. Each group's pay trend is the area's adjusted by how that group's earnings have grown relative to all workers (Census Bureau, Quarterly Workforce Indicators), and the lowest income group is measured against starter homes, so groups can be compared side by side. One departure from the model is labeled as such: by default, people take about a year to notice a change in the trend, and the user can make it immediate, as in the model. The paper's two figures can be reproduced and varied there as well.
+
+\clearpage
+\appendix
+\input{appA_body}
+
+\clearpage
+\section{Proofs for Sections~\ref{sec:vol} to \ref{sec:wealth}}\label{app:B}
+\input{appB}
+
+\clearpage
+\section{Numerical methods and checks}\label{app:C}
+\input{appC}
+
+\clearpage
+\input{refs}
+
+\end{document}

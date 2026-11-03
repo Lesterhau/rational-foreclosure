@@ -1,0 +1,97 @@
+Throughout, $a:=\tfrac12\sigma^2$, $b:=\log x^*$, and lemmas numbered A.$n$ are in Appendix~\ref{app:A}, which proves Proposition~\ref{prop:reduction} and Theorem~\ref{thm:main} in full. Two facts from there are used repeatedly. First, translation invariance: for a fixed strategy on a fixed probability space, the state started at $y+h$ equals the state started at $y$ plus $h$, path by path, so $e^{y_t}=e^yM_t$ with $M_t$ independent of the starting point. Second, the generalized It\^o formula of Lemma~\OAref{lem:ito}, which applies to $F$ because $F$ is continuously differentiable and twice continuously differentiable off $b$ with locally bounded second derivative. Its proof uses the consumption share only through a bound on $|\mut-q|$ and the volatility only through $a>0$, so it holds for any bounded consumption share, any constant drift and any nonzero constant volatility.
+
+\subsection*{Proof of Theorem~\ref{thm:vol}}
+
+\emph{Step 1: a mean-preserving spread.} Fix $D<\rho$ and let $\sigma<\sigma'$, with $a=\tfrac12\sigma^2<a'=\tfrac12\sigma'^2$, $\mut=D-a$ and $\mut'=D-a'$. Write $F$ for the value at $\sigma$ and $\hat F$ for the value at $\sigma'$, and $b$, $\hat b$ for the two thresholds in log terms. Suppose $F''\ge F'$ on $(b,\infty)$. Since $F(\log x)$ has second derivative $(F''-F')/x^2$ in $x$, this is the convexity hypothesis.
+
+Let $q^*=\rho/(1+\rho F')$ be the optimal feedback at $\sigma$, which takes values in $(0,\rho]$ and is locally Lipschitz, and run it under the $\sigma'$ dynamics, $dy_t=(\mut'-q^*(y_t))\,dt-\sigma'\,dZ_t$, from $y>b$ until $\tau:=\inf\{t:y_t\le b\}$. Because the drift is bounded and locally Lipschitz, this equation has a unique strong solution, so $(q^*(y_t),\tau)$ is a strategy for the problem at $\sigma'$. With $\mathcal L'^qu:=a'u''+(\mut'-q)u'$ and $\mathcal L^qu:=au''+(\mut-q)u'$,
+\[
+\mathcal L'^qF-\mathcal L^qF=(a'-a)F''+(\mut'-\mut)F'=(a'-a)(F''-F')\ \ge0\quad\text{on }(b,\infty),
+\]
+because $\mut'-\mut=-(a'-a)$. On $(b,\infty)$ the equation \eqref{eq:ode} with $q=q^*$ reads $(\mathcal L^{q^*}-\rho)F=-f+H_\rho(q^*)$. Apply Lemma~\OAref{lem:ito} under the $\sigma'$ dynamics to $e^{-\rho t}F(y_t)$, stopped at $T_n:=\tau\wedge n\wedge\inf\{t:|y_t|\ge n\}$:
+\begin{align*}
+F(y)&=\E\int_0^{T_n}e^{-\rho t}\big[f(y_t)-H_\rho(q^*_t)-(a'-a)(F''-F')(y_t)\big]dt+\E\big[e^{-\rho T_n}F(y_{T_n})\big]\\
+&\le \E\int_0^{T_n}e^{-\rho t}\big[f(y_t)-H_\rho(q^*_t)\big]dt+\E\big[e^{-\rho T_n}F(y_{T_n})\big].
+\end{align*}
+Let $n\to\infty$ exactly as in the proof of Theorem~\OAref{thm:verif}: the cost satisfies $H_\rho(q^*)\le\log(1+\rho C')+y^+$ and is integrable; the positional flow is dominated by $\alpha\lambda+\alpha e^{y_t}$; and $e^{-\rho t}F(y_t)\le Ce^yG_t$ with $G$ as in Lemma~\OAref{lem:bm}(b) for volatility $\sigma'$ and $\kappa=\rho-D$, which is the same at both volatilities. The terminal term vanishes because $F(y_\tau)=F(b)=0$ on $\{\tau<\infty\}$. Hence $F(y)\le\hat J(y;q^*,\tau)\le\hat F(y)$, where $\hat J$ is the payoff under the $\sigma'$ dynamics. For $y\le b$, $F(y)=0\le\hat F(y)$. So $\hat F\ge F$ everywhere.
+
+Consequently $\hat F>0$ on $(b,\infty)$, so $\hat b\le b$. Suppose $\hat b=b$. By Lemma~\OAref{lem:sf}, both functions vanish with their first derivatives at $b$, and their second derivatives have right limits $-f(b)/a$ and $-f(b)/a'$ at $b$. Since $b<0$, $-f(b)=\alpha\lambda(1-e^b)>0$, so the second limit is strictly smaller. Then $\hat F(y)-F(y)=\int_b^y(y-s)\big(\hat F''(s)-F''(s)\big)ds<0$ for $y$ close enough to $b$ from above, contradicting $\hat F\ge F$. Hence $\hat b<b$, that is, $x^*(\sigma')<x^*(\sigma)$.
+
+\emph{Step 2: a higher median growth.} Fix $\sigma$ and raise $\mut$ to $\mut_1>\mut$, keeping $\rho>\mut_1+a$. For any strategy on any reference system, the state under $\mut_1$ exceeds the state under $\mut$ by $(\mut_1-\mut)t$ path by path, while the consumption cost is unchanged. Since $f$ is nondecreasing, every payoff weakly rises, so the value weakly rises, the set where it vanishes weakly shrinks, and the threshold weakly falls.
+
+\emph{The three normalizations.} With $D$ fixed, Step 1 is the claim. With $\mut$ fixed, raising $\sigma$ to $\sigma'$ raises $D=\mut+a$ by $a'-a$; decompose it into Step 1 at the original $D$, followed by Step 2 at volatility $\sigma'$, which raises $\mut$ from $D-a'$ back to the original value. With $\delta$ fixed, $\mut=a-\delta$ rises by $a'-a$ and $D$ by $2(a'-a)$; decompose into Step 1 at the original $D$, then Step 2 at volatility $\sigma'$, raising $\mut$ from $D-a'$ to $a'-\delta$. In each case the intermediate parameters satisfy $\rho>D$ because the final ones do, Step 1 is strict, and Step 2 is weak, so the threshold falls strictly. Step 1 requires the convexity hypothesis only at the original parameters.
+
+\emph{Convexity when $\lambda=1$.} With $\lambda=1$, $f(y)=\alpha(e^y-1)$. Fix a strategy $(q,\tau)$ on a reference system. By translation invariance, $e^{y_t}=xM_t$ with $x=e^y$ and $M_t$ not depending on $x$, so
+\[
+J(\log x;q,\tau)=x\cdot\alpha\,\E\int_0^\tau e^{-\rho t}M_t\,dt\;-\;\E\int_0^\tau e^{-\rho t}\big[\alpha+H_\rho(q_t)\big]dt .
+\]
+The first expectation is finite (at most $1/(\rho-D)$) and the second lies in $[0,\infty]$. So each $J(\log x;q,\tau)$ is an affine function of $x$ or identically $-\infty$, and the family of strategies does not depend on $x$. The value $F(\log x)$ is the supremum of this family, which contains the zero function ($\tau=0$) and is finite by Proposition~\ref{prop:reduction}; a supremum of affine functions is convex. Since $F(\log x)$ is twice continuously differentiable on $(x^*,\infty)$, its second derivative there is nonnegative, which is $F''\ge F'$ on $(b,\infty)$. This proves part (a). Part (b) is Step 1 with Step 2 under the stated hypothesis. \qed
+
+\subsection*{Proof of Proposition~\ref{prop:xbar}}
+
+Write $Q(\beta;a):=a\beta(\beta-1)+D\beta-\rho$, which is the quadratic defining $\beta$ in Section~\ref{sec:threshold}. Since $Q(0;a)=-\rho<0$ and $Q(\beta;a)\to+\infty$ as $\beta\to-\infty$, there is exactly one negative root $\beta(a)$, and $\partial_\beta Q<0$ there. For $\beta<0$, $\partial_aQ=\beta(\beta-1)>0$, so by the implicit function theorem $\beta'(a)=-\partial_aQ/\partial_\beta Q>0$: the root moves toward zero as $a$ rises. Now $\bar x=\frac{\rho-D}{\rho}\,g(\beta)$ with $g(\beta)=\beta/(\beta-1)=1-1/(1-\beta)$, and $g'(\beta)=-1/(1-\beta)^2<0$. Hence $d\bar x/da<0$. As $a\to\infty$, dividing $Q=0$ by $a$ shows the negative root tends to $0$, so $\bar x\to0$. As $a\to0$ with $D<0$, the bounded root tends to $\rho/D<0$, so $g\to\rho/(\rho-D)$ and $\bar x\to1$. \qed
+
+\subsection*{Proof of Proposition~\ref{prop:drift}}
+
+(a) Raising $\delta$ with $\sigma$ fixed lowers $\mut=a-\delta$. By Step 2 of the proof of Theorem~\ref{thm:vol}, run in reverse, every payoff weakly falls, so the value weakly falls and the threshold weakly rises.
+
+(b) Let $\lambda<\lambda'$. The flow $f$ is the same for $y\ge0$ and strictly lower under $\lambda'$ for $y<0$, and the consumption cost does not depend on $\lambda$, so every payoff, and hence the value, is weakly lower under $\lambda'$: $F_{\lambda'}\le F_\lambda$. The set where the value vanishes therefore weakly grows, and $b_{\lambda'}\ge b_\lambda$. Suppose $b_{\lambda'}=b_\lambda=b$. Both values vanish with their first derivatives at $b$, and by Lemma~\OAref{lem:sf} their second derivatives have right limits $2\alpha\lambda'(1-e^b)/\sigma^2>2\alpha\lambda(1-e^b)/\sigma^2$. Then $F_{\lambda'}>F_\lambda$ just above $b$, a contradiction. \qed
+
+\subsection*{Proof of Proposition~\ref{prop:deadline}}
+
+Fix $s>0$ and write $c_s:=\int_0^se^{(D-\rho)t}\,dt$. Throughout, $J$ is the payoff of \eqref{eq:F}, and $F_s(y):=\sup J(y;q,\tau)$ over consumption rates $q$ and stopping times $\tau\le s$, on an arbitrary reference system as in Definition~\OAref{def:plans}. Nothing below uses $\rho>D$ unless it says so.
+
+(a) Taking $\tau=0$ gives $F_s\ge0$. For any strategy with $\tau\le s$, $-H_\rho\le0$, $f(y)\le\alpha e^y$ and $E[e^{Y_t}]\le e^{y+Dt}$, so $J\le\alpha e^y c_s$. For the reduction, follow the proof of Lemma~\OAref{lem:reduction} with plans whose exit time is at most $s$. The budget identity and the burst bounds concern consumption only and are unchanged. In the upper bound, take $t_0\ge s$, so the positional term vanishes on $(t_0,T]$; and the comparison across positional weights becomes $F_s^{\tilde\alpha}\le F_s+(\tilde\alpha-\alpha)e^yc_s$, by the same domination. Every other step is as written, with each use of $\alpha e^y/(\rho-D)$ replaced by $\alpha e^yc_s$; that bound is the only place the proof uses $\rho>D$. Attainment is as written, since the positional terms of a plan that exits by $s$ are integrable.
+
+(b) \emph{Monotonicity and continuity.} The coupling in the proof of Lemma~\OAref{lem:mono} applies to strategies with $\tau\le s$ and gives, for $y_1<y_2$, $0\le F_s(y_2)-F_s(y_1)\le\alpha\lambda c_s(e^{y_2}-e^{y_1})$. So $F_s$ is nondecreasing and continuous, and $S_s:=\{y:F_s(y)=0\}$ is closed and downward closed.
+
+\emph{Not above par.} If $y>0$, use $q\equiv\rho$ and $\tau=s\wedge\inf\{t:Y_t\le0\}$. Paths are continuous, so $\tau>0$ almost surely, and $f(Y_t)>0$ on $[0,\tau)$; hence $J>0$ and $F_s(y)>0$. So $S_s\subset(-\infty,0]$.
+
+\emph{Far enough below.} Fix $\rho'\ge\rho$ with $\rho'>D$ and set $\kappa:=\rho'-\rho\ge0$. For $0\le t\le s$ and all $y$,
+\begin{equation}
+e^{-\rho t}f(y)\ \le\ \alpha\lambda\,e^{-\rho' t}\big(e^{\kappa s}e^y-1\big). \label{eq:deadline-dom}
+\end{equation}
+If $y<0$, then $f(y)=\alpha\lambda(e^y-1)<0$ and $e^{-\rho t}\ge e^{-\rho't}$, so $e^{-\rho t}f(y)\le\alpha\lambda e^{-\rho't}(e^y-1)$, which is at most the right side. If $y\ge0$, then $e^{-\rho t}=e^{\kappa t}e^{-\rho't}\le e^{\kappa s}e^{-\rho't}$, so $e^{-\rho t}f(y)\le\alpha e^{\kappa s}e^{-\rho't}(e^y-1)$, and the right side exceeds this by $\alpha e^{-\rho't}\big[(\lambda-1)e^{\kappa s}e^y+e^{\kappa s}-\lambda\big]\ge\alpha e^{-\rho't}\lambda(e^{\kappa s}-1)\ge0$. Now let $Y^0$ be the uncontrolled ratio of the proof of Lemma~\OAref{lem:below} and $X^0=e^{Y^0}$. For any strategy with $\tau\le s$, $Y_t\le Y^0_t$ and $f$ is nondecreasing, so by \eqref{eq:deadline-dom}, with $c:=e^{-\kappa s}$,
+\[
+J(y;q,\tau)\ \le\ \alpha\lambda\,E_y\!\int_0^\tau e^{-\rho't}\big(e^{\kappa s}X^0_t-1\big)\,dt
+=\alpha\lambda\,E\!\int_0^\tau e^{-\rho't}\big(\tilde X_t-1\big)\,dt,\qquad \tilde X:=X^0/c .
+\]
+$\tilde X$ is a geometric Brownian motion with drift $D$ and volatility $\sigma$, started at $e^y/c$. The proof of Lemma~\OAref{lem:below}, with $\rho'$ in place of $\rho$ (it uses only $\rho'>D$), shows that the supremum of the last expectation over all stopping times is zero when $\tilde X_0\le\bar x(\rho')$. Hence $F_s(y)=0$ whenever $e^y\le e^{-\kappa s}\bar x(\rho')$.
+
+So $S_s=(-\infty,b(s)]$ with $\log\big(e^{-\kappa s}\bar x(\rho')\big)\le b(s)\le0$. Quitting now earns $0$ in the reduced problem and the best available is $F_s(y)$, so immediate exit is optimal exactly on $S_s$; set $x^*_s:=e^{b(s)}$.
+
+(c) A strategy with $\tau\le s$ also satisfies $\tau\le s'$ for $s'>s$, so $F_s\le F_{s'}$, $S_{s'}\subset S_s$ and $b(s')\le b(s)$.
+
+(d) For any strategy $(q,\tau)$ with unrestricted $\tau$, $J(y;q,\tau\wedge s)\to J(y;q,\tau)$ as $s\to\infty$ whenever the positive part of the integrand, $e^{-\rho t}f^+(Y_t)$, is integrable on $[0,\infty)$: dominated convergence applies to the positive part and monotone convergence to the negative part, $e^{-\rho t}(f^-+H_\rho)$.
+
+If $\rho>D$, the positive part is integrable for every strategy, with integral at most $\alpha e^y/(\rho-D)$ (Lemma~\OAref{lem:finite}). Hence $\lim_sF_s\ge F$; and $F_s\le F$, since every strategy with $\tau\le s$ is admissible in \eqref{eq:F}. So $F_s\uparrow F$ pointwise. From $F_s\le F$, $S\subset S_s$ and $b(s)\ge b=\log x^*$. For $y>b$, $F(y)>0$ by Theorem~\OAref{thm:threshold}, so $F_s(y)>0$ for all large $s$, and $b(s)<y$. With (c), $b(s)\downarrow b$.
+
+If $\rho\le D$, use the strategies $q\equiv\varepsilon$, $\tau=\infty$ of the proof of Lemma~\OAref{lem:finite}. Their negative part is integrable ($f^-\le\alpha\lambda$ and $H_\rho(\varepsilon)$ is constant), and their positive part increases with the horizon, so $J(y;\varepsilon,s)\to J(y;\varepsilon,\infty)$ by monotone convergence. That limit is $+\infty$ when $D>\rho$ and $\varepsilon<D-\rho$, and is unbounded as $\varepsilon\downarrow0$ when $D=\rho$. Either way $F_s(y)\to\infty$ for every $y$, so every $y$ eventually lies above $b(s)$, and $b(s)\to-\infty$, that is, $x^*_s\to0$.\hfill$\square$
+
+\subsection*{Proof of Proposition~\ref{prop:welfare}}
+
+Let $0\le q\le\bar q$. If $\E\int_0^{\tilde\tau}e^{-\rho t}H_\rho(q_t)\,dt=\infty$, then $J=-\infty$; and because $\log(1+\rho F')\le\rho F'\le\rho C'e^{y}$ and $f\le\alpha e^y$ have finite discounted expectation, the right side is $+\infty$ too. Assume the cost is finite.
+
+Apply Lemma~\OAref{lem:ito} to $e^{-\rho t}F(y_t)$, assigning $F''(b):=0$. By \eqref{eq:ode} for $y>b$, and because $F\equiv0$ for $y\le b$, the definition of $\Delta$ gives, for every $y\ne b$ and $q\ge0$,
+\[
+\big[(\mathcal L^q-\rho)F\big](y)=-\Delta(y,q)-f(y)+H_\rho(q).
+\]
+(For $y>b$: $aF''+\mut F'-\rho F=\log(1+\rho F')-f$, and subtracting $qF'$ gives the claim. For $y<b$ both sides vanish.) The state spends no time at $b$ (first step of the proof of Lemma~\OAref{lem:ito}), so the value assigned at $b$ is irrelevant. With $T_n:=\tilde\tau\wedge n\wedge\inf\{t:|y_t|\ge n\}$, the stochastic integral has a bounded integrand up to $T_n$ and mean zero, so
+\[
+F(y)=\E\int_0^{T_n}e^{-\rho t}\big[f(y_t)-H_\rho(q_t)\big]dt+\E\int_0^{T_n}e^{-\rho t}\Delta(y_t,q_t)\,dt+\E\big[e^{-\rho T_n}F(y_{T_n})\big].
+\]
+Let $n\to\infty$, so $T_n\uparrow\tilde\tau$. The first term tends to $J(y;q,\tilde\tau)$ by dominated convergence, with dominating function $\alpha\lambda+\alpha e^{y_t}+H_\rho(q_t)$. The second tends to $\E\int_0^{\tilde\tau}e^{-\rho t}\Delta\,dt$ by monotone convergence, since $\Delta\ge0$. For the third, $0\le F\le Ce^{y}$ with $C=\alpha/(\rho-D)$ and $y_t\le y+\mut t-\sigma Z_t$, so $e^{-\rho t}F(y_t)\le Ce^yG_t$ with $G$ as in Lemma~\OAref{lem:bm}(b) for $\kappa=\rho-D$; its running supremum is integrable and $G_t\to0$ a.s., so the third term tends to $\E[e^{-\rho\tilde\tau}F(y_{\tilde\tau});\tilde\tau<\infty]$. \qed
+
+\subsection*{Proof of Proposition~\ref{prop:wealth}}
+
+\emph{The state.} Here $(Z^W,Z^R)$ is a two-dimensional Brownian motion with $d\langle Z^W,Z^R\rangle_t=\varrho\,dt$ with respect to the agent's filtration: both coordinates are martingales for it and their increments after each time are independent of the past. By It\^o's formula, $d\log W_t=(r_W-q_t-\tfrac12\sigma_W^2)\,dt+\sigma_W\,dZ^W_t$ and $d\log R_t=(r_R-\tfrac12\sigma_R^2)\,dt+\sigma_R\,dZ^R_t$. The process $Z:=(\sigma_RZ^R-\sigma_WZ^W)/\sqrt S$ is then a continuous martingale for that filtration with $\langle Z\rangle_t=t$, hence a Brownian motion for it by L\'evy's characterization, and
+\[
+dy_t=(\mut_S-q_t)\,dt-\sqrt S\,dZ_t .
+\]
+The filtration together with $Z$ is a reference system in the sense of Definition~\OAref{def:plans}, and every result of Appendix~\ref{app:A} holds on an arbitrary reference system. So the reduced problem for $y$ is the baseline problem with $\sigma^2$ replaced by $S$ and $\mut$ by $\mut_S$, and every conclusion about $F_S$ applies, with $D_S=\mut_S+\tfrac12S$ in place of $D$. The proof of Theorem~\ref{thm:vol} above uses only the reduced problem, so it applies to comparisons of $S$ that hold fixed $D_S$, $\mut_S$, or the reduced problem's own drift gap $\delta_S:=\tfrac12S-\mut_S$. It does not apply to comparisons that hold the raw drift gap $\delta=r_R-r_W$ fixed, because $\delta_S=\delta+\sigma_W^2-\varrho\sigma_W\sigma_R$ moves with $\sigma_W$ and $\varrho$; Appendix~\ref{app:C} gives a case in which such a comparison reverses.
+
+\emph{The budget identity.} Let $\ell_t=\log W_t$ and $r_W':=r_W-\tfrac12\sigma_W^2$, so $d\ell_t=(r_W'-q_t)\,dt+\sigma_W\,dZ^W_t$. The product-rule computation in the proof of Lemma~\OAref{lem:reduction} now gives the budget identity with $r_W$ replaced by $r_W'$, $K_0$ by $K_0':=K_0-\sigma_W^2/(2\rho^2)$ (because $\rho K_0'=\log\rho+r_W'/\rho-1$), and two additional terms,
+\[
+\frac{\sigma_W}{\rho}\int_0^Te^{-\rho t}\,dZ^W_t\ -\ \frac{\sigma_W}{\rho}\,e^{-\rho T}Z^W_T ,
+\]
+which have mean zero. The proof of Lemma~\OAref{lem:reduction} uses the identity only through its expectation, together with pathwise bounds on cumulative consumption and its cost, which are unchanged; the upper bound uses $\E[e^{y^0_t}]=e^{y+D_St}$; and the attainment step needs $e^{-\rho T}\E|\ell_T|\to0$, which holds because $\E|\ell_T|\le|\ell_0|+(|r_W'|+\rho)T+\sigma_W\sqrt T$ when $q\le\rho$. Hence $V=\frac1\rho\log W+K_0'+F_S(\log(W/R))$, and finiteness holds if and only if $\rho>D_S$ by Lemma~\OAref{lem:finite}. \qed

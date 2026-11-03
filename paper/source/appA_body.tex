@@ -1,0 +1,415 @@
+\section{Proofs of Proposition~\ref{prop:reduction} and Theorem~\ref{thm:main}}\label{app:A}
+
+This appendix is self-contained. It uses only standard tools: It\^o's formula for $C^2$ functions, optional stopping at bounded stopping times, the law of large numbers $Z_t/t\to0$, existence, uniqueness and continuous dependence for ordinary and stochastic differential equations with locally Lipschitz coefficients, Gr\"onwall's inequality, Dini's theorem, and the convergence theorems of integration. The dynamic programming step, the comparison step and a generalized It\^o formula, which standard treatments cite, are proved here. Where a published theorem covers the same ground it is named, and it was checked against the source. Proposition~\ref{prop:reduction} is Lemmas~\ref{lem:reduction} and \ref{lem:finite}; Theorem~\ref{thm:main} collects Lemmas~\ref{lem:mono}, \ref{lem:above}, \ref{lem:below}, \ref{lem:reg}, \ref{lem:sf}, \ref{lem:kink}, Theorem~\ref{thm:threshold} and Theorem~\ref{thm:verif}.
+
+
+\subsection{Setting}
+
+Wealth evolves as $dW_t=(r_W W_t-c_t)\,dt$ and the reference as $dR_t=r_R R_t\,dt+\sigma R_t\,dZ_t$ with $\sigma>0$. Write consumption as a fraction of wealth, $c_t=q_tW_t$, and work with the log ratio $Y_t=\log(W_t/R_t)$. By It\^o's formula,
+\begin{equation}
+dY_t=(\mut-q_t)\,dt-\sigma\,dZ_t,\qquad \mut:=r_W-r_R+\tfrac12\sigma^2 . \label{eq:Y}
+\end{equation}
+Set
+\begin{equation}
+D:=\mut+\tfrac12\sigma^2=r_W-r_R+\sigma^2,\qquad f(y):=\alpha\,v(e^y-1),\qquad H_\rho(q):=\frac q\rho-1-\log\frac q\rho\ \ (\ge 0),
+\end{equation}
+where $v(u)=u$ for $u\ge0$ and $v(u)=\lambda u$ for $u<0$, with $\alpha>0$ and $\lambda\ge1$. Note that $E[e^{Y_t}]\le e^{y+Dt}$ for every control with $q\ge0$, since consumption only lowers $Y$ pathwise.
+
+\begin{adefinition}[Plans and strategies]\label{def:plans}
+A \emph{consumption rate} is a progressively measurable process $q\ge0$ with $\int_0^t q_s\,ds<\infty$ a.s.\ for all $t$; consumption is $c_t=q_tW_t$ for all $t\ge0$, before and after exit. A \emph{plan} is a consumption rate together with an exit time $\tau\in[0,\infty]$, a stopping time. Writing
+\[
+P_T:=\int_0^T e^{-\rho t}\big[\log c_t+\mathbf 1_{\{t<\tau\}}f(Y_t)\big]\,dt,
+\]
+the value of a plan is $\limsup_{T\to\infty}E[P_T]$, and $V(W,R)$ is the supremum of the value over \emph{all} plans. No admissibility restriction is imposed: no transversality condition, no integrability condition on consumption beyond $\int_0^tq_s\,ds<\infty$. Each $E[P_T]$ is well defined in $[-\infty,\infty)$, because $E[P_T^+]<\infty$ when $\rho>D$, by Lemma~\ref{lem:burst} and the budget identity \eqref{eq:budget} below (a pathwise identity whose derivation does not use this fact), and $\limsup$ is the most permissive way to aggregate the truncations: any plan whose truncated payoffs converge gets its limit, and no plan is helped by the choice. For the reduced problem, a \emph{strategy} is the pair $(q,\tau)$ restricted to $[0,\tau)$. A \emph{reference system} is a filtered probability space satisfying the usual conditions, carrying a Brownian motion $Z$ whose increments after each time $t$ are independent of $\cF_t$ (hence, by optional sampling, after each bounded stopping time as well). Strategies and plans live on an arbitrary reference system, and every supremum over them, $V$, $F$ and later $F_\varepsilon$, also runs over the system. The generality costs nothing: every upper bound below is proved strategy by strategy on an arbitrary system, and the supremum is attained by a feedback control on the plain Brownian filtration (Theorem~\ref{thm:verif}). It earns its keep exactly once, in Lemma~\ref{lem:cond}, where conditioning on a past event produces a system whose initial $\sigma$-field is rich. Let $\cA$ denote the set of consumption rates and $\cT$ the set of stopping times. Payoffs take values in $[-\infty,\infty]$, with $H_\rho(0):=+\infty$ and $\log0:=-\infty$.
+\end{adefinition}
+
+\begin{aremark}[The choice of convention is harmless]\label{rem:conv}
+An improper expected payoff whose integrand is unbounded in both signs needs a convention, whatever the model. The one above is explicit, and nothing in the results depends on it: whenever a plan's truncated payoffs $E[P_T]$ converge, the $\limsup$ is that limit, so the two agree on every plan for which the original improper expectation is unambiguous; the optimal plan of Theorem~\ref{thm:verif} is of this kind. For any other convention that agrees with the ordinary expectation in the unambiguous cases and never exceeds $\limsup_TE[P_T]$ in the remaining ones, the supremum over plans is the same number, since the upper bound of Lemma~\ref{lem:reduction} caps every plan and the optimum attains it with an honest limit.
+\end{aremark}
+
+The \emph{continuation advantage} is
+\begin{equation}
+F(y):=\sup_{q\in\cA,\ \tau\in\cT} J(y;q,\tau),\qquad J(y;q,\tau):=E_y\!\int_0^\tau e^{-\rho t}\big[f(Y_t)-H_\rho(q_t)\big]\,dt . \label{eq:F}
+\end{equation}
+
+\begin{alemma}[Consumption above $\rho W$ never helps]\label{lem:trunc}
+For any strategy $(q,\tau)$, the pair $(q\wedge\rho,\tau)$ is a strategy and $J(y;q\wedge\rho,\tau)\ge J(y;q,\tau)$. Hence the supremum in \eqref{eq:F} may be taken over controls with values in $[0,\rho]$, and every strategy used below has this property. Moreover, if $q\le\rho$, then $e^{-\rho T}|\log W_T|\to0$ deterministically.
+\end{alemma}
+
+\begin{proof}
+Since $q\wedge\rho\le q$, \eqref{eq:Y} gives $Y^{q\wedge\rho}_t\ge Y^q_t$ pathwise, so $f(Y^{q\wedge\rho}_t)\ge f(Y^q_t)$ because $f$ is nondecreasing. Also $H_\rho(q_t\wedge\rho)\le H_\rho(q_t)$: the two coincide where $q_t\le\rho$, and where $q_t>\rho$ the left side is $H_\rho(\rho)=0$. Integrating the difference of the two integrands, which is nonnegative, up to the same $\tau$ gives $J(y;q\wedge\rho,\tau)\ge J(y;q,\tau)$. For the last claim: if $q\le\rho$, then $\log W_0+(r_W-\rho)t\le\log W_t\le\log W_0+r_Wt$, so $e^{-\rho T}|\log W_T|\to0$ deterministically.
+\end{proof}
+
+\begin{alemma}[Late consumption bursts have no value]\label{lem:burst}
+For every $q\ge0$ and $0\le s<T$,
+\begin{equation}
+\frac{e^{-\rho T}}{\rho}\,q\ \le\ e^{-\rho s}H_\rho(q)\ -\ e^{-\rho s}\log\!\big(1-e^{-\rho(T-s)}\big). \label{eq:legendre}
+\end{equation}
+Consequently, for every consumption rate, pathwise, with $Q(t):=\int_0^t q_s\,ds$ and every $0\le t_0\le T$,
+\begin{equation}
+\frac{e^{-\rho T}}{\rho}\big(Q(T)-Q(t_0)\big)\ \le\ \int_{t_0}^T e^{-\rho s}H_\rho(q_s)\,ds\ +\ e^{-\rho t_0}g(T-t_0), \label{eq:burst}
+\end{equation}
+where $g(u):=\int_0^u -e^{-\rho r}\log(1-e^{-\rho(u-r)})\,dr$ satisfies $0\le g(u)\le e^{-\rho u}\big[\frac{u}{1-e^{-\rho}}+e^{\rho}c_\rho\big]\to0$ as $u\to\infty$, with $c_\rho:=\int_0^1-\log(1-e^{-\rho v})\,dv<\infty$.
+\end{alemma}
+
+\begin{proof}
+Fix $s<T$ and set $\theta:=e^{-\rho(T-s)}\in(0,1)$. The map $q\mapsto(e^{-\rho T}/\rho)q-e^{-\rho s}H_\rho(q)$ is concave, tends to $-\infty$ at $q\downarrow0$ and as $q\to\infty$, and its stationary point is $q^*=\rho/(1-\theta)$. There its value is
+\[
+e^{-\rho s}\Big[\frac{\theta}{1-\theta}-H_\rho\Big(\frac{\rho}{1-\theta}\Big)\Big]
+=e^{-\rho s}\Big[\frac{\theta}{1-\theta}-\frac{\theta}{1-\theta}-\log(1-\theta)\Big]=-e^{-\rho s}\log(1-\theta),
+\]
+which is \eqref{eq:legendre}. Integrating \eqref{eq:legendre} over $s\in[t_0,T)$ along any measurable path $s\mapsto q_s$ gives \eqref{eq:burst}, after the substitution $r=s-t_0$ in the error term. For the bound on $g$, substitute $v=u-r$, so $g(u)=e^{-\rho u}\int_0^u e^{\rho v}\big[-\log(1-e^{-\rho v})\big]dv$. If $u\le1$, this is at most $e^{-\rho u}e^{\rho}c_\rho$. If $u>1$, split at $r=u-1$: on $[0,u-1]$, $-\log(1-x)\le x/(1-x)$ gives $-\log(1-e^{-\rho(u-r)})\le e^{-\rho(u-r)}/(1-e^{-\rho})$, so that piece is at most $ue^{-\rho u}/(1-e^{-\rho})$; on $(u-1,u]$, bound $e^{-\rho r}\le e^{-\rho(u-1)}$ and substitute $v=u-r$ to get $e^{\rho}e^{-\rho u}c_\rho$, where $c_\rho$ is finite because the singularity of $-\log(1-e^{-\rho v})\sim\log\frac1{\rho v}$ at $v=0$ is integrable.
+\end{proof}
+
+The name is exact: in the finite-horizon budget identity below, the only way a plan can beat $V_{\rm stop}$ is through the term $e^{-\rho T}Q(T)/\rho$, which is large only if consumption explodes near the horizon; \eqref{eq:burst} says the consumption cost of such a burst cancels the gain, up to an error that vanishes with the horizon. This is what makes any transversality assumption unnecessary.
+
+\begin{alemma}[Reduction]\label{lem:reduction}
+Let $V_{\rm stop}(W)=\frac1\rho\log W+K_0$ with $K_0=\frac{\log\rho}{\rho}+\frac{r_W-\rho}{\rho^2}$, the value of log consumption after exit, and let $\rho>D$. Then for all $W,R>0$,
+\[
+V(W,R)=V_{\rm stop}(W)+F\big(\log(W/R)\big),
+\]
+with the supremum over all plans: $\limsup_{T\to\infty}E[P_T]\le V_{\rm stop}(W)+F(\log(W/R))$ for every plan, and the bound is attained, as an honest limit, by the optimal plan of Theorem~\ref{thm:verif} extended by $q\equiv\rho$ after exit. If $\rho\le D$, both sides are $+\infty$.
+\end{alemma}
+
+\begin{proof}
+Let $\ell_t=\log W_t$, so $d\ell_t=(r_W-q_t)\,dt$ and $\ell_T=\ell_0+r_WT-Q(T)$. Fix a plan and a deterministic horizon $T$. The product rule gives, pathwise,
+\[
+e^{-\rho T}\frac{\ell_T}{\rho}-\frac{\ell_0}{\rho}=\int_0^T e^{-\rho t}\Big[\frac{r_W-q_t}{\rho}-\ell_t\Big]dt,
+\qquad
+e^{-\rho T}K_0-K_0=-\rho K_0\int_0^T e^{-\rho t}dt .
+\]
+Adding, and using $\log c_t=\log q_t+\ell_t$ and $\rho K_0=\log\rho+r_W/\rho-1$,
+\begin{equation}
+\int_0^T e^{-\rho t}\log c_t\,dt
+=V_{\rm stop}(W_0)+d(T)+\frac{e^{-\rho T}}{\rho}Q(T)-\int_0^T e^{-\rho t}H_\rho(q_t)\,dt, \label{eq:budget}
+\end{equation}
+where $d(T):=-e^{-\rho T}[(\ell_0+r_WT)/\rho+K_0]$ is deterministic and $d(T)\to0$. The identity is ordinary calculus along each path; if $\int_0^T(\log q_t)^-\,dt=\infty$ on a path, both sides are $-\infty$ there and every inequality below holds trivially. (The positive part is harmless: $(\log q)^+\le q$ and $Q(T)<\infty$.)
+
+\emph{Upper bound, all plans.} Fix $t_0\in(0,T)$ and set $w:=1-e^{-\rho(T-t_0)}\in(0,1)$. Apply \eqref{eq:burst} twice: on $[t_0,T]$ as stated, and on $[0,t_0]$ at horizon $t_0$, multiplied by $e^{-\rho(T-t_0)}$. Together,
+\[
+\frac{e^{-\rho T}}{\rho}Q(T)-\int_0^T e^{-\rho t}H_\rho\,dt\ \le\ e^{-\rho(T-t_0)}g(t_0)+e^{-\rho t_0}g(T-t_0)\ -\ w\int_0^{t_0}e^{-\rho t}H_\rho\,dt .
+\]
+Add the positional term. Pathwise $Y_t\le Y^0_t$, the uncontrolled ratio, and $f^+(y)\le\alpha e^y$ with $E[e^{Y^0_t}]=e^{y+Dt}$, so
+\[
+E\int_0^{T\wedge\tau}e^{-\rho t}f(Y_t)\,dt\ \le\ E\int_0^{t_0\wedge\tau}e^{-\rho t}f(Y_t)\,dt\ +\ \frac{\alpha e^{y}e^{-(\rho-D)t_0}}{\rho-D}.
+\]
+Dropping the cost on $(t_0\wedge\tau,t_0]$ and scaling by $w$,
+\[
+E\Big[\int_0^{t_0\wedge\tau}e^{-\rho t}f\,dt-w\int_0^{t_0}e^{-\rho t}H_\rho\,dt\Big]
+\le wE\int_0^{t_0\wedge\tau}e^{-\rho t}\Big[\frac{f}{w}-H_\rho\Big]dt
+= wJ^{\alpha/w}(y;q,\tau\wedge t_0)
+\]
+where $J^{\tilde\alpha}$ is $J$ with $\alpha$ replaced by $\tilde\alpha$. Since $f_{\tilde\alpha}-f_\alpha=(\tilde\alpha/\alpha-1)f_\alpha\le(\tilde\alpha-\alpha)e^{Y}$ for $\tilde\alpha\ge\alpha$, the same domination gives $F^{\tilde\alpha}(y)\le F(y)+(\tilde\alpha-\alpha)e^y/(\rho-D)$, so $wJ^{\alpha/w}\le wF(y)+\alpha(1-w)e^y/(\rho-D)\le F(y)+\alpha(1-w)e^y/(\rho-D)$. Assembling,
+\[
+E[P_T]\ \le\ V_{\rm stop}(W_0)+F(y)+\varepsilon(t_0,T),
+\]
+\[
+\varepsilon(t_0,T):=d(T)+e^{-\rho(T-t_0)}g(t_0)+e^{-\rho t_0}g(T-t_0)+\frac{\alpha e^y}{\rho-D}\Big(e^{-\rho(T-t_0)}+e^{-(\rho-D)t_0}\Big).
+\]
+Let $T\to\infty$ at fixed $t_0$: every term of $\varepsilon$ except the last tends to $0$. Then let $t_0\to\infty$. Hence $\limsup_TE[P_T]\le V_{\rm stop}(W_0)+F(y)$ for every plan.
+
+\emph{Attainment.} For any strategy with $q\le\rho$ (Lemma~\ref{lem:trunc} loses nothing), extend to a plan by $q\equiv\rho$ after $\tau$. Then $q\le\rho$ throughout, so $|\ell_T|\le|\ell_0|+(|r_W|+\rho)T$ and $e^{-\rho T}E|\ell_T|\to0$; in \eqref{eq:budget} the cost converges monotonically and the positional terms converge by dominated convergence ($f^-\le\alpha\lambda$, $E\int_0^\infty e^{-\rho t}f^+(Y_t)\,dt\le\alpha e^y/(\rho-D)$). The plan's value is exactly $V_{\rm stop}(W_0)+J(y;q,\tau)-E\int_\tau^\infty e^{-\rho t}H_\rho(\rho)\,dt=V_{\rm stop}(W_0)+J(y;q,\tau)$, since $H_\rho(\rho)=0$. Taking the supremum over such strategies gives $V\ge V_{\rm stop}+F$, with the limit honest for each; at the optimal strategy of Theorem~\ref{thm:verif} the supremum is attained. The same computation shows that after exit the optimal consumption is $c=\rho W$, so $V_{\rm stop}$ is the post-exit value. If $\rho\le D$, Lemma~\ref{lem:finite} makes $F=+\infty$, and the plans used there ($q\equiv\varepsilon$, $\tau=\infty$) give $V=+\infty$ as well: when $D>\rho$ and $\varepsilon<D-\rho$, a single such plan has truncated payoffs that diverge to $+\infty$; when $D=\rho$, each such plan has a finite value, $V_{\rm stop}(W_0)+J(y;\varepsilon,\infty)$ by the attainment computation above (its positional term is integrable because $e^{-\rho t}E[e^{Y_t}]=e^{y-\varepsilon t}$), and these values are unbounded as $\varepsilon\downarrow0$. The constant $K_0$ carries $+\log\rho/\rho$; the sign matters only for the level of $V$, never for $F$ or the threshold.
+\end{proof}
+
+\begin{alemma}[Finiteness]\label{lem:finite}
+$F$ is finite if and only if $\rho>D$. In that case $0\le F(y)\le \alpha e^y/(\rho-D)$ for all $y$.
+\end{alemma}
+
+\begin{proof}
+\emph{Sufficiency.} Taking $\tau=0$ gives $F\ge0$. For any strategy, $-H_\rho\le0$ and $f(y)\le\alpha e^y$, so $J\le\alpha\int_0^\infty e^{-\rho t}E[e^{Y_t}]\,dt\le\alpha e^y/(\rho-D)$.
+
+\emph{Necessity.} Use $q\equiv\varepsilon>0$ and $\tau=\infty$. Then $E[e^{Y_t}]=e^{y+(D-\varepsilon)t}$, and $v(e^y-1)\ge e^y-\lambda$ for all $y$ (check $e^y\ge1$ and $e^y<1$ separately, using $\lambda\ge1$), so
+\[
+J(y;\varepsilon,\infty)\ \ge\ \alpha e^y\int_0^\infty e^{(D-\varepsilon-\rho)t}\,dt-\frac{\alpha\lambda}{\rho}-\frac{H_\rho(\varepsilon)}{\rho}.
+\]
+The two subtracted terms are finite for each fixed $\varepsilon>0$. If $D>\rho$, choose $\varepsilon<D-\rho$: the integral is $+\infty$ by monotone convergence, so $F=\infty$. If $D=\rho$, the integral equals $1/\varepsilon$, and since $H_\rho(\varepsilon)$ grows only like $|\log\varepsilon|$ as $\varepsilon\downarrow0$, the lower bound tends to $+\infty$.
+\end{proof}
+
+\noindent From here on, $\rho>D$.
+
+\begin{alemma}[Monotonicity and Lipschitz bound]\label{lem:mono}
+$F$ is nondecreasing, and for $y_1<y_2$,
+\[
+0\le F(y_2)-F(y_1)\le \frac{\alpha\lambda}{\rho-D}\,\big(e^{y_2}-e^{y_1}\big).
+\]
+In particular $F$ is continuous, and the stopping set $S:=\{y:F(y)=0\}$ is closed and downward closed.
+\end{alemma}
+
+\begin{proof}
+Fix a strategy $(q,\tau)$ and run it from $y_1$ and from $y_2$ on the same probability space. By \eqref{eq:Y}, $Y^{(2)}_t=Y^{(1)}_t+(y_2-y_1)$ for all $t$, and the consumption cost $H_\rho(q_t)$ is the same path by path. Since $f$ is nondecreasing, $J(y_2;q,\tau)\ge J(y_1;q,\tau)$; taking suprema gives monotonicity. Since $v$ is $\lambda$-Lipschitz, $f(Y^{(2)}_t)-f(Y^{(1)}_t)\le\alpha\lambda\,e^{Y^{(1)}_t}(e^{y_2-y_1}-1)$. If the strategy's discounted cost $E\int_0^\tau e^{-\rho t}H_\rho(q_t)\,dt$ is infinite, both payoffs are $-\infty$ (the positional parts are bounded above by $\alpha e^{y_i}/(\rho-D)$) and the next display holds trivially; otherwise all terms are finite and
+\begin{align*}
+J(y_2;q,\tau)&\le J(y_1;q,\tau)+\alpha\lambda(e^{y_2-y_1}-1)\int_0^\infty e^{-\rho t}E[e^{Y^{(1)}_t}]dt\\
+&\le J(y_1;q,\tau)+\frac{\alpha\lambda(e^{y_2}-e^{y_1})}{\rho-D}.
+\end{align*}
+Since this holds uniformly over strategies, $F(y_2)\le F(y_1)+\alpha\lambda(e^{y_2}-e^{y_1})/(\rho-D)$. If $F(y_0)=0$ and $y<y_0$, then $0\le F(y)\le F(y_0)=0$, so $S$ is downward closed; it is closed because $F$ is continuous.
+\end{proof}
+
+\begin{alemma}[Two Brownian facts]\label{lem:bm}
+Let $Z$ be a Brownian motion and $\sigma>0$.
+\begin{enumerate}
+\item[(a)] For $m\in\R$ and $\rho,\varepsilon>0$, let $Y_t:=mt-\sigma Z_t$ and $T_\varepsilon:=\inf\{t:Y_t\le-\varepsilon\}$. Then $E[e^{-\rho T_\varepsilon}]=e^{-\theta\varepsilon}$ (with $e^{-\rho\infty}:=0$), where $\theta>0$ is the positive root of $\tfrac12\sigma^2\theta^2-m\theta-\rho=0$.
+\item[(b)] For $\kappa>0$, let $G_t:=\exp\big(-\sigma Z_t-(\tfrac12\sigma^2+\kappa)t\big)$ and $p:=1+2\kappa/\sigma^2>1$. Then $P(\sup_{t\ge0}G_t>z)\le z^{-p}$ for $z\ge1$, so $E[\sup_tG_t]\le p/(p-1)$; and $G_t\to0$ a.s.
+\end{enumerate}
+\end{alemma}
+
+\begin{proof}
+(a) By It\^o's formula, $M_t:=\exp(-\theta Y_t-\rho t)$ is a martingale, because the drift of its exponent plus half its quadratic variation rate is $-\theta m-\rho+\tfrac12\theta^2\sigma^2=0$. On $[0,T_\varepsilon]$, $Y\ge-\varepsilon$, so $0<M\le e^{\theta\varepsilon}$. Optional stopping at the bounded time $T_\varepsilon\wedge n$ gives $E[M_{T_\varepsilon\wedge n}]=1$. As $n\to\infty$, $M_{T_\varepsilon\wedge n}\to e^{\theta\varepsilon}e^{-\rho T_\varepsilon}$ on $\{T_\varepsilon<\infty\}$, and on $\{T_\varepsilon=\infty\}$ it is at most $e^{\theta\varepsilon-\rho n}\to0$. Bounded convergence gives $e^{\theta\varepsilon}E[e^{-\rho T_\varepsilon}]=1$.
+
+(b) $G^p=\exp\big(-p\sigma Z_t-p(\tfrac12\sigma^2+\kappa)t\big)$ is a martingale because $p(\tfrac12\sigma^2+\kappa)=\tfrac12p^2\sigma^2$, which is the definition of $p$. For $z\ge1=G_0$ let $H:=\inf\{t:G_t\ge z\}$. Optional stopping at $H\wedge n$ gives $1=E[G^p_{H\wedge n}]\ge z^pP(H\le n)$, and letting $n\to\infty$, $P(\sup_tG_t>z)\le P(H<\infty)\le z^{-p}$. Hence $E[\sup_tG_t]=\int_0^\infty P(\sup_tG_t>z)\,dz\le1+\int_1^\infty z^{-p}dz=p/(p-1)$. Finally, $\log G_t=-t\big(\sigma Z_t/t+\tfrac12\sigma^2+\kappa\big)\to-\infty$ a.s.\ because $Z_t/t\to0$ a.s.
+\end{proof}
+
+\begin{alemma}[Exit never occurs at or above the reference]\label{lem:above}
+$F(0)>0$. Consequently $F(y)>0$ for all $y\ge0$, so $S\subset(-\infty,0)$.
+\end{alemma}
+
+\begin{proof}
+From $y=0$ use $q\equiv\rho$ (so $H_\rho(q_t)=0$) and $\tau=T_\varepsilon:=\inf\{t:Y_t\le-\varepsilon\}$ for $\varepsilon>0$. Write $X_t=e^{Y_t}$, which under this control is a geometric Brownian motion with drift $D-\rho$, and set $m:=\mut-\rho$,
+\[
+\theta:=\frac{m+\sqrt{m^2+2\rho\sigma^2}}{\sigma^2}>0,\qquad L:=E_0[e^{-\rho T_\varepsilon}]=e^{-\theta\varepsilon},\qquad \kappa:=2\rho-D>0 ,
+\]
+where $Y_t=mt-\sigma Z_t$ under this control, so $L=e^{-\theta\varepsilon}$ is Lemma~\ref{lem:bm}(a).
+Before $T_\varepsilon$ we have $Y_t>-\varepsilon$, so $f(Y_t)=\alpha(X_t-1)+\alpha(\lambda-1)(X_t-1)\mathbf 1\{Y_t<0\}\ge\alpha(X_t-1)-\alpha(\lambda-1)(1-e^{-\varepsilon})$. Optional stopping applied to $e^{-\rho t}X_t$ (localized at $T_\varepsilon\wedge n$, with $E[e^{-\rho n}X_n]=e^{(D-2\rho)n}\to0$) gives $E\int_0^{T_\varepsilon}e^{-\rho t}X_t\,dt=(1-e^{-\varepsilon}L)/\kappa$, and $E\int_0^{T_\varepsilon}e^{-\rho t}dt=(1-L)/\rho$. Therefore
+\begin{equation}
+F(0)\ \ge\ J_\varepsilon:=\alpha\Big[\frac{1-e^{-(1+\theta)\varepsilon}}{\kappa}-\frac{1-e^{-\theta\varepsilon}}{\rho}-(\lambda-1)\frac{(1-e^{-\varepsilon})(1-e^{-\theta\varepsilon})}{\rho}\Big]. \label{eq:Jeps}
+\end{equation}
+As $\varepsilon\downarrow0$, $J_\varepsilon=\alpha\varepsilon\big[(1+\theta)/\kappa-\theta/\rho\big]+O(\varepsilon^2)$. The bracket is positive if and only if $\theta<\rho/(\rho-D)$. Now $\theta$ is the positive root of $Q(s)=\tfrac12\sigma^2s^2-ms-\rho$, which is convex with $Q(0)<0$, and with $s_0=\rho/(\rho-D)$ and $m=D-\tfrac12\sigma^2-\rho$ one computes $Q(s_0)=\tfrac12\sigma^2 s_0(s_0+1)>0$. Hence $s_0>\theta$, the bracket is positive, and $J_\varepsilon>0$ for small $\varepsilon$. Monotonicity (Lemma~\ref{lem:mono}) extends $F>0$ to $y\ge0$.
+\end{proof}
+
+\begin{aremark}
+Lemma~\ref{lem:above} uses no smooth fit and no regularity of $F$.
+\end{aremark}
+
+\begin{alemma}[Exit occurs far enough below the reference]\label{lem:below}
+Let $\beta<0$ be the negative root of $\tfrac12\sigma^2\beta^2+(D-\tfrac12\sigma^2)\beta-\rho=0$ and
+\[
+\bar x:=\frac{\rho-D}{\rho}\cdot\frac{\beta}{\beta-1}\ \in(0,1).
+\]
+Then $F(y)=0$ for all $y\le\log\bar x$.
+\end{alemma}
+
+\noindent Here $\bar x>0$ because $\rho>D$, and $\bar x<1$ is equivalent to $D\beta<\rho$, which holds because the quadratic gives $\rho-D\beta=\tfrac12\sigma^2\beta(\beta-1)>0$.
+
+\begin{proof}
+Let $Y^0$ solve \eqref{eq:Y} with $q\equiv0$ (this process is used only as a bound, not as a strategy). Pathwise $Y_t\le Y^0_t$ for every admissible $q$. Since $f$ is nondecreasing, $f\le\tilde g$ with $\tilde g(y):=\alpha\lambda(e^y-1)$, and $-H_\rho\le0$, every strategy satisfies
+\[
+J(y;q,\tau)\le U(y):=\sup_{\tau\in\cT}E_y\int_0^\tau e^{-\rho t}\,\tilde g(Y^0_t)\,dt .
+\]
+Here $X^0=e^{Y^0}$ is a geometric Brownian motion with drift $D$ and volatility $\sigma$. The process $M_t:=\int_0^t e^{-\rho s}(X^0_s-1)\,ds-\frac{x}{\rho-D}+\frac1\rho-e^{-\rho t}\psi(X^0_t)$, with $\psi(X):=\frac1\rho-\frac{X}{\rho-D}$, is a martingale (It\^o, using $(\mathcal L-\rho)\psi=x-1$), so for an arbitrary stopping time $\tau$ and $T_n:=\tau\wedge n\wedge\inf\{t:X^0_t\ge n\}$, $E[M_{T_n}]=0$. Let $n\to\infty$: the running integral converges by monotone convergence applied to its positive and negative parts ($E\int_0^\infty e^{-\rho t}X^0_t\,dt=x/(\rho-D)<\infty$ by $\rho>D$); and $e^{-\rho T_n}\psi(X^0_{T_n})\to e^{-\rho\tau}\psi(X^0_\tau)\mathbf 1_{\{\tau<\infty\}}$ a.s.\ (on $\{\tau=\infty\}$, $e^{-\rho t}X^0_t\to0$ a.s.), dominated by $\frac1\rho+\frac{1}{\rho-D}\sup_t e^{-\rho t}X^0_t$, which is integrable by Lemma~\ref{lem:bm}(b) with $\kappa=\rho-D$, since $e^{-\rho t}X^0_t=x\,G_t$. Hence, for every stopping time $\tau$, with $x=e^y$,
+\[
+E\int_0^\tau e^{-\rho t}(X^0_t-1)\,dt=\frac{x}{\rho-D}-\frac1\rho+E\big[e^{-\rho\tau}\psi(X^0_\tau);\tau<\infty\big],
+\]
+so $U(y)=\alpha\lambda[x/(\rho-D)-1/\rho+P(x)]$, where $P(x)=\sup_\tau E[e^{-\rho\tau}\psi(X^0_\tau)]$ is a perpetual put with linear payoff. Its solution is classical (background: McKean 1965; Dixit and Pindyck 1994, Ch.~5), but nothing is borrowed from it; here is the complete argument. Let $\Phi(x)=\psi(x)$ for $x\le\bar x$ and $\Phi(x)=\psi(\bar x)(x/\bar x)^\beta$ for $x>\bar x$. Then $\Phi$ is $C^1$ at $\bar x$ by the choice of $\bar x$; $(\mathcal L-\rho)\Phi=x-1<0$ on $x<\bar x$ (because $\bar x<1$) and $=0$ on $x>\bar x$; and $\Phi\ge\psi$ because $\Phi$ is convex and tangent to the line $\psi$ at $\bar x$. Moreover $\psi(\bar x)=1/(\rho(1-\beta))>0$, so $\Phi$ takes values in $(0,1/\rho]$. The function $y\mapsto\Phi(e^y)$ is $C^1$, and $C^2$ off $\log\bar x$ with bounded second derivative on compacts, so Lemma~\ref{lem:ito} (with $q\equiv0$) applies to it; in the variable $x$ its drift term is $e^{-\rho t}[(\mathcal L-\rho)\Phi](X^0_t)\le0$. For any stopping time $\tau$, stop at $\tau_n:=\tau\wedge n\wedge\inf\{t:|Y^0_t|\ge n\}$, where the stochastic integral has mean zero, to get $E[e^{-\rho\tau_n}\Phi(X^0_{\tau_n})]\le\Phi(x)$. As $n\to\infty$, $e^{-\rho\tau_n}\Phi(X^0_{\tau_n})\to e^{-\rho\tau}\Phi(X^0_\tau)\mathbf 1_{\{\tau<\infty\}}$ (on $\{\tau=\infty\}$ it is at most $e^{-\rho n}/\rho$), and bounded convergence gives $E[e^{-\rho\tau}\Phi(X^0_\tau);\tau<\infty]\le\Phi(x)$. Since $\psi\le\Phi$, $P\le\Phi$. Hence for $x\le\bar x$, $\psi(x)\le P(x)\le\Phi(x)=\psi(x)$ (the first inequality by $\tau=0$), so $U(y)=0$ and $F(y)=0$. (For $x>\bar x$ the reverse inequality also holds, so $P=\Phi$ everywhere: the first time $\bar\tau$ that $X^0$ reaches $\bar x$ gives $E[e^{-\rho\bar\tau}\psi(X^0_{\bar\tau})]=\psi(\bar x)E[e^{-\rho\bar\tau}]=\psi(\bar x)(x/\bar x)^\beta=\Phi(x)$, by Lemma~\ref{lem:bm}(a) applied to $\log X^0$ with $m=\mut$, whose root is $\theta=-\beta$. Only $x\le\bar x$ is used here.)
+\end{proof}
+
+\begin{atheorem}[Existence and location of the threshold]\label{thm:threshold}
+There is a unique $b\in[\log\bar x,0)$ such that $S=(-\infty,b]$. Equivalently, with $x^*:=e^b$, immediate exit is optimal exactly when $x\le x^*$, and $0<\bar x\le x^*<1$.
+\end{atheorem}
+
+\begin{proof}
+By Lemma~\ref{lem:mono}, $S$ is closed and downward closed; by Lemma~\ref{lem:below} it contains $(-\infty,\log\bar x]$; by Lemma~\ref{lem:above} it excludes $[0,\infty)$. Hence $S=(-\infty,b]$ with $b=\sup S\in[\log\bar x,0)$, and $b$ is unique because it is the supremum of a set determined by $F$.
+\end{proof}
+
+\subsection{The dynamic programming step}
+
+For $\varepsilon\in(0,\rho)$ let $\cA_\varepsilon\subset\cA$ denote the consumption rates with values in $[\varepsilon,\rho]$, and let
+\[
+F_\varepsilon(y):=\sup\big\{J(y;q,\tau):\ \text{a reference system},\ q\in\cA_\varepsilon,\ \tau\in\cT\big\}\ \in[0,F(y)].
+\]
+On $[\varepsilon,\rho]$ the cost $H_\rho$ is bounded, and payoffs are well defined in $[-\infty,\infty)$ because $E\int_0^\infty e^{-\rho t}f^+(Y_t)\,dt\le\alpha e^y/(\rho-D)$. The proof of Lemma~\ref{lem:mono} applies verbatim: $F_\varepsilon$ is nondecreasing and obeys the same Lipschitz bound.
+
+This subsection proves from first principles the two dynamic-programming inequalities that the viscosity property of $F_\varepsilon$ requires. The textbook route derives them from a general dynamic programming principle whose proof needs measurable selection (El Karoui 1981; Krylov 1980); here both follow from one structural fact, \emph{translation invariance}: for a fixed consumption rate and exit time on a fixed system, \eqref{eq:Y} gives $Y^{y+h}_t=Y^y_t+h$ pathwise, so one strategy can be run from every starting point at once, and by the proof of Lemma~\ref{lem:mono},
+\begin{equation}
+J(z;q,\tau)\ \le\ J(z';q,\tau)\ \le\ J(z;q,\tau)+\frac{\alpha\lambda}{\rho-D}\big(e^{z'}-e^{z}\big),\qquad z\le z' , \label{eq:transplant}
+\end{equation}
+A strategy nearly optimal at one point is therefore nearly optimal on a whole interval, with an explicit loss. This is what replaces measurable selection.
+
+\begin{alemma}[Pasting]\label{lem:paste}
+For every $y$, every constant $v\in[\varepsilon,\rho]$ and every $h>0$, with $Y$ the state started at $y$ under $q\equiv v$,
+\[
+F_\varepsilon(y)\ \ge\ E\int_0^h e^{-\rho t}\big[f(Y_t)-H_\rho(v)\big]dt\ +\ e^{-\rho h}\,E\big[F_\varepsilon(Y_h)\big].
+\]
+\end{alemma}
+
+\begin{proof}
+Fix $\eta,\delta>0$, set $y_k:=k\delta$ and $I_k:=[y_k,y_k+\delta)$ for $k\in\mathbb Z$, and pick for each $k$ a system $S_k$ carrying a strategy $(q^k,\tau^k)\in\cA_\varepsilon\times\cT$ with $J(y_k;q^k,\tau^k)\ge F_\varepsilon(y_k)-\eta$. Realize everything on one system: the product of a space carrying the first-phase noise $Z^0$, with filtration $(\cF^0_t)$, and the systems $S_k$, with filtrations $(\cF^k_t)$, all independent. Equip it with the \emph{delayed} filtration $\cG_t:=\cF^0_t\vee\bigvee_k\cF^k_{(t-h)^+}$ (augmented), in which each $S_k$ starts its clock at time $h$. (The plain product filtration would reveal the path of $Z^k$ ahead of its use, and the composite noise would not be a Brownian motion for it.) The composite strategy runs $q\equiv v$ on $[0,h]$ with no exit; at time $h$, on the event $\{Y_h\in I_k\}\in\cF^0_h$, it continues with $(q^k,\tau^k)$, driven by $S_k$'s own noise $Z^k$. The composite driving noise, $Z^0$ up to $h$ and then $Z^0_h+\sum_k\mathbf 1_{I_k}(Y_h)Z^k_{\cdot-h}$, is a Brownian motion for $(\cG_t)$. It is continuous and adapted. For the increments, let $g$ be bounded and measurable. If $t<h$, then $\cG_t=\cF^0_t\vee\bigvee_k\cF^k_0$. When also $t+u\le h$, the increment $Z^0_{t+u}-Z^0_t$ is independent of $\cF^0_t$ (the Brownian property of $Z^0$) and of every $\cF^k_0$ (the product structure). When $t<h<t+u$, the increment equals $(Z^0_h-Z^0_t)+Z^k_{t+u-h}$ on $\{Y_h\in I_k\}$; conditionally on $\cF^0_h\vee\bigvee_j\cF^j_0$, each $Z^k_{t+u-h}$ is $\mathcal N(0,t+u-h)$, so with $\tilde g(x):=E[g(x+\mathcal N(0,t+u-h))]$, for $B\in\cG_t$, $E[\mathbf 1_Bg(Z_{t+u}-Z_t)]=E\big[\mathbf 1_B\sum_k\mathbf 1_{I_k}(Y_h)\tilde g(Z^0_h-Z^0_t)\big]=E[\mathbf 1_B\tilde g(Z^0_h-Z^0_t)]=P(B)\,E[g(\mathcal N(0,u))]$. For $t\ge h$, $u>0$ and $B\in\cG_t$, the increment $Z_{t+u}-Z_t$ equals $Z^k_{t+u-h}-Z^k_{t-h}$ on $\{Y_h\in I_k\}\in\cG_h$, and that increment is independent of $\cF^k_{t-h}$ (the Brownian property on $S_k$) and of every other factor (the product structure), hence of $\cG_t$; so $E[\mathbf 1_Bg(Z_{t+u}-Z_t)]=\sum_kP(B\cap\{Y_h\in I_k\})\,E[g(Z^k_{t+u-h}-Z^k_{t-h})]=P(B)\,E[g(\mathcal N(0,u))]$. The composite control ($v$ before $h$, then $q^k_{t-h}$ on $\{Y_h\in I_k\}$) is $\cG$-progressively measurable with values in $[\varepsilon,\rho]$, and the composite exit time $\tau^{\rm c}$, equal to $h+\tau^k$ on $\{Y_h\in I_k\}$, is a $\cG$-stopping time: $\{\tau^{\rm c}\le t\}$ is empty for $t<h$, and for $t\ge h$ it equals $\bigcup_k\big(\{Y_h\in I_k\}\cap\{\tau^k\le t-h\}\big)$, a countable union of sets in $\cG_t$, since $\{Y_h\in I_k\}\in\cF^0_h$ and $\{\tau^k\le t-h\}\in\cF^k_{t-h}$. Because the continuation is driven by noise independent of $\cF^0_h$, Fubini's theorem (applied to the positive and negative parts separately) gives the composite payoff
+\[
+E\int_0^h e^{-\rho t}\big[f(Y_t)-H_\rho(v)\big]dt\ +\ e^{-\rho h}\,E\Big[\sum_k\mathbf 1_{I_k}(Y_h)\,J_k(Y_h)\Big],
+\]
+with $J_k(z):=J(z;q^k,\tau^k)$ computed on $S_k$,
+where each $J_k$ is nondecreasing and continuous by \eqref{eq:transplant}, hence measurable. On $I_k$,
+\[
+J_k(Y_h)\ \ge\ J_k(y_k)\ \ge\ F_\varepsilon(y_k)-\eta\ \ge\ F_\varepsilon(Y_h)-\eta-\frac{\alpha\lambda}{\rho-D}\,e^{Y_h}\big(1-e^{-\delta}\big),
+\]
+using monotonicity of $J_k$, the choice of $(q^k,\tau^k)$, and the Lipschitz bound for $F_\varepsilon$. Since $F_\varepsilon(y)$ dominates the composite payoff and $E[e^{Y_h}]\le e^{y+Dh}$, letting $\delta\downarrow0$ and then $\eta\downarrow0$ proves the claim.
+\end{proof}
+
+\begin{alemma}[Conditioning]\label{lem:cond}
+Let $(q,\tau)$ be a strategy with $q\in\cA_\varepsilon$ on any reference system, and let $\theta$ be a bounded stopping time. Then
+\[
+J(y;q,\tau)\ \le\ E\int_0^{\tau\wedge\theta}e^{-\rho t}\big[f(Y_t)-H_\rho(q_t)\big]dt\ +\ E\big[\mathbf 1_{\{\tau>\theta\}}e^{-\rho\theta}F_\varepsilon(Y_\theta)\big].
+\]
+\end{alemma}
+
+\begin{proof}
+Set $G:=\int_0^{(\tau-\theta)^+}e^{-\rho s}\big[f(Y_{\theta+s})-H_\rho(q_{\theta+s})\big]ds$, so that $J(y;q,\tau)$ equals the first term on the right plus $E[\mathbf 1_{\{\tau>\theta\}}e^{-\rho\theta}G]$. The conditional expectation $E[G\,|\,\cF_\theta]$ is well defined in $[-\infty,\infty)$, because $f^+(Y_{\theta+s})\le\alpha e^{Y_{\theta+s}}$ has finite discounted expectation ($\theta$ is bounded). It suffices to prove $E[G\,|\,\cF_\theta]\le F_\varepsilon(Y_\theta)$ a.s.\ on $\{\tau>\theta\}$. Suppose not. Then there are $\kappa>0$ and $M>0$ such that $A:=\{\tau>\theta\}\cap\{|Y_\theta|\le M\}\cap\{E[G|\cF_\theta]\ge F_\varepsilon(Y_\theta)+2\kappa\}\in\cF_\theta$ has $P(A)>0$. Choose $\delta>0$ with $\alpha\lambda e^{M}(e^{\delta}-1)/(\rho-D)<\kappa$, and then, among the finitely many intervals $[z,z+\delta)$ that cover $[-M,M]$, one for which $A':=A\cap\{Y_\theta\in[z,z+\delta)\}$ has $P(A')>0$.
+
+Condition on $A'$. Under $P(\cdot\,|A')$, the shifted noise $Z'_s:=Z_{\theta+s}-Z_\theta$ is still a Brownian motion for the filtration $\cG_s:=\cF_{\theta+s}$: under $P$ its increments are independent of $\cG_s$ with the Gaussian law (optional sampling at the bounded $\theta$), and conditioning on $A'\in\cG_0$ preserves both, since for $B\in\cG_s$, $E[\mathbf 1_{A'\cap B}\,g(Z'_{s+u}-Z'_s)]=P(A'\cap B)\,E[g(\mathcal N(0,u))]$. So $(\cG_s,P(\cdot|A'))$ is a reference system, on which $q'_s:=q_{\theta+s}$ belongs to $\cA_\varepsilon$ and $\tau':=(\tau-\theta)^+$ is a stopping time. Run $(q',\tau')$ from the deterministic point $z+\delta$: by translation invariance, the resulting state dominates $Y_{\theta+\cdot}$ pathwise on $A'$ (same control, same noise, higher start), and $f$ is nondecreasing, so
+\[
+F_\varepsilon(z+\delta)\ \ge\ J^{P(\cdot|A')}\big(z+\delta;q',\tau'\big)\ \ge\ E_{P(\cdot|A')}[G]\ =\ \frac{E\big[\mathbf 1_{A'}\,E[G|\cF_\theta]\big]}{P(A')}\ \ge\ F_\varepsilon(z)+2\kappa,
+\]
+using in the last step $Y_\theta\ge z$ on $A'$ and monotonicity of $F_\varepsilon$. But the Lipschitz bound gives $F_\varepsilon(z+\delta)-F_\varepsilon(z)\le\alpha\lambda e^{z}(e^{\delta}-1)/(\rho-D)<\kappa$, a contradiction.
+\end{proof}
+
+\begin{alemma}[Viscosity property]\label{lem:visc}
+$F_\varepsilon$ is a continuous viscosity solution on $\R$ of
+\[
+\min\{u,\ \rho u-au''-\mut u'-\mathcal H_\varepsilon(u')-f\}=0,\qquad \mathcal H_\varepsilon(p):=\sup_{q\in[\varepsilon,\rho]}\{-qp-H_\rho(q)\} .
+\]
+The operator is proper (nondecreasing in $u$) and degenerate elliptic (nonincreasing in $u''$), and \emph{viscosity solution} has the standard meaning of Crandall, Ishii and Lions (1992): wherever a $C^2$ function $\varphi$ touches $u$ from above (below), the operator evaluated at $(y_0,u(y_0),\varphi'(y_0),\varphi''(y_0))$ is $\le0$ ($\ge0$).
+\end{alemma}
+
+\begin{proof}
+Continuity is the Lipschitz bound. \emph{Supersolution.} $F_\varepsilon\ge0$ (take $\tau=0$). Let $\varphi\in C^2$ touch $F_\varepsilon$ from below at $y_0$: $\varphi\le F_\varepsilon$ on a ball $B_r(y_0)$, with equality at $y_0$. Replace $\varphi$ by $\chi\varphi$, where $\chi$ is smooth, $0\le\chi\le1$, $\chi=1$ on $B_{r/2}$, $\chi=0$ off $B_r$: the value and first two derivatives at $y_0$ are unchanged, the new test function is bounded with bounded derivatives, and it lies below $F_\varepsilon$ everywhere (on $B_r$, $\chi\varphi\le\varphi\le F_\varepsilon$ where $\varphi\ge0$ and $\chi\varphi\le0\le F_\varepsilon$ where $\varphi<0$; off $B_r$ it vanishes and $F_\varepsilon\ge0$). For constant $v\in[\varepsilon,\rho]$, Lemma~\ref{lem:paste}, $F_\varepsilon\ge\chi\varphi$, and It\^o's formula for the bounded test function give
+\begin{multline*}
+0\ \ge\ E\int_0^h e^{-\rho t}\big[f(Y_t)-H_\rho(v)\big]dt+\big(e^{-\rho h}-1\big)\varphi(y_0)\\
++\ e^{-\rho h}\int_0^h E\big[a(\chi\varphi)''+(\mut-v)(\chi\varphi)'\big](Y_t)\,dt .
+\end{multline*}
+Divide by $h$ and let $h\downarrow0$. Each integrand converges to its value at $y_0$: the derivative terms are bounded and continuous, and $E[f(Y_t)]\to f(y_0)$ because $f$ is continuous with $|f|\le\alpha\lambda+\alpha e^{(\cdot)}$ and $E[e^{2Y_t}]$ is bounded for $t\le1$. At $y_0$ this gives $a\varphi''+(\mut-v)\varphi'-\rho\varphi+f-H_\rho(v)\le0$; the supremum over $v\in[\varepsilon,\rho]$ gives $a\varphi''+\mut\varphi'+\mathcal H_\varepsilon(\varphi')+f-\rho F_\varepsilon\le0$ at $y_0$. So $F_\varepsilon(y_0)\ge0$ and $\rho F_\varepsilon-a\varphi''-\mut\varphi'-\mathcal H_\varepsilon(\varphi')-f\ge0$ at $y_0$: both components of the min are nonnegative, which is the supersolution property.
+
+\emph{Subsolution.} Let $\varphi\in C^2$ touch $F_\varepsilon$ from above at $y_0$: $F_\varepsilon\le\varphi$ on $\bar B_r(y_0)$, equality at $y_0$. If $F_\varepsilon(y_0)=0$, the first component of the min vanishes, so the min is $\le0$ and we are done. So let $F_\varepsilon(y_0)>0$ and suppose, for contradiction, that the second component is positive, that is $a\varphi''+\mut\varphi'+\mathcal H_\varepsilon(\varphi')+f-\rho\varphi<0$ at $y_0$; by continuity, after shrinking $r$, it is $\le-2\delta'<0$ on $\bar B_r$ and $F_\varepsilon\ge\gamma>0$ there. Set $T_0:=(\log2)/\rho$ and $\theta:=T_0\wedge\inf\{t:Y_t\notin B_r(y_0)\}$. Take any strategy with $J(y_0;q,\tau)\ge F_\varepsilon(y_0)-\eta$; its cost on $[0,\tau\wedge\theta]$ has finite expectation (else Lemma~\ref{lem:cond} would give $J=-\infty$). It\^o's formula for $e^{-\rho t}\varphi(Y_t)$ on $[0,\tau\wedge\theta]$, where $Y$ stays in $\bar B_r$, with the pointwise bound $a\varphi''+(\mut-q_t)\varphi'-\rho\varphi\le-2\delta'-f+H_\rho(q_t)$ (which uses $-q_t\varphi'\le\mathcal H_\varepsilon(\varphi')+H_\rho(q_t)$), gives
+\[
+E\int_0^{\tau\wedge\theta}e^{-\rho t}\big[f-H_\rho(q_t)\big]dt\ \le\ \varphi(y_0)-E\big[e^{-\rho(\tau\wedge\theta)}\varphi(Y_{\tau\wedge\theta})\big]-2\delta'E\int_0^{\tau\wedge\theta}e^{-\rho t}dt .
+\]
+Combine with Lemma~\ref{lem:cond} and $\varphi(y_0)=F_\varepsilon(y_0)$. On $\{\tau>\theta\}$, $F_\varepsilon(Y_\theta)-\varphi(Y_\theta)\le0$; on $\{\tau\le\theta\}$, $-\varphi(Y_\tau)\le-F_\varepsilon(Y_\tau)\le-\gamma$. Hence
+\[
+-\eta\ \le\ -\gamma\,E\big[\mathbf 1_{\{\tau\le\theta\}}e^{-\rho\tau}\big]-2\delta'\,E\int_0^{\tau\wedge\theta}e^{-\rho t}dt .
+\]
+It remains to bound the right side away from zero uniformly over strategies. Let $w(x):=c_0(1-|x-y_0|^2/r^2)$ with $c_0:=\min\{1,(\rho+2a/r^2+2(|\mut|+\rho)/r)^{-1}\}$, so that on $\bar B_r$: $0\le w\le c_0\le1$, $w=0$ on $\partial B_r$, and $\rho w-aw''-(\mut-q)w'\le1$ for every $q\in[\varepsilon,\rho]$. It\^o's formula for $e^{-\rho t}w(Y_t)$ on $[0,\tau\wedge\theta]$ gives
+\[
+c_0\ \le\ E\int_0^{\tau\wedge\theta}e^{-\rho t}dt+E\big[e^{-\rho(\tau\wedge\theta)}w(Y_{\tau\wedge\theta})\big]
+\le E\int_0^{\tau\wedge\theta}e^{-\rho t}dt+E\big[\mathbf 1_{\{\tau\le\theta\}}e^{-\rho\tau}\big]+c_0e^{-\rho T_0},
+\]
+because at time $\tau\wedge\theta$ either the state is on $\partial B_r$ ($w=0$), or $\tau\le\theta$ ($w\le1$), or $\theta=T_0$ ($e^{-\rho\theta}w\le c_0e^{-\rho T_0}$). With $e^{-\rho T_0}=\tfrac12$, the two expectations sum to at least $c_0/2$, so $-\eta\le-\min\{\gamma,2\delta'\}\,c_0/2$ for every $\eta>0$, a contradiction.
+\end{proof}
+
+\begin{aremark}[Relation to the literature]
+The inequalities above are the dynamic programming principle for combined control and discretionary stopping, specialized to this model. Its two one-sided specializations are textbook theorems, verified against the books, though under their own hypotheses (a bounded domain in the first; no simultaneous control and growth restrictions on the reward in the second), which this model does not satisfy, so they are named here as analogues rather than applied: for control with exit at the boundary of a bounded domain, Fleming and Soner (2006), Theorem~V.2.1 and Corollary~V.3.1, under their IV(6.1) and IV(6.3); for stopping with no simultaneous control, Pham (2009), Theorem~5.2.1 with Remark~5.2.1, whose Lemma~5.2.2 and Proposition~5.2.1 also prove interior $C^2$ regularity and one-dimensional smooth fit by the same arguments used below. The mixed case is the subject of Chancelier, \O ksendal and Sulem (2002); general proofs are in El Karoui (1981) and Krylov (1980), the sources Pham's own proof names. It is proved here rather than cited because no source we could check states the mixed case at theorem level for rewards of this growth, and because translation invariance makes the proof short.
+\end{aremark}
+
+\subsection{Regularity, smooth fit and verification}
+
+Let $a:=\tfrac12\sigma^2$. For $p>-1/\rho$, $\sup_{q>0}\{-qp-H_\rho(q)\}=-\log(1+\rho p)$, attained at $q=\rho/(1+\rho p)$. The Hamilton-Jacobi-Bellman variational inequality for \eqref{eq:F} is
+\begin{equation}
+\min\Big\{F,\ \rho F-aF''-\mut F'+\log(1+\rho F')-f\Big\}=0 , \label{eq:HJB}
+\end{equation}
+with viscosity solutions in the standard sense of Lemma~\ref{lem:visc}. (For classical solutions this is the same as $\max\{-F,\ aF''+\mut F'-\rho F-\log(1+\rho F')+f\}=0$; the $\min$ form is the one whose operator is proper and degenerate elliptic, so the standard inequalities apply to it.)
+
+\begin{alemma}[Regularity in the continuation region]\label{lem:reg}
+$F\in C^2((b,\infty))$, $F'\ge0$, and on $(b,\infty)$
+\begin{equation}
+aF''+\mut F'-\rho F-\log(1+\rho F')+f=0 . \label{eq:ODE}
+\end{equation}
+\end{alemma}
+
+\begin{proof}
+(i) \emph{Test slopes are nonnegative.} Any nondecreasing function $G$ has this property. If a smooth $\varphi$ touches $G$ from above at $y_0$, then $\varphi(y)-\varphi(y_0)\ge G(y)-G(y_0)\ge0$ for $y>y_0$, so $\varphi'(y_0)\ge0$. If it touches from below, then $\varphi(y)-\varphi(y_0)\le G(y)-G(y_0)\le0$ for $y<y_0$, so again $\varphi'(y_0)\ge0$. So for nondecreasing value functions the Hamiltonian is only evaluated at $p\ge0$, and $-\log(1+\rho p)$ may be replaced by the globally $\rho$-Lipschitz $-\log(1+\rho p^+)$ without changing anything.
+
+(ii) \emph{Viscosity property and the limit $\varepsilon\downarrow0$.} For $\varepsilon\in(0,\rho)$, Lemma~\ref{lem:visc} makes $F_\varepsilon$ a continuous viscosity solution of the compact-control variational inequality with Hamiltonian $\mathcal H_\varepsilon$, and $F_\varepsilon$ is nondecreasing.
+
+As $\varepsilon\downarrow0$, $F_\varepsilon\uparrow F$. To see this, take $(q,\tau)$ with $q\le\rho$ (Lemma~\ref{lem:trunc}) and $J(y;q,\tau)>-\infty$. The control $q\vee\varepsilon$ lies in $[\varepsilon,\rho]$. It satisfies $H_\rho(q\vee\varepsilon)\le H_\rho(q)$ because $H_\rho$ is decreasing on $(0,\rho]$, and $Y^{q\vee\varepsilon}_t\ge Y^q_t-\varepsilon t$. Hence
+\[
+J(y;q\vee\varepsilon,\tau)\ge E\int_0^\tau e^{-\rho t}\big[f(Y^q_t-\varepsilon t)-H_\rho(q_t)\big]dt\ \longrightarrow\ J(y;q,\tau),
+\]
+by dominated convergence, since $|f(Y^q_t-\varepsilon t)|\le\alpha\lambda+\alpha e^{Y^q_t}$. Because $F$ is continuous (Lemma~\ref{lem:mono}), Dini's theorem makes the convergence locally uniform.
+
+The operators must also converge, not only the solutions. As written they do not converge on negative slopes: for $p<0$ the supremum defining $\mathcal H_\varepsilon(p)$ is attained at $q=\rho$, giving $\mathcal H_\varepsilon(p)=-\rho p\ne0=-\log(1+\rho p^+)$. So first use step (i): since $F_\varepsilon$ is nondecreasing, every test slope is nonnegative, and $F_\varepsilon$ is equally a viscosity solution of the equation with $\mathcal H_\varepsilon(p)$ replaced by $\mathcal H_\varepsilon(p^+)$. For $0\le p\le 1/\varepsilon-1/\rho$ the unconstrained maximizer $\rho/(1+\rho p)$ lies in $[\varepsilon,\rho]$, so $\mathcal H_\varepsilon(p^+)=-\log(1+\rho p^+)$ for all $p\le 1/\varepsilon-1/\rho$. The modified operators therefore converge locally uniformly on all of $\R$ (they coincide with the limit on any bounded set once $\varepsilon$ is small). Stability under these convergences is elementary enough to prove here. Write $E_\varepsilon(y,r,p,X):=\min\{r,\ \rho r-aX-\mut p-\mathcal H_\varepsilon(p^+)-f(y)\}$ and $E$ for the same expression with $\log(1+\rho p^+)$ in place of $-\mathcal H_\varepsilon(p^+)$; then $E_\varepsilon\to E$ locally uniformly because the outer $\min$ is $1$-Lipschitz. Let $\varphi\in C^2$ and let $F-\varphi$ have a local maximum at $y_0$; replacing $\varphi(y)$ by $\varphi(y)+\kappa(y-y_0)^2$ and letting $\kappa\downarrow0$ at the end, we may take the maximum strict on a closed ball $\bar B$ around $y_0$. Since $F_\varepsilon\to F$ uniformly on $\bar B$, a maximum point $y_\varepsilon$ of $F_\varepsilon-\varphi$ over $\bar B$ converges to $y_0$: any limit point $\hat y$ satisfies $(F-\varphi)(\hat y)\ge\limsup(F_\varepsilon-\varphi)(y_\varepsilon)\ge\lim(F_\varepsilon-\varphi)(y_0)=(F-\varphi)(y_0)$, and $y_0$ is the strict maximizer. So $y_\varepsilon$ is interior for small $\varepsilon$, the subsolution property of $F_\varepsilon$ gives $E_\varepsilon(y_\varepsilon,F_\varepsilon(y_\varepsilon),\varphi'(y_\varepsilon),\varphi''(y_\varepsilon))\le0$, and passing to the limit (continuity of $\varphi',\varphi''$, $F_\varepsilon(y_\varepsilon)\to F(y_0)$, locally uniform convergence of $E_\varepsilon$) gives $E(y_0,F(y_0),\varphi'(y_0),\varphi''(y_0))\le0$. The supersolution half is the mirror image with minima. Hence $F$ is a continuous viscosity solution of \eqref{eq:HJB} with $-\log(1+\rho p^+)$; no outside stability theorem is needed.
+
+(iii) Fix a compact interval $I=[y_1,y_2]\subset(b,\infty)$. On $I$, $F>0$, so $F$ is a viscosity solution of \eqref{eq:ODE} (with $p^+$) on the interior of $I$. The two-point boundary value problem $a u''=R(y,u,u')$ on $I$, $u(y_i)=F(y_i)$, with $R(y,r,p):=\rho r-\mut p+\log(1+\rho p^+)-f(y)$, has exactly one solution $u\in C^2(I)$, by shooting. Note that $R$ is continuous, locally Lipschitz in $(r,p)$, satisfies $R(y,r,p)-R(y,r',p)=\rho(r-r')$, and is globally Lipschitz in $p$ with constant $L:=|\mut|+\rho$. Solutions $u_m$ of the initial value problem $u(y_1)=F(y_1)$, $u'(y_1)=m$ exist on all of $I$ ($|R|$ grows at most linearly in $(|r|,|p|)$, so Gr\"onwall's inequality forbids blow-up) and depend continuously on $m$. Set $\Phi(m):=u_m(y_2)$. For $m_1>m_2$ put $w:=u_{m_1}-u_{m_2}$, so $w(y_1)=0$, $w'(y_1)=m_1-m_2>0$, and $aw''\ge\rho w-L|w'|$ pointwise. The derivative $w'$ never vanishes: at a first zero $z$ of $w'$ one has $w>0$ on $(y_1,z]$ and $w''(z)=\lim_{s\uparrow z}-w'(s)/(z-s)\le0$, while $aw''(z)\ge\rho w(z)>0$. So $w'>0$ on $I$, and $v:=w'$ satisfies $av'\ge\rho w-Lv\ge-Lv$, hence $v(y)\ge(m_1-m_2)e^{-L(y-y_1)/a}$ and
+\[
+\Phi(m_1)-\Phi(m_2)\ \ge\ (m_1-m_2)\int_{y_1}^{y_2}e^{-L(s-y_1)/a}\,ds\ =:\ (m_1-m_2)\,\kappa,\qquad \kappa>0 .
+\]
+Thus $\Phi$ is continuous and strictly increasing, and it is onto $\R$ because the same inequality gives $\Phi(m)\ge\Phi(0)+m\kappa\to\infty$ as $m\to\infty$ and $\Phi(m)\le\Phi(0)+m\kappa\to-\infty$ as $m\to-\infty$. So there is exactly one $m$ with $\Phi(m)=F(y_2)$.
+
+(iv) \emph{Comparison with the classical solution.} Write the equation as $G(y,u,u',u'')=0$ with $G(y,r,p,X):=\rho r-aX-\mut p+\log(1+\rho p^+)-f(y)$. Since $F>0$ on $I$, the first component of the min in \eqref{eq:HJB} is positive there, so near any interior point the min is decided by its second component, which is $G$, and the viscosity property says: if a $C^2$ function $\varphi$ touches $F$ from above at an interior point $y_0$, then $G(y_0,F(y_0),\varphi'(y_0),\varphi''(y_0))\le0$; from below, $\ge0$. Let $u$ be the solution from (iii) and suppose $m:=\max_I(F-u)>0$. Because $F=u$ at both endpoints, the maximum is attained at an interior $y_0$, and $\varphi:=u+m$ touches $F$ from above there. Hence $G(y_0,F(y_0),u'(y_0),u''(y_0))\le0$, while $G(y_0,u(y_0),u'(y_0),u''(y_0))=0$ because $u$ is a classical solution. The two differ only in the $r$ slot, so subtracting gives $\rho\big(F(y_0)-u(y_0)\big)\le0$, that is $\rho m\le0$, a contradiction. The mirror argument at an interior minimum, with $\varphi:=u-m'$ touching from below, rules out $\min_I(F-u)<0$. Hence $u=F$ on $I$. This is the special case, one function classical, of the comparison principle of Crandall, Ishii and Lions (1992), Theorem~3.3 with Example~3.6 (checked against the article); in that case only the strict monotonicity of $G$ in $r$ is needed. Since $I$ is arbitrary, $F\in C^2((b,\infty))$ and \eqref{eq:ODE} holds there; $F'\ge0$ by Lemma~\ref{lem:mono}.
+\end{proof}
+
+\begin{alemma}[Smooth fit and boundary curvature]\label{lem:sf}
+$F\in C^1(\R)$ with $F'(b)=0$, and
+\[
+F''(b+)=\frac{2\alpha\lambda(1-e^b)}{\sigma^2}>0 .
+\]
+\end{alemma}
+
+\begin{proof}
+On $(-\infty,b]$, $F\equiv0$, so $F'(b-)=0$. On $(b,b+1]$, $F$ is bounded and $0\le F'\le\alpha\lambda e^{b+1}/(\rho-D)$ by Lemma~\ref{lem:mono}, so \eqref{eq:ODE} bounds $F''$. Hence $F'$ is Lipschitz on $(b,b+1)$ and $c:=F'(b+)=\lim_{y\downarrow b}F'(y)\ge0$ exists. Let $K$ be the Lipschitz constant of $F'$ on $(b,b+1)$; then $F(y)\ge c(y-b)-K(y-b)^2$ there. Suppose $c>0$, fix $p\in(0,c)$, and for $\kappa>0$ let $\varphi_\kappa(y):=p(y-b)+(y-b)^2/(2\kappa)$. For $b-2\kappa p\le y<b$, $\varphi_\kappa(y)\le0=F(y)$; for $0<y-b\le(c-p)/(K+1/(2\kappa))$, $\varphi_\kappa(y)\le c(y-b)-K(y-b)^2\le F(y)$. So $\varphi_\kappa$ touches $F$ from below at $b$, where $\varphi_\kappa(b)=F(b)=0$, and the supersolution property of $F$ (step (ii) of Lemma~\ref{lem:reg}) makes both components of the min in \eqref{eq:HJB} nonnegative at $b$. With $\varphi_\kappa(b)=0$, $\varphi_\kappa'(b)=p$ and $\varphi_\kappa''(b)=1/\kappa$, the second component reads, after a change of sign,
+\[
+\frac{a}{\kappa}+\mut p-\log(1+\rho p)+f(b)\ \le\ 0 .
+\]
+This fails for small $\kappa$ because $a=\sigma^2/2>0$. So $c=0$ and $F\in C^1(\R)$. (This is the argument of Pham (2009), Proposition~5.2.1, checked against the book, carried over to the controlled problem; it needs only $\sigma>0$.) Letting $y\downarrow b$ in \eqref{eq:ODE} with $F,F'\to0$ gives $aF''(b+)=-f(b)=\alpha\lambda(1-e^b)$, which is positive because $b<0$.
+\end{proof}
+
+\begin{alemma}[Regularity across the reference]\label{lem:kink}
+$F$ is $C^2$ in a neighborhood of $y=0$ (that is, across $x=1$). Its third derivative jumps there by
+\[
+F'''(0+)-F'''(0-)=\frac{2\alpha(\lambda-1)}{\sigma^2},
+\]
+so $F\notin C^3$ at $0$ when $\lambda>1$, while $F$ is $C^\infty$ near $0$ when $\lambda=1$.
+\end{alemma}
+
+\begin{proof}
+By Theorem~\ref{thm:threshold}, $0\in(b,\infty)$, so $F\in C^2$ near $0$ by Lemma~\ref{lem:reg}. Differentiating \eqref{eq:ODE} on each side of $0$, every term except $-f'$ is continuous at $0$, and $f'(0\pm)$ equals $\alpha$ from the right and $\alpha\lambda$ from the left. So $a[F''']_0=-[f']_0=\alpha(\lambda-1)$. If $\lambda=1$, then $f(y)=\alpha(e^y-1)$ is smooth near $0$, and bootstrapping \eqref{eq:ODE} gives $F\in C^\infty$ there.
+\end{proof}
+
+\begin{alemma}[It\^o's formula across a point]\label{lem:ito}
+Let $u\in C^1(\R)\cap C^2(\R\setminus\{\hat b\})$ with $u''$ bounded on $K\setminus\{\hat b\}$ for every compact $K$, and let $Y$ solve \eqref{eq:Y} from $Y_0=y$ with a consumption rate $0\le q\le\rho$. Write $\mathcal L^qu:=au''+(\mut-q)u'$, with $u''(\hat b)$ assigned any value. Then a.s., for all $t\ge0$,
+\[
+e^{-\rho t}u(Y_t)=u(y)+\int_0^t e^{-\rho s}\big[(\mathcal L^{q_s}-\rho)u\big](Y_s)\,ds-\sigma\int_0^t e^{-\rho s}u'(Y_s)\,dZ_s .
+\]
+\end{alemma}
+
+\begin{proof}
+\emph{The state spends no time at $\hat b$.} Fix $t$ and $\delta\in(0,1)$, take a smooth $\phi_\delta$ with $\mathbf 1_{[\hat b-\delta/2,\hat b+\delta/2]}\le\phi_\delta\le\mathbf 1_{(\hat b-\delta,\hat b+\delta)}$, and set $g_\delta(z):=\int_{\hat b}^z\int_{\hat b}^w\phi_\delta(r)\,dr\,dw$, so that $g_\delta''=\phi_\delta$, $|g_\delta'|\le2\delta$ and $|g_\delta(z)|\le2\delta|z-\hat b|$. It\^o's formula for the smooth $g_\delta$, whose stochastic integral has a bounded integrand and so has mean zero, gives
+\begin{align*}
+aE\int_0^t\phi_\delta(Y_s)\,ds&=E[g_\delta(Y_t)]-g_\delta(y)-E\int_0^tg_\delta'(Y_s)(\mut-q_s)\,ds\\
+&\le\ 2\delta\Big(E|Y_t-\hat b|+|y-\hat b|+(|\mut|+\rho)t\Big).
+\end{align*}
+The bracket is finite since $|Y_t-\hat b|\le|y-\hat b|+(|\mut|+\rho)t+\sigma|Z_t|$. Letting $\delta\downarrow0$, $E\int_0^t\mathbf 1_{\{Y_s=\hat b\}}ds=0$: a.s.\ the times at which $Y_s=\hat b$ form a Lebesgue-null set.
+
+\emph{Mollification.} By the mean value theorem on each side of $\hat b$ and continuity of $u'$ at $\hat b$, $u'$ is locally Lipschitz, hence absolutely continuous with a.e.\ derivative $u''$. Let $u_n:=u*\eta_n$ with a standard mollifier $\eta_n$. Then $u_n$ is smooth, $u_n\to u$ and $u_n'=u'*\eta_n\to u'$ locally uniformly, and $u_n''=u''*\eta_n$ is bounded on compacts uniformly in $n$ and converges to $u''(z)$ at every $z\ne\hat b$. Fix $N$ and let $T_N:=t\wedge\inf\{s:|Y_s|\ge N\}$. The classical It\^o formula holds for each $u_n$ on $[0,T_N]$. As $n\to\infty$: the boundary terms converge; the $ds$-integrand $e^{-\rho s}[(\mathcal L^{q_s}-\rho)u_n](Y_s)$ is bounded uniformly in $n$ and converges at every $s$ with $Y_s\ne\hat b$, so for a.e.\ $s$, a.s., and bounded convergence applies; and the stochastic integrals converge in $L^2$ by the It\^o isometry, because $u_n'\to u'$ uniformly on $[-N,N]$. Letting $N\to\infty$ gives the formula. Under the stronger hypothesis that $u''$ has one-sided limits at $\hat b$, which every candidate of Theorem~\ref{thm:verif} satisfies ($u''(\hat b-)=0$ and $u''(\hat b+)=-f(\hat b)/a$), the formula is also the constant-curve case of the change-of-variable formula of Peskir (2005), Theorem~2.1 (checked against the article), whose local-time term carries the factor $u'(\hat b+)-u'(\hat b-)=0$. The lemma as stated needs only boundedness of $u''$ (for which one-sided limits can fail, e.g.\ $u''(z)=\sin(1/z)$ for $z>0$), which is why it is proved directly.
+\end{proof}
+
+\begin{atheorem}[Verification and uniqueness of the free-boundary problem]\label{thm:verif}
+Call $(\hat b,u)$ a \emph{candidate} if $\hat b<0$; $u\in C^1(\R)\cap C^2(\R\setminus\{\hat b\})$ with $u''$ locally bounded; $u=0$ on $(-\infty,\hat b]$ and $u>0$ on $(\hat b,\infty)$; $0\le u'(y)\le C'e^y$; $0\le u(y)\le Ce^y$; and $u$ solves \eqref{eq:ODE} on $(\hat b,\infty)$. Then:
+\begin{enumerate}
+\item $(b,F)$ is a candidate.
+\item Every candidate equals $(b,F)$. In particular the free-boundary problem has exactly one solution in this class.
+\item The feedback $q^*(y)=\rho/(1+\rho F'(y))\in(0,\rho]$ and the stopping time $\tau^*=\inf\{t:Y_t\le b\}$ are optimal.
+\end{enumerate}
+\end{atheorem}
+
+\begin{proof}
+(1) This follows from Lemmas~\ref{lem:finite}, \ref{lem:mono}, \ref{lem:reg} and \ref{lem:sf} and Theorem~\ref{thm:threshold}.
+
+(2) Let $(\hat b,u)$ be a candidate and $(q,\tau)$ any strategy; by Lemma~\ref{lem:trunc} we may take $q\le\rho$. A verification theorem that requires $u\in C^2(\R)$ does not apply, because $F''(b-)=0<F''(b+)$ (Lemma~\ref{lem:sf}). A candidate does satisfy the hypotheses of Lemma~\ref{lem:ito}, so It\^o's formula applies to $e^{-\rho t}u(Y_t)$, with $u''(\hat b)$ assigned arbitrarily. On $y\le\hat b$, $(\mathcal L^q-\rho)u-H_\rho(q)+f=-H_\rho(q)+f(y)\le0$ because $f(y)\le0$ for $y\le\hat b<0$. On $y>\hat b$, $(\mathcal L^q-\rho)u-H_\rho(q)+f\le\sup_q\{\cdot\}=0$ by \eqref{eq:ODE}. Localizing at $T_n=\tau\wedge n\wedge\inf\{t:|Y_t|\ge n\}$ and using $u\ge0$,
+\[
+u(y)\ \ge\ E\int_0^{T_n}e^{-\rho t}\big[f(Y_t)-H_\rho(q_t)\big]dt .
+\]
+If $E\int_0^\tau e^{-\rho t}H_\rho(q_t)\,dt=\infty$, then $J(y;q,\tau)=-\infty$ and there is nothing to prove. Otherwise the integrand is dominated by $\alpha\lambda+\alpha e^{Y_t}+H_\rho(q_t)$, which has finite discounted expectation because $\rho>D$. Letting $n\to\infty$ by dominated convergence gives $u\ge J(y;q,\tau)$, hence $u\ge F$. For $(q^*,\tau^*)$ built from $u$, every inequality above is an equality. The feedback $q^*=\rho/(1+\rho u')$ takes values in $(0,\rho]$ and is locally Lipschitz, because $u'$ is locally Lipschitz. So the state equation has a unique strong solution, and transversality holds by Lemma~\ref{lem:trunc}. The consumption cost is integrable: $H_\rho(q^*)=q^*/\rho-1+\log(1+\rho u')\le\log(1+\rho C')+Y^+$, and $E\int_0^\infty e^{-\rho t}Y_t^+\,dt<\infty$ because $Y_t\le y+\mut t-\sigma Z_t$. For the terminal term, every control with $q\ge0$ satisfies $e^{-\rho t}u(Y_t)\le Ce^{y}\exp\!\big(-\sigma Z_t-(\tfrac12\sigma^2+\rho-D)t\big)$. Because $\rho>D$, the right-hand side is $Ce^yG_t$ with $G$ as in Lemma~\ref{lem:bm}(b) for $\kappa=\rho-D$, so its running supremum is integrable and it tends to $0$ a.s. By dominated convergence, $E[e^{-\rho T_n}u(Y_{T_n})]\to0$, since $u(Y_{\tau^*})=u(b)=0$ on $\{\tau^*<\infty\}$ and $e^{-\rho t}u(Y_t)\to0$ a.s.\ on $\{\tau^*=\infty\}$. Hence $u=J(y;q^*,\tau^*)\le F$, so $u=F$ and $\hat b=\sup\{u=0\}=b$.
+
+(3) This is the equality case of (2) with $u=F$.
+\end{proof}
+
+\begin{aremark}[What the growth and sign conditions exclude]
+Uniqueness in Theorem~\ref{thm:verif} is among candidates, not among all solutions of the ordinary differential equation. At the parameters $\rho=.1$, $\alpha=1$, $\lambda=2$, $r_R=r_W$, $\sigma=.25$ (Appendix~\ref{app:C}), integrating \eqref{eq:ODE} from $u(\hat b)=u'(\hat b)=0$ gives three different outcomes depending on the starting point $e^{\hat b}$:
+\begin{itemize}
+\item from $e^{\hat b}=0.55$, a solution with $u(8)/e^8=77.8$, far above the admissible coefficient $\alpha/(\rho-D)=26.67$;
+\item from $e^{\hat b}=0.60$, a solution whose derivative turns negative;
+\item from $e^{\hat b}=x^*=0.57932$, the solution with $u(8)/e^8=26.6$.
+\end{itemize}
+Together, the growth bound and $u'\ge0$ suffice to single out $x^*$ (Theorem~\ref{thm:verif}). The trajectories illustrate the kind of branch each condition excludes; they do not show that either condition is separately necessary, and no classification of the remaining solutions is claimed.
+\end{aremark}
+
+\begin{aremark}[What this appendix proves]
+Proposition~\ref{prop:reduction} and Theorem~\ref{thm:main}, with no transversality or other admissibility assumption on plans. Everything from Lemma~\ref{lem:bm} on assumes $\sigma>0$. If the ratio is deterministic (in the extension of Section~\ref{sec:wealth}, when $S=0$), smooth fit can fail, and the extension assumes $S>0$. Three steps that standard treatments cite are proved here instead, because no source we could check covers combined control and stopping with rewards of this growth: the dynamic programming step (Lemmas~\ref{lem:paste}, \ref{lem:cond} and \ref{lem:visc}), the comparison step (iv) of Lemma~\ref{lem:reg}, and the generalized It\^o formula of Lemma~\ref{lem:ito}. No step rests on a cited theorem beyond the standard tools listed at the start of this appendix.
+\end{aremark}
+
