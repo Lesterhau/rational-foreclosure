@@ -4,6 +4,8 @@ name: Update Hope Gap data
 # Census Bureau, and publishes it to the gh-pages branch under /data.
 # Group pay trends (Census QWI, large files, released quarterly) are rebuilt when they are more
 # than 28 days old, on every push that changes build_groups.py, and on request.
+# Any failed run, or any source that could not be refreshed, opens (or comments on) a GitHub issue.
+# GitHub often starts scheduled runs several hours late; that is normal.
 on:
   schedule:
     - cron: "17 13 * * 1,4"
@@ -19,6 +21,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: hope-gap-data
@@ -89,3 +92,40 @@ jobs:
           cp ../gout/groups_log.txt data/ || true
           git add data
           if git diff --cached --quiet; then echo "no changes"; else git commit -m "Update Hope Gap group pay trends $(date -u +%F)" && git push origin HEAD:gh-pages; fi
+      - name: Open a GitHub issue if anything went wrong
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'EOF'
+          import json, os, re, subprocess
+          probs = []
+          if os.environ.get("JOB_STATUS") != "success":
+              probs.append("The run did not finish (status: %s). Open the run below to see which step failed." % os.environ.get("JOB_STATUS"))
+          try:
+              m = re.search(r"^status (\{.*\})$", open("out/build_log.txt").read(), re.M)
+              st = json.loads(m.group(1)) if m else {}
+              if not m:
+                  probs.append("The build log has no status line.")
+              probs += ["Source '%s' was not refreshed (%s); the page keeps its previous data for it." % (k, v) for k, v in st.items() if v != "ok"]
+          except FileNotFoundError:
+              probs.append("No build log was written.")
+          if os.path.exists("gout/groups_log.txt"):
+              g = open("gout/groups_log.txt").read()
+              if "FATAL" in g or not os.path.exists("gout/groups.json"):
+                  probs.append("Group pay trends (Census QWI) failed to rebuild; the page keeps the previous groups.json.")
+          if not probs:
+              print("no problems")
+              raise SystemExit(0)
+          run = "%s/%s/actions/runs/%s" % (os.environ["GITHUB_SERVER_URL"], os.environ["GITHUB_REPOSITORY"], os.environ["GITHUB_RUN_ID"])
+          body = "\n".join("- " + p for p in probs) + "\n\nRun: " + run
+          title = "Data refresh problem"
+          num = subprocess.run(["gh", "issue", "list", "--state", "open", "--search", title + " in:title", "--json", "number", "--jq", ".[0].number"],
+                               capture_output=True, text=True).stdout.strip()
+          if num:
+              subprocess.run(["gh", "issue", "comment", num, "--body", body], check=False)
+          else:
+              subprocess.run(["gh", "issue", "create", "--title", title, "--label", "bug", "--body",
+                              body + "\n\nThis issue was opened automatically by the data workflow. Later problems are added as comments. Close it once fixed."], check=False)
+          EOF
