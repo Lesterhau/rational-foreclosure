@@ -9,9 +9,9 @@ Wealth evolves as $dW_t=(r_W W_t-c_t)\,dt$ and the reference as $dR_t=r_R R_t\,d
 \begin{equation}
 dY_t=(\mut-q_t)\,dt-\sigma\,dZ_t,\qquad \mut:=r_W-r_R+\tfrac12\sigma^2 . \label{eq:Y}
 \end{equation}
-Set
+Set $a:=\tfrac12\sigma^2$ and
 \begin{equation}
-D:=\mut+\tfrac12\sigma^2=r_W-r_R+\sigma^2,\qquad f(y):=\alpha\,v(e^y-1),\qquad H_\rho(q):=\frac q\rho-1-\log\frac q\rho\ \ (\ge 0),
+D:=\mut+a=r_W-r_R+\sigma^2,\qquad f(y):=\alpha\,v(e^y-1),\qquad H_\rho(q):=\frac q\rho-1-\log\frac q\rho\ \ (\ge 0),
 \end{equation}
 where $v(u)=u$ for $u\ge0$ and $v(u)=\lambda u$ for $u<0$, with $\alpha>0$ and $\lambda\ge1$. Note that $E[e^{Y_t}]\le e^{y+Dt}$ for every control with $q\ge0$, since consumption only lowers $Y$ pathwise.
 
@@ -20,7 +20,7 @@ A \emph{consumption rate} is a progressively measurable process $q\ge0$ with $\i
 \[
 P_T:=\int_0^T e^{-\rho t}\big[\log c_t+\mathbf 1_{\{t<\tau\}}f(Y_t)\big]\,dt,
 \]
-the value of a plan is $\limsup_{T\to\infty}E[P_T]$, and $V(W,R)$ is the supremum of the value over \emph{all} plans. No admissibility restriction is imposed: no transversality condition, no integrability condition on consumption beyond $\int_0^tq_s\,ds<\infty$. Each $E[P_T]$ is well defined in $[-\infty,\infty)$, because $E[P_T^+]<\infty$ when $\rho>D$, by Lemma~\ref{lem:burst} and the budget identity \eqref{eq:budget} below (a pathwise identity whose derivation does not use this fact), and $\limsup$ is the most permissive way to aggregate the truncations: any plan whose truncated payoffs converge gets its limit, and no plan is helped by the choice. For the reduced problem, a \emph{strategy} is the pair $(q,\tau)$ restricted to $[0,\tau)$. A \emph{reference system} is a filtered probability space satisfying the usual conditions, carrying a Brownian motion $Z$ whose increments after each time $t$ are independent of $\cF_t$ (hence, by optional sampling, after each bounded stopping time as well). Strategies and plans live on an arbitrary reference system, and every supremum over them, $V$, $F$ and later $F_\varepsilon$, also runs over the system. The generality costs nothing: every upper bound below is proved strategy by strategy on an arbitrary system, and the supremum is attained by a feedback control on the plain Brownian filtration (Theorem~\ref{thm:verif}). It earns its keep exactly once, in Lemma~\ref{lem:cond}, where conditioning on a past event produces a system whose initial $\sigma$-field is rich. Let $\cA$ denote the set of consumption rates and $\cT$ the set of stopping times. Payoffs take values in $[-\infty,\infty]$, with $H_\rho(0):=+\infty$ and $\log0:=-\infty$.
+the value of a plan is $\limsup_{T\to\infty}E[P_T]$, and $V(W,R)$ is the supremum of the value over \emph{all} plans. No admissibility restriction is imposed: no transversality condition, no integrability condition on consumption beyond $\int_0^tq_s\,ds<\infty$. Each $E[P_T]$ is well defined in $[-\infty,\infty)$, because $E[P_T^+]<\infty$ for every finite $T$, whatever the sign of $\rho-D$, by Lemma~\ref{lem:burst} and the budget identity \eqref{eq:budget} below (a pathwise identity whose derivation does not use this fact), and $\limsup$ is the most permissive way to aggregate the truncations: any plan whose truncated payoffs converge gets its limit, and no plan is helped by the choice. For the reduced problem, a \emph{strategy} is the pair $(q,\tau)$ restricted to $[0,\tau)$. A \emph{reference system} is a filtered probability space satisfying the usual conditions, carrying a Brownian motion $Z$ whose increments after each time $t$ are independent of $\cF_t$ (hence, by optional sampling, after each bounded stopping time as well). Strategies and plans live on an arbitrary reference system, and every supremum over them, $V$, $F$ and later $F_\varepsilon$, also runs over the system. The generality costs nothing: every upper bound below is proved strategy by strategy on an arbitrary system, and the supremum is attained by a feedback control on the plain Brownian filtration (Theorem~\ref{thm:verif}). It earns its keep exactly once, in Lemma~\ref{lem:cond}, where conditioning on a past event produces a system whose initial $\sigma$-field is rich. Let $\cA$ denote the set of consumption rates and $\cT$ the set of stopping times. Payoffs take values in $[-\infty,\infty]$, with $H_\rho(0):=+\infty$ and $\log0:=-\infty$.
 \end{adefinition}
 
 \begin{aremark}[The choice of convention is harmless]\label{rem:conv}
@@ -298,7 +298,7 @@ The inequalities above are the dynamic programming principle for combined contro
 
 \subsection{Regularity, smooth fit and verification}
 
-Let $a:=\tfrac12\sigma^2$. For $p>-1/\rho$, $\sup_{q>0}\{-qp-H_\rho(q)\}=-\log(1+\rho p)$, attained at $q=\rho/(1+\rho p)$. The Hamilton-Jacobi-Bellman variational inequality for \eqref{eq:F} is
+For $p>-1/\rho$, $\sup_{q>0}\{-qp-H_\rho(q)\}=-\log(1+\rho p)$, attained at $q=\rho/(1+\rho p)$. The Hamilton-Jacobi-Bellman variational inequality for \eqref{eq:F} is
 \begin{equation}
 \min\Big\{F,\ \rho F-aF''-\mut F'+\log(1+\rho F')-f\Big\}=0 , \label{eq:HJB}
 \end{equation}
@@ -379,7 +379,7 @@ The bracket is finite since $|Y_t-\hat b|\le|y-\hat b|+(|\mut|+\rho)t+\sigma|Z_t
 \end{proof}
 
 \begin{atheorem}[Verification and uniqueness of the free-boundary problem]\label{thm:verif}
-Call $(\hat b,u)$ a \emph{candidate} if $\hat b<0$; $u\in C^1(\R)\cap C^2(\R\setminus\{\hat b\})$ with $u''$ locally bounded; $u=0$ on $(-\infty,\hat b]$ and $u>0$ on $(\hat b,\infty)$; $0\le u'(y)\le C'e^y$; $0\le u(y)\le Ce^y$; and $u$ solves \eqref{eq:ODE} on $(\hat b,\infty)$. Then:
+Call $(\hat b,u)$ a \emph{candidate} if $\hat b<0$; $u\in C^1(\R)\cap C^2(\R\setminus\{\hat b\})$ with $u''$ locally bounded; $u=0$ on $(-\infty,\hat b]$ and $u>0$ on $(\hat b,\infty)$; $0\le u'(y)\le C'e^y$; $0\le u(y)\le Ce^y$; and $u$ solves \eqref{eq:ODE} on $(\hat b,\infty)$. (The last condition implies the regularity above $\hat b$: \eqref{eq:ODE} gives $u''$ in terms of $u$ and $u'$, so $u$ is $C^2$ there with $u''$ bounded near $\hat b$. Theorem~\ref{thm:main}(d) therefore describes the same class.) Then:
 \begin{enumerate}
 \item $(b,F)$ is a candidate.
 \item Every candidate equals $(b,F)$. In particular the free-boundary problem has exactly one solution in this class.
@@ -394,7 +394,7 @@ Call $(\hat b,u)$ a \emph{candidate} if $\hat b<0$; $u\in C^1(\R)\cap C^2(\R\set
 \[
 u(y)\ \ge\ E\int_0^{T_n}e^{-\rho t}\big[f(Y_t)-H_\rho(q_t)\big]dt .
 \]
-If $E\int_0^\tau e^{-\rho t}H_\rho(q_t)\,dt=\infty$, then $J(y;q,\tau)=-\infty$ and there is nothing to prove. Otherwise the integrand is dominated by $\alpha\lambda+\alpha e^{Y_t}+H_\rho(q_t)$, which has finite discounted expectation because $\rho>D$. Letting $n\to\infty$ by dominated convergence gives $u\ge J(y;q,\tau)$, hence $u\ge F$. For $(q^*,\tau^*)$ built from $u$, every inequality above is an equality. The feedback $q^*=\rho/(1+\rho u')$ takes values in $(0,\rho]$ and is locally Lipschitz, because $u'$ is locally Lipschitz. So the state equation has a unique strong solution, and transversality holds by Lemma~\ref{lem:trunc}. The consumption cost is integrable: $H_\rho(q^*)=q^*/\rho-1+\log(1+\rho u')\le\log(1+\rho C')+Y^+$, and $E\int_0^\infty e^{-\rho t}Y_t^+\,dt<\infty$ because $Y_t\le y+\mut t-\sigma Z_t$. For the terminal term, every control with $q\ge0$ satisfies $e^{-\rho t}u(Y_t)\le Ce^{y}\exp\!\big(-\sigma Z_t-(\tfrac12\sigma^2+\rho-D)t\big)$. Because $\rho>D$, the right-hand side is $Ce^yG_t$ with $G$ as in Lemma~\ref{lem:bm}(b) for $\kappa=\rho-D$, so its running supremum is integrable and it tends to $0$ a.s. By dominated convergence, $E[e^{-\rho T_n}u(Y_{T_n})]\to0$, since $u(Y_{\tau^*})=u(b)=0$ on $\{\tau^*<\infty\}$ and $e^{-\rho t}u(Y_t)\to0$ a.s.\ on $\{\tau^*=\infty\}$. Hence $u=J(y;q^*,\tau^*)\le F$, so $u=F$ and $\hat b=\sup\{u=0\}=b$.
+If $E\int_0^\tau e^{-\rho t}H_\rho(q_t)\,dt=\infty$, then $J(y;q,\tau)=-\infty$ and there is nothing to prove. Otherwise the integrand is dominated by $\alpha\lambda+\alpha e^{Y_t}+H_\rho(q_t)$, which has finite discounted expectation because $\rho>D$. Letting $n\to\infty$ by dominated convergence gives $u\ge J(y;q,\tau)$, hence $u\ge F$. For $(q^*,\tau^*)$ built from $u$, every inequality above is an equality. The feedback $q^*=\rho/(1+\rho u')$ takes values in $(0,\rho]$ and is locally Lipschitz, because $u'$ is locally Lipschitz. So the state equation has a unique strong solution. The consumption cost is integrable: $H_\rho(q^*)=q^*/\rho-1+\log(1+\rho u')\le\log(1+\rho C')+Y^+$, and $E\int_0^\infty e^{-\rho t}Y_t^+\,dt<\infty$ because $Y_t\le y+\mut t-\sigma Z_t$. For the terminal term, every control with $q\ge0$ satisfies $e^{-\rho t}u(Y_t)\le Ce^{y}\exp\!\big(-\sigma Z_t-(\tfrac12\sigma^2+\rho-D)t\big)$. Because $\rho>D$, the right-hand side is $Ce^yG_t$ with $G$ as in Lemma~\ref{lem:bm}(b) for $\kappa=\rho-D$, so its running supremum is integrable and it tends to $0$ a.s. By dominated convergence, $E[e^{-\rho T_n}u(Y_{T_n})]\to0$, since $u(Y_{\tau^*})=u(b)=0$ on $\{\tau^*<\infty\}$ and $e^{-\rho t}u(Y_t)\to0$ a.s.\ on $\{\tau^*=\infty\}$. Hence $u=J(y;q^*,\tau^*)\le F$, so $u=F$ and $\hat b=\sup\{u=0\}=b$.
 
 (3) This is the equality case of (2) with $u=F$.
 \end{proof}

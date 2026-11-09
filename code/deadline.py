@@ -5,8 +5,15 @@ before the race ends, by backward induction on the variational inequality
     max( -dF/ds + a F'' + mut F' - rho F - log(1 + rho max(F',0)) + f(y),  -F ) = 0,   F_0 = 0,
 with a = sigma^2/2, mut = sigma^2/2 - gap, f(y) = alpha v(e^y - 1). Implicit Euler in s for the linear part,
 the consumption term and the flow explicit; each step's complementarity problem (F >= 0) is solved exactly by
-the Brennan-Schwartz sweep, the standard method for American-style stopping problems with one boundary. Boundary: F = 0 at the bottom of the grid; F'' = F' at the top
-(exact for A e^y + const, the far-field shape).
+the Brennan-Schwartz sweep, the standard method for American-style stopping problems with one boundary. Boundary: F = 0 at the bottom of the grid;
+at the top, F'' - F' = (1 - e^{-rho s})/rho, the far-field condition. For large y the solution behaves like
+A(s) e^y + B(s) y + C(s) with B(s) = -(1 - e^{-rho s})/rho (the y-terms of the equation give B' = -rho B - 1, B(0) = 0),
+and the discrete top condition below is exact for that shape. In the stationary limit this is the far field
+A e^y - y/rho + C used by solver.py. The grid runs from y = -6 to y = 6.
+(Before November 9, 2026 the code imposed F'' = F', exact only for A e^y + C, with the grid's top at y = 2.5. The
+first two calibrations are unchanged to four digits; the third, where rho < D and the value grows fastest, came out
+too high at long horizons: 0.5027 instead of 0.5016 at s = 40, and 0.3296 instead of 0.3104 at s = 100. Raising the
+top to y = 8, under either top condition, reproduces the current values.)
 
 Reports the quitting point x*_s = exp(b(s)) for several s, checks that it falls as s grows, and checks that
 it approaches the stationary threshold of solver.py when rho > D. In the second calibration rho <= D, so the
@@ -17,7 +24,7 @@ import numpy as np
 from scipy.linalg import solve_banded
 
 
-def deadline(rho, alpha, lam, gap, sig, S, yL=-6.0, yU=2.5, dy=0.005, ds=1 / 100, report=None):
+def deadline(rho, alpha, lam, gap, sig, S, yL=-6.0, yU=6.0, dy=0.005, ds=1 / 100, report=None, far_y=True):
     a = sig ** 2 / 2
     mut = sig ** 2 / 2 - gap
     y = np.arange(yL, yU + dy / 2, dy)
@@ -32,8 +39,11 @@ def deadline(rho, alpha, lam, gap, sig, S, yL=-6.0, yU=2.5, dy=0.005, ds=1 / 100
     ab[0, 1:] = up
     ab[1, :] = di
     ab[2, :-1] = lo
-    # top boundary: F_{n-1} = F_{n-2} + e^dy (F_{n-2} - F_{n-3}) folded into the last interior row
+    # top boundary: F_{n-1} = F_{n-2} + e^dy (F_{n-2} - F_{n-3}) + kap(s), folded into the last interior row.
+    # This is exact for A e^y + B y + C with kap = B dy (1 - e^dy); with B(s) = -(1 - e^{-rho s})/rho it is the
+    # discrete form of F'' - F' = (1 - e^{-rho s})/rho. far_y=False drops the y-term (the pre-Nov-2026 condition F'' = F').
     ed = np.exp(dy)
+    kap = (lambda s: (1 - np.exp(-rho * s)) / rho * dy * (ed - 1)) if far_y else (lambda s: 0.0)
     ab[1, -1] = di + up * (1 + ed)
     ab[2, -2] = lo - up * ed
     # Brennan-Schwartz: eliminate from the top of the grid down, then substitute from the bottom up, projecting onto
@@ -53,8 +63,10 @@ def deadline(rho, alpha, lam, gap, sig, S, yL=-6.0, yU=2.5, dy=0.005, ds=1 / 100
     out = {}
     k = 0
     for i in range(1, steps + 1):
+        s = i * ds
         Fp = (F[2:] - F[:-2]) / (2 * dy)
         rhs = (F[1:-1] + ds * (f[1:-1] - np.log1p(rho * np.maximum(Fp, 0.0)))).tolist()
+        rhs[-1] -= up * kap(s)
         rp = rhs[:]
         for j in range(m - 2, -1, -1):
             rp[j] = rhs[j] - ratl[j] * rp[j + 1]
@@ -66,8 +78,7 @@ def deadline(rho, alpha, lam, gap, sig, S, yL=-6.0, yU=2.5, dy=0.005, ds=1 / 100
             col[j] = prev
         F[1:-1] = col
         F[0] = 0.0
-        F[-1] = F[-2] + ed * (F[-2] - F[-3])
-        s = i * ds
+        F[-1] = F[-2] + ed * (F[-2] - F[-3]) + kap(s)
         while k < len(want) and s >= want[k] - 1e-9:
             out[want[k]] = boundary(y, F)
             k += 1

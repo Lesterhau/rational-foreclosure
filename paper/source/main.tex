@@ -289,7 +289,7 @@ Appendix~\ref{app:B}.
 The jumpier the target, the further behind the agent should be willing to fall before quitting. A jumpy target can come back to her; a steady one that is pulling away will not.
 \end{inwords}
 
-The proof works through convexity: when the value of staying is convex in the ratio, extra spread raises its expected value, as for any option. With $\lambda=1$ convexity always holds, because the value is then the best of many strategies, each linear in the starting ratio. Loss aversion puts a kink in the flow payoff at par, which pushes the other way. In 143 of the 162 grid cases with $\lambda>1$ computed in Appendix~\ref{app:C} the value is still convex, and part (b) applies. In the other 19, which combine strong loss aversion with a high positional weight, the value bends the wrong way in a narrow band around par, and the proof does not reach them. The comparison there is numerical, and the value of staying need not rise everywhere. In one such case (Appendix~\ref{app:C}), more volatility lowers the value at par by about 6 percent while raising it near the threshold, and the threshold still falls, from $0.542$ to $0.507$. For a strongly loss-averse agent, a jumpier benchmark makes the race worse near par, where it threatens a painful shortfall, and better near the threshold, where it offers a way back. A proof for these cases cannot compare values everywhere; it would have to work at the threshold itself.
+The proof works through convexity: when the value of staying is convex in the ratio, extra spread raises its expected value, as for any option. With $\lambda=1$ convexity always holds, because the value is then the best of many strategies, each a straight line in the starting ratio. Loss aversion puts a kink in the flow payoff at par, which pushes the other way. In 143 of the 162 grid cases with $\lambda>1$ computed in Appendix~\ref{app:C} the value is still convex, and part (b) applies. All three calibrations of Table~\ref{tab:calib} are convex too (Appendix~\ref{app:C}), so part (b) covers the baseline comparison below, from 10 to 20 percent volatility; the computation supplies its size, not its sign. In the other 19, which combine strong loss aversion with a high positional weight, the value bends the wrong way in a narrow band around par, and the proof does not reach them. The comparison there is numerical, and the value of staying need not rise everywhere. In one such case (Appendix~\ref{app:C}), more volatility lowers the value at par by about 6 percent while raising it near the threshold, and the threshold still falls, from $0.542$ to $0.507$. For a strongly loss-averse agent, a jumpier benchmark makes the race worse near par, where it threatens a painful shortfall, and better near the threshold, where it offers a way back. A proof for these cases cannot compare values everywhere; it would have to work at the threshold itself.
 
 \begin{result}[Volatility delays exit: all cases computed]\label{res:vol}
 Across a grid of discount rates, positional weights, loss aversion and growth rates, with $\sigma$ from $0.05$ to $0.40$, $x^*$ fell with $\sigma$ in all 2,016 comparisons of consecutive volatilities: 576 with the drift gap fixed, 684 with the median growth fixed, and 756 with the expected growth fixed. At the baseline:
@@ -329,7 +329,7 @@ Appendix~\ref{app:B}.
 \begin{proposition}[Faster benchmarks and stronger loss aversion speed exit]\label{prop:drift}
 Under Assumption~\ref{ass:main}, holding the other parameters fixed:
 \begin{enumerate}[label=(\alph*)]
-\item $x^*$ is nondecreasing in the drift gap $\delta$;
+\item $x^*$ is strictly increasing in the drift gap $\delta$;
 \item $x^*$ is strictly increasing in the loss-aversion parameter $\lambda$.
 \end{enumerate}
 \end{proposition}
@@ -400,10 +400,10 @@ Table~\ref{tab:deadline} puts numbers on it. At the baseline, time barely matter
 \midrule
 Baseline & 0.966 & 0.946 & 0.944 & 0.942 & 0.942 & 0.942 \\
 Moderate volatility & 0.932 & 0.878 & 0.852 & 0.835 & 0.823 & 0.818 \\
-Volatile, $D>\rho$ & 0.882 & 0.763 & 0.689 & 0.604 & 0.503 & none \\
+Volatile, $D>\rho$ & 0.882 & 0.763 & 0.689 & 0.604 & 0.502 & none \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.92\textwidth}{\footnotesize Baseline and moderate volatility are the first two rows of Table~\ref{tab:calib}. The third row has $\sigma=0.25$, $\delta=0.01$, $\alpha=0.5$ and $\lambda=2$, so $D=0.0525>\rho$. Computed by backward induction on the variational inequality for $F_s$ (Appendix~\ref{app:C}). In the first two rows $\rho>D$ and $x^*_s$ approaches $x^*$; in the third $\rho<D$, there is no stationary threshold, and $x^*_s$ keeps falling (0.330 at $s=100$).}
+\par\smallskip\parbox{0.92\textwidth}{\footnotesize Baseline and moderate volatility are the first two rows of Table~\ref{tab:calib}. The third row has $\sigma=0.25$, $\delta=0.01$, $\alpha=0.5$ and $\lambda=2$, so $D=0.0525>\rho$. Computed by backward induction on the variational inequality for $F_s$ (Appendix~\ref{app:C}). In the first two rows $\rho>D$ and $x^*_s$ approaches $x^*$; in the third $\rho<D$, there is no stationary threshold, and $x^*_s$ keeps falling (0.310 at $s=100$).}
 \end{table}
 
 The deadline also separates what the trend decides from what time decides. The sign of $\rho-D$, fixed by the benchmark's drift and volatility and by impatience, sets the floor that the quitting point approaches for those with the most time left: $x^*$ when $\rho>D$, and zero when $\rho\le D$. Standing and time left decide who reaches the quitting point first.
@@ -453,7 +453,7 @@ Let $\tilde\tau$ be the first time $x_t\le\tilde x$, with consumption bounded an
 Both bounds drop nonnegative terms from Proposition~\ref{prop:welfare}. In (a) the ratio must pass through $(\tilde x,x^*]$ before $\tilde\tau$, and with $\sigma>0$ and bounded consumption it does so with positive probability, spending positive time there. In (b), $F>0$ above $\log x^*$ by Theorem~\ref{thm:main}, and $\tilde\tau<\infty$ with positive probability.
 \end{proof}
 
-How large is the loss? Let the agent choose consumption optimally given the imposed rule; this can include consuming faster than $\rho W$ to reach the imposed exit sooner. Figure~\ref{fig:welfare} plots the loss at par against the imposed threshold.
+How large is the loss? Let the agent choose consumption optimally given the imposed rule; this can include consuming faster than $\rho W$ to reach the imposed exit sooner. Her optimal share stays below $3.04\rho$ in every case computed (Appendix~\ref{app:C}), so Proposition~\ref{prop:welfare} applies. Figure~\ref{fig:welfare} plots the loss at par against the imposed threshold.
 
 \begin{result}[Quadratic loss]\label{res:quad}
 At the baseline, the loss at par is $c\,(\log\tilde x-\log x^*)^2$ with $c$ between 5.37 and 5.56 for every imposed threshold computed, from $\tilde x=0.80$ to $\tilde x=0.97$. In the high-volatility calibration the same ratio lies between 14 and 23 over $\tilde x\in[0.50,0.75]$: the loss is quadratic near the threshold and grows somewhat more slowly than that for large forced continuations.
