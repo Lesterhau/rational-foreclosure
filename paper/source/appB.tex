@@ -43,11 +43,25 @@ Write $Q(\beta;a):=a\beta(\beta-1)+D\beta-\rho$, which is the quadratic defining
 
 Fix $s>0$ and write $c_s:=\int_0^se^{(D-\rho)t}\,dt$. Throughout, $J$ is the payoff of \eqref{eq:F}, and $F_s(y):=\sup J(y;q,\tau)$ over consumption rates $q$ and stopping times $\tau\le s$, on an arbitrary reference system as in Definition~\OAref{def:plans}. Nothing below uses $\rho>D$ unless it says so.
 
-(a) Taking $\tau=0$ gives $F_s\ge0$. For any strategy with $\tau\le s$, $-H_\rho\le0$, $f(y)\le\alpha e^y$ and $E[e^{Y_t}]\le e^{y+Dt}$, so $J\le\alpha e^y c_s$. For the reduction, follow the proof of Lemma~\OAref{lem:reduction} with plans whose exit time is at most $s$. The budget identity and the burst bounds concern consumption only and are unchanged. In the upper bound, take $t_0\ge s$, so the positional term vanishes on $(t_0,T]$; and the comparison across positional weights becomes $F_s^{\tilde\alpha}\le F_s+(\tilde\alpha-\alpha)e^yc_s$, by the same domination. Every other step is as written, with each use of $\alpha e^y/(\rho-D)$ replaced by $\alpha e^yc_s$; that bound is the only place the proof uses $\rho>D$. Attainment is as written, since the positional terms of a plan that exits by $s$ are integrable.
+(a) Taking $\tau=0$ gives $F_s\ge0$. For any strategy with $\tau\le s$, $-H_\rho\le0$, $f(y)\le\alpha e^y$ and $E[e^{Y_t}]\le e^{y+Dt}$, so $J\le\alpha e^y c_s$. For the reduction, follow the proof of Lemma~\OAref{lem:reduction} with plans whose exit time is at most $s$. The budget identity \eqref{eq:budget} and the burst bound \eqref{eq:burst} concern consumption only and hold as stated.
+
+\emph{Upper bound.} Take $T>t_0\ge s$ and $w:=1-e^{-\rho(T-t_0)}$. Since $\tau\le s\le t_0$, the positional term has no tail beyond $t_0$, and the bound $\alpha e^ye^{-(\rho-D)t_0}/(\rho-D)$ of that proof is not needed. The same steps give $E[P_T]\le V_{\rm stop}(W_0)+d(T)+e^{-\rho(T-t_0)}g(t_0)+e^{-\rho t_0}g(T-t_0)+wF_s^{\alpha/w}(y)$. The domination above gives $F_s^{\tilde\alpha}\le F_s+(\tilde\alpha-\alpha)e^yc_s$ for $\tilde\alpha\ge\alpha$, so $wF_s^{\alpha/w}\le F_s+\alpha(1-w)e^yc_s$. Hence
+\[
+E[P_T]\ \le\ V_{\rm stop}(W_0)+F_s(y)+d(T)+e^{-\rho(T-t_0)}\big[g(t_0)+\alpha e^yc_s\big]+e^{-\rho t_0}g(T-t_0),
+\]
+and the error tends to $0$ as $T\to\infty$ at fixed $t_0$, with no further limit and no use of $\rho>D$.
+
+\emph{Lower bound.} For any strategy with $q\le\rho$ and $\tau\le s$ (Lemma~\OAref{lem:trunc} loses nothing), extend it by $q\equiv\rho$ after $\tau$. As in the proof of Lemma~\OAref{lem:reduction}, $e^{-\rho T}E|\ell_T|\to0$ and the cost converges monotonically; the positional term lives on $[0,s]$, where $E\int_0^se^{-\rho t}|f(Y_t)|\,dt\le\alpha e^yc_s+\alpha\lambda s<\infty$. So the plan's value is $V_{\rm stop}(W_0)+J(y;q,\tau)$, an honest limit. Taking the supremum gives $V\ge V_{\rm stop}+F_s$. Part (a) is an equality of suprema and does not need an optimal strategy to exist.
 
 (b) \emph{Monotonicity and continuity.} The coupling in the proof of Lemma~\OAref{lem:mono} applies to strategies with $\tau\le s$ and gives, for $y_1<y_2$, $0\le F_s(y_2)-F_s(y_1)\le\alpha\lambda c_s(e^{y_2}-e^{y_1})$. So $F_s$ is nondecreasing and continuous, and $S_s:=\{y:F_s(y)=0\}$ is closed and downward closed.
 
 \emph{Not above par.} If $y>0$, use $q\equiv\rho$ and $\tau=s\wedge\inf\{t:Y_t\le0\}$. Paths are continuous, so $\tau>0$ almost surely, and $f(Y_t)>0$ on $[0,\tau)$; hence $J>0$ and $F_s(y)>0$. So $S_s\subset(-\infty,0]$.
+
+\emph{Not at par.} At $y=0$ use $q\equiv\rho$, so $H_\rho(q)=0$ and $Y_t=mt+\sigma B_t$ with $m:=\mut-\rho$ and $B$ a standard Brownian motion. For $\varepsilon\in(0,1)$ stop at $\tau_\varepsilon:=s\wedge\inf\{t:Y_t\le-\varepsilon\}$. Before $\tau_\varepsilon$, $f(Y_t)\ge-\alpha\lambda(1-e^{-\varepsilon})\ge-\alpha\lambda\varepsilon$. For $t<s$, $Y_t$ on $\{\tau_\varepsilon>t\}$ has density at $z>-\varepsilon$
+\[
+p_\varepsilon(t,z)=e^{mz/\sigma^2-m^2t/(2\sigma^2)}\big[\varphi_t(z)-\varphi_t(z+2\varepsilon)\big],\qquad \varphi_t(z):=\frac{e^{-z^2/(2\sigma^2t)}}{\sigma\sqrt{2\pi t}},
+\]
+by the reflection principle and a change of measure. The bracket is at most $2\varepsilon\sup_{[z,z+2\varepsilon]}|\varphi_t'|$, and integrating over $z$ gives $P(\tau_\varepsilon>t)\le C(\varepsilon/\sqrt t+\varepsilon^2/t)$ for $t\le s$, with $C$ depending only on $m$, $\sigma$ and $s$. Bounding this probability by $1$ for $t\le\varepsilon^2$ gives $E[\tau_\varepsilon]=\int_0^sP(\tau_\varepsilon>t)\,dt=O(\varepsilon)$, so the negative part of $J$ is at most $\alpha\lambda\varepsilon E[\tau_\varepsilon]=O(\varepsilon^2)$. On the rectangle $t\in[s/4,s/2]$, $z\in[1,2]$, $p_\varepsilon/\varepsilon$ converges uniformly, as $\varepsilon\downarrow0$, to $e^{mz/\sigma^2-m^2t/(2\sigma^2)}\,2z\varphi_t(z)/(\sigma^2t)>0$, and $f(z)\ge\alpha(e-1)$ there, so the positive part of $J$ is at least $c\varepsilon$ for some $c>0$ and all small $\varepsilon$. Hence $J(0;\rho,\tau_\varepsilon)>0$ for small $\varepsilon$, $F_s(0)>0$, and $S_s\subset(-\infty,0)$.
 
 \emph{Far enough below.} Fix $\rho'\ge\rho$ with $\rho'>D$ and set $\kappa:=\rho'-\rho\ge0$. For $0\le t\le s$ and all $y$,
 \begin{equation}
@@ -60,7 +74,7 @@ J(y;q,\tau)\ \le\ \alpha\lambda\,E_y\!\int_0^\tau e^{-\rho't}\big(e^{\kappa s}X^
 \]
 $\tilde X$ is a geometric Brownian motion with drift $D$ and volatility $\sigma$, started at $e^y/c$. The proof of Lemma~\OAref{lem:below}, with $\rho'$ in place of $\rho$ (it uses only $\rho'>D$), shows that the supremum of the last expectation over all stopping times is zero when $\tilde X_0\le\bar x(\rho')$. Hence $F_s(y)=0$ whenever $e^y\le e^{-\kappa s}\bar x(\rho')$.
 
-So $S_s=(-\infty,b(s)]$ with $\log\big(e^{-\kappa s}\bar x(\rho')\big)\le b(s)\le0$. Quitting now earns $0$ in the reduced problem and the best available is $F_s(y)$, so immediate exit is optimal exactly on $S_s$; set $x^*_s:=e^{b(s)}$.
+So $S_s=(-\infty,b(s)]$ with $\log\big(e^{-\kappa s}\bar x(\rho')\big)\le b(s)<0$. Quitting now earns $0$ in the reduced problem and the best available is $F_s(y)$, so immediate exit is optimal exactly on $S_s$; set $x^*_s:=e^{b(s)}$.
 
 (c) A strategy with $\tau\le s$ also satisfies $\tau\le s'$ for $s'>s$, so $F_s\le F_{s'}$, $S_{s'}\subset S_s$ and $b(s')\le b(s)$.
 
