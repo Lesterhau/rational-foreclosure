@@ -663,7 +663,7 @@ function thresholdAt(p,sg,pr){if(p<=sg*sg)return -Infinity;const S=solveAt(p,sg,
 function consAt(p,sg,pr){const S=solveAt(Math.max(p,sg*sg+0.0025),sg,pr);return S.finite?S:null;}
 /* Quitting point with a deadline (the paper's Proposition 4): backward induction in the working years left. */
 function solveDeadline(P,S,opt){opt=opt||{};
-  const yL=opt.yL!=null?opt.yL:-5,yU=opt.yU!=null?opt.yU:2,dy=opt.dy||0.02,ds=opt.ds||1/12,outEvery=opt.outEvery||0.25;
+  const yL=opt.yL!=null?opt.yL:-5,yU=opt.yU!=null?opt.yU:4,dy=opt.dy||0.02,ds=opt.ds||1/12,outEvery=opt.outEvery||0.25;
   const a=P.sig*P.sig/2,mut=a-P.delta,rho=P.rho,n=Math.round((yU-yL)/dy)+1,m=n-2;
   const y=new Float64Array(n),f=new Float64Array(n);for(let i=0;i<n;i++){y[i]=yL+i*dy;const v=Math.exp(y[i])-1;f[i]=P.alpha*(y[i]>=0?v:P.lam*v);}
   const lo=-ds*(a/(dy*dy)-mut/(2*dy)),di=1+ds*(2*a/(dy*dy)+rho),up=-ds*(a/(dy*dy)+mut/(2*dy)),ed=Math.exp(dy);
@@ -678,9 +678,11 @@ function solveDeadline(P,S,opt){opt=opt||{};
     const j2=Math.min(j+6,n-1),r1=Math.sqrt(F[j]),r2=Math.sqrt(F[j2]);if(r2<=r1)return y[j-1];const b=y[j]-r1*(y[j2]-y[j])/(r2-r1);return Math.min(Math.max(b,y[j-1]),y[j]);};
   for(let k=1;k<=steps;k++){
     for(let i=1;i<=m;i++){const Fp=(F[i+1]-F[i-1])/(2*dy);rhs[i-1]=F[i]+ds*(f[i]-Math.log1p(rho*Math.max(Fp,0)));}
+    /* top: F''-F'=(1-e^{-rho s})/rho, the far field A(s)e^y+B(s)y+C(s); exact discrete form F[n-1]=F[n-2]+ed(F[n-2]-F[n-3])+kap */
+    const kap=(1-Math.exp(-rho*k*ds))/rho*dy*(ed-1);rhs[m-1]-=up*kap;
     rp[m-1]=rhs[m-1];for(let i=m-2;i>=0;i--)rp[i]=rhs[i]-C[i]*rp[i+1]/Bp[i+1];
     let prev=0;for(let i=0;i<m;i++){const v=(rp[i]-A[i]*prev)/Bp[i];prev=v>0?v:0;F[i+1]=prev;}
-    F[0]=0;F[n-1]=F[n-2]+ed*(F[n-2]-F[n-3]);
+    F[0]=0;F[n-1]=F[n-2]+ed*(F[n-2]-F[n-3])+kap;
     if(k%per===0)bs.push(bound());
     if(k%perY===0){const g=new Float32Array(n);for(let i=1;i<n-1;i++)g[i]=Math.max(0,(F[i+1]-F[i-1])/(2*dy));Fps.push(g);}
   }
