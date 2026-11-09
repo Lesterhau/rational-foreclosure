@@ -1,5 +1,5 @@
 == FRED national series
-   FRED national series: ok in 10s
+   FRED national series: ok in 11s
 == FHFA state index
    states: 51 latest (2026, 2)
    FHFA state index: ok in 1s
@@ -15,7 +15,7 @@
    10y back: 4426
   HTTP 404 https://data.bls.gov/cew/data/api/1990/a/industry/10.csv
    annual 2025 4451 1990 4343
-   BLS QCEW wages: ok in 16s
+   BLS QCEW wages: ok in 21s
 == Zillow home values
    states 51 counties 3071 cities 21338 date 2026-09-30
    Zillow home values: ok in 5s
@@ -27,6 +27,6 @@
   HTTP 404 https://www2.census.gov/programs-surveys/acs/summary_file/2025/table-based-SF/data/5YRData/acsdt5y2025-b01001.dat
    5-year counties added: 2359
    us True states 52 counties 3222 places 672 {'us': 'ACS 2025 1-year', 'state': 'ACS 2025 1-year', 'county1': 'ACS 2025 1-year', 'county5': 'ACS 2020-2024 5-year'}
-   Census ACS: ok in 35s
-wrote core (51 states), 3144 counties, 666 places in 83s
+   Census ACS: ok in 41s
+wrote core (51 states), 3144 counties, 666 places in 95s
 status {"FRED national series": "ok", "FHFA state index": "ok", "FHFA county index": "ok", "BLS QCEW wages": "ok", "Zillow home values": "ok", "Zillow starter homes": "ok", "Census ACS": "ok"}
