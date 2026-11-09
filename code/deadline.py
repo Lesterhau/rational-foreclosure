@@ -18,7 +18,7 @@ top to y = 8, under either top condition, reproduces the current values.)
 Reports the quitting point x*_s = exp(b(s)) for several s, checks that it falls as s grows, and checks that
 it approaches the stationary threshold of solver.py when rho > D. In the second calibration rho <= D, so the
 stationary problem has no threshold; x*_s still exists for every finite s and falls toward zero.
-Run: python3 deadline.py   (needs numpy, scipy; under a minute)
+Run: python3 deadline.py   (needs numpy, scipy; a few minutes)
 """
 import numpy as np
 from scipy.linalg import solve_banded
