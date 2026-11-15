@@ -399,17 +399,11 @@ If $E\int_0^\tau e^{-\rho t}H_\rho(q_t)\,dt=\infty$, then $J(y;q,\tau)=-\infty$ 
 (3) This is the equality case of (2) with $u=F$.
 \end{proof}
 
-\begin{aremark}[What the growth and sign conditions exclude]
-Uniqueness in Theorem~\ref{thm:verif} is among candidates, not among all solutions of the ordinary differential equation. At the parameters $\rho=.1$, $\alpha=1$, $\lambda=2$, $r_R=r_W$, $\sigma=.25$ (Appendix~\ref{app:C}), integrating \eqref{eq:ODE} from $u(\hat b)=u'(\hat b)=0$ gives three different outcomes depending on the starting point $e^{\hat b}$:
-\begin{itemize}
-\item from $e^{\hat b}=0.55$, a solution with $u(8)/e^8=77.8$, far above the admissible coefficient $\alpha/(\rho-D)=26.67$;
-\item from $e^{\hat b}=0.60$, a solution whose derivative turns negative;
-\item from $e^{\hat b}=x^*=0.57932$, the solution with $u(8)/e^8=26.6$.
-\end{itemize}
-Together, the growth bound and $u'\ge0$ suffice to single out $x^*$ (Theorem~\ref{thm:verif}). The trajectories illustrate the kind of branch each condition excludes; they do not show that either condition is separately necessary, and no classification of the remaining solutions is claimed.
+\begin{aremark}[Scope of uniqueness]
+Uniqueness in Theorem~\ref{thm:verif} is among candidates, not among all solutions of the ordinary differential equation.
 \end{aremark}
 
 \begin{aremark}[What this appendix proves]
-Proposition~\ref{prop:reduction} and Theorem~\ref{thm:main}, with no transversality or other admissibility assumption on plans. Everything from Lemma~\ref{lem:bm} on assumes $\sigma>0$. If the ratio is deterministic (in the extension of Section~\ref{sec:wealth}, when $S=0$), smooth fit can fail, and the extension assumes $S>0$. Three steps that standard treatments cite are proved here instead, because no source we could check covers combined control and stopping with rewards of this growth: the dynamic programming step (Lemmas~\ref{lem:paste}, \ref{lem:cond} and \ref{lem:visc}), the comparison step (iv) of Lemma~\ref{lem:reg}, and the generalized It\^o formula of Lemma~\ref{lem:ito}. No step rests on a cited theorem beyond the standard tools listed at the start of this appendix.
+Proposition~\ref{prop:reduction} and Theorem~\ref{thm:main}, with no transversality or other admissibility assumption on plans. Everything from Lemma~\ref{lem:bm} on assumes $\sigma>0$. If the ratio is deterministic (in the extension of Section~\ref{sec:wealth}, when $S=0$), smooth fit can fail, and the extension assumes $S>0$.
 \end{aremark}
 

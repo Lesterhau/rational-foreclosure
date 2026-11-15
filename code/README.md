@@ -5,7 +5,7 @@ Every file in this folder is code or its output. Python 3.10+ with numpy, scipy 
 | File | What it does | Paper result |
 |---|---|---|
 | `solver.py` | Core solver: the free-boundary problem by collocation (`sol`), the bound x-bar (`xbar`), the lower bound J_eps (`Jlb`). Imported by every other script. | everything |
-| `appendixA_numerical_checks.py` | The 243-point scan checking Theorem 1 (x-bar <= x* < 1, sign conditions), plus the burst-bound test. About 10 to 20 minutes. | Theorem 1; Appendix C, "Checks of Theorem 1" and "The burst bound" |
+| `appendixA_numerical_checks.py` | The 243-point scan checking Theorem 1 (x-bar <= x* < 1, sign conditions), plus a numerical test of the burst bound of Lemma A.4 (no longer reported in the paper, which proves it). About 10 to 20 minutes. | Theorem 1; Appendix C, "Checks of Theorem 1" |
 | `sweeps.py` | Calibrations and comparative statics at the baseline. Writes `sweeps.json`. | Tables 2 and 3; the table in Result 1 |
 | `robust.py` | Volatility comparisons with the drift gap fixed and with the median growth fixed (576 and 684 comparisons). Writes `robust.json`. | Result 1 |
 | `robustD.py` | Volatility comparisons with the expected growth of W/R fixed (756 comparisons). Writes `robustD.json`. | Result 1 |
@@ -14,7 +14,7 @@ Every file in this folder is code or its output. Python 3.10+ with numpy, scipy 
 | `extreme_search.py` | Searches for a reversal of the volatility comparison (D fixed) at strong loss aversion and positional weight, lambda up to 100 and alpha up to 20. | Appendix C, "Result 1" |
 | `risky_wealth_reversal.py` | The risky-wealth case in which raising wealth volatility with the raw drift gap fixed raises the threshold. | Proposition 6; Appendix C, "Risky wealth and the raw drift gap" |
 | `cohort.py` | The illustrative cohort: share out of the race and average grind under five scenarios. | Table 5, Section 5.3 |
-| `deadline.py` | The race with a deadline: the quitting point by years left, by backward induction with the Brennan-Schwartz sweep; checks that it falls as time left grows and approaches the stationary threshold. Writes `deadline.json`. Under a minute. | Proposition 4; Table 4; Appendix C, "The deadline" |
+| `deadline.py` | The race with a deadline: the quitting point by years left, by backward induction with the Brennan-Schwartz sweep; checks that it falls as time left grows and approaches the stationary threshold. Writes `deadline.json`. A few minutes. | Proposition 4; Table 4; Appendix C, "The deadline" |
 | `welfare.py` | Welfare loss from an imposed exit threshold. | Proposition 5 magnitudes; Result 3; Figure 2 |
 | `figs.py` | Produces Figures 1 and 2. | Figures 1 and 2 |
 | `shoot.py` | Independent shooting solver (the method used in the interactive page), used to cross-check the collocation solver. | Appendix C, "The solver" |
